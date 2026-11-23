@@ -142,6 +142,15 @@ tr:last-child td {
   .table-wrap table {
     min-width: 600px;
   }
+
+  .table-wrap:has(table:not(.rules-table))::before {
+    display: block;
+    padding: var(--fw-space-2) var(--fw-space-3);
+    border-bottom: 1px solid var(--fw-border);
+    color: var(--fw-text-muted);
+    font-size: var(--fw-font-size-body-xxs);
+    content: 'Scroll horizontally for all columns';
+  }
 }
 
 code {

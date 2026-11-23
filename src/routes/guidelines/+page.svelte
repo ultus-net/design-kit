@@ -26,30 +26,30 @@
 <div class="prose">
   <h2>Global invariants</h2>
   <div class="table-wrap">
-    <table>
+    <table class="rules-table">
       <thead>
         <tr><th>Rule</th><th>Enforced by</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td>No colour outside tokens.json</td>
-          <td>Consult the primitive and semantic tokens; npm run contrast fails the build on a measured regression.</td>
+          <td data-label="Rule">No colour outside tokens.json</td>
+          <td data-label="Enforced by">Consult the primitive and semantic tokens; npm run contrast fails the build on a measured regression.</td>
         </tr>
         <tr>
-          <td>Radius 0, shadow none</td>
-          <td>Every --fw-radius-* resolves to 0px and every --fw-shadow-* to none. A literal radius or shadow is a defect.</td>
+          <td data-label="Rule">Radius 0, shadow none</td>
+          <td data-label="Enforced by">Every --fw-radius-* resolves to 0px and every --fw-shadow-* to none. A literal radius or shadow is a defect.</td>
         </tr>
         <tr>
-          <td>Text pairs at least 4.5:1</td>
-          <td>npm run contrast asserts 31 pairs per mode: 26 text pairs at 4.5:1 and 5 structural pairs at 3:1.</td>
+          <td data-label="Rule">Text pairs at least 4.5:1</td>
+          <td data-label="Enforced by">npm run contrast asserts 31 pairs per mode: 26 text pairs at 4.5:1 and 5 structural pairs at 3:1.</td>
         </tr>
         <tr>
-          <td>Structural rules and focus at least 3:1</td>
-          <td>The same gate covers border on page, raised and sunken, plus strong border and focus on page.</td>
+          <td data-label="Rule">Structural rules and focus at least 3:1</td>
+          <td data-label="Enforced by">The same gate covers border on page, raised and sunken, plus strong border and focus on page.</td>
         </tr>
         <tr>
-          <td>A pastel is a fill, and text only where measured</td>
-          <td>The pastel measures 1.92:1 on whiteprint and 6.84:1 on cyanotype. Whiteprint text uses accent-strong; cyanotype may use the pastel.</td>
+          <td data-label="Rule">A pastel is a fill, and text only where measured</td>
+          <td data-label="Enforced by">The pastel measures 1.92:1 on whiteprint and 6.84:1 on cyanotype. Whiteprint text uses accent-strong; cyanotype may use the pastel.</td>
         </tr>
       </tbody>
     </table>
@@ -57,25 +57,25 @@
 
   <h2>Three surfaces</h2>
   <div class="table-wrap">
-    <table>
+    <table class="rules-table">
       <thead>
         <tr><th>Surface</th><th>Default mode</th><th>Rules</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td>Reading</td>
-          <td>whiteprint</td>
-          <td>Measure at or below 68 characters. One signal moment per viewport: the primary action. Display type for headings only. Links use link, never accent.</td>
+          <td data-label="Surface">Reading</td>
+          <td data-label="Default mode">whiteprint</td>
+          <td data-label="Rules">Measure at or below 68 characters. One signal moment per viewport: the primary action. Display type for headings only. Links use link, never accent.</td>
         </tr>
         <tr>
-          <td>App</td>
-          <td>cyanotype</td>
-          <td>Rows are 32px compact or 40px default. Numerals are mono and tabular, right-aligned in tables. Status is a tint fill plus matching text, never colour alone. One accent fill per row or panel. Destructive actions use danger. Focus is 2px focus at 2px offset and is never removed.</td>
+          <td data-label="Surface">App</td>
+          <td data-label="Default mode">cyanotype</td>
+          <td data-label="Rules">Rows are 32px compact or 40px default. Numerals are mono and tabular, right-aligned in tables. Status is a tint fill plus matching text, never colour alone. One accent fill per row or panel. Destructive actions use danger. Focus is 2px focus at 2px offset and is never removed.</td>
         </tr>
         <tr>
-          <td>Documentation</td>
-          <td>whiteprint</td>
-          <td>Mono for identifiers, token names and commands. 1px for construction, 2px for a section cut; the colour stays border. Show the failing example beside the passing one. Every claim carries its measurement or it is removed.</td>
+          <td data-label="Surface">Documentation</td>
+          <td data-label="Default mode">whiteprint</td>
+          <td data-label="Rules">Mono for identifiers, token names and commands. 1px for construction, 2px for a section cut; the colour stays border. Show the failing example beside the passing one. Every claim carries its measurement or it is removed.</td>
         </tr>
       </tbody>
     </table>
@@ -129,3 +129,49 @@
     <a href="/cheatsheet">cheatsheet</a>.
   </p>
 </div>
+
+<style>
+  @media (max-width: 640px) {
+    .rules-table,
+    .rules-table tbody,
+    .rules-table tr,
+    .rules-table td {
+      display: block;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .rules-table thead {
+      display: none;
+    }
+
+    .rules-table tr {
+      padding: var(--fw-space-3) 0;
+      border-bottom: 1px solid var(--fw-border);
+    }
+
+    .rules-table tr:last-child {
+      border-bottom: 0;
+    }
+
+    .rules-table td {
+      padding: 0;
+      border: 0;
+    }
+
+    .rules-table td + td {
+      margin-top: var(--fw-space-2);
+    }
+
+    .rules-table td::before {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--fw-text-muted);
+      font-size: var(--fw-font-size-body-xxs);
+      font-weight: var(--fw-weight-semibold);
+      letter-spacing: var(--fw-tracking-caps);
+      text-transform: uppercase;
+      content: attr(data-label);
+    }
+  }
+</style>
