@@ -96,6 +96,10 @@
   }
 
   .docs__home {
+    display: inline-flex;
+    align-items: center;
+    align-self: start;
+    min-height: 32px;
     font-family: var(--fw-font-display);
     font-size: var(--fw-font-size-display-4);
     line-height: 1.1;

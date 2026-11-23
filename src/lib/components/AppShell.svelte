@@ -85,11 +85,18 @@
   }
 
   .fw-shell__nav {
+    display: flex;
     flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fw-space-1) var(--fw-space-4);
     min-width: 0;
   }
 
   .fw-shell__nav :global(a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
     color: inherit;
   }
 
