@@ -9,14 +9,13 @@
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
 
-  let email = $state('dispatch@jacobsens.example');
-  let section = $state('commercial');
+  let email = $state('dispatch@example.com');
+  let density = $state('compact');
   let loading = $state(false);
 
   const options = [
-    { value: 'about', label: 'About' },
-    { value: 'commercial', label: 'Commercial' },
-    { value: 'residential', label: 'Residential' }
+    { value: 'compact', label: 'Compact' },
+    { value: 'default', label: 'Default' }
   ];
 </script>
 
@@ -26,7 +25,7 @@
 />
 
 {#snippet shellBrand()}
-  <a href="/">Jacobsens</a>
+  <a href="/">formwork</a>
 {/snippet}
 
 {#snippet shellNav()}
@@ -63,20 +62,20 @@
   <h2>Input and Select</h2>
   <div class="form-grid">
     <Input
-      label="Dispatch email"
+      label="Email"
       bind:value={email}
       type="email"
-      hint="Order confirmations go to this address."
+      hint="Confirmations go to this address."
       required
     />
-    <Input label="Reference" value="JC-10428" hint="Read only in the demo." disabled />
+    <Input label="Reference" value="FW-10428" hint="Read only in the demo." disabled />
     <Select
-      label="Section theme"
-      bind:value={section}
+      label="Density"
+      bind:value={density}
       options={options}
-      hint="Changes the accent and chrome at runtime."
+      hint="Sets row height in dense tools."
     />
-    <Input label="Postcode" value="4000" error="This postcode is outside the service area." />
+    <Input label="Project key" value="blueprint-021" error="This key already exists." />
   </div>
 </section>
 
@@ -173,7 +172,7 @@
   }
 
   @media (max-width: 420px) {
-    .row :global(.jcs-button) {
+    .row :global(.fw-button) {
       min-width: 0;
       flex: 1 1 100%;
     }

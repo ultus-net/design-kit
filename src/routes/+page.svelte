@@ -5,27 +5,27 @@
   import PageHeader from './_PageHeader.svelte';
 
   const routes = [
-    { href: '/colours', title: 'Colours', body: 'Primitives, six theme combinations, and measured WCAG ratios.' },
-    { href: '/typography', title: 'Typography', body: 'Gibson over Unica, the extracted scale, and open fallbacks.' },
-    { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, radii, shadows, breakpoints and motion.' },
-    { href: '/components', title: 'Components', body: 'Eight components built on tokens only.' },
-    { href: '/assets', title: 'Assets', body: 'Logos, favicons and font files ready to download.' },
-    { href: '/guidelines', title: 'Guidelines', body: 'Internal-tool rules, accessibility and a migration checklist.' }
+    { href: '/colours', title: 'Colours', body: 'Blueprint primitives, two modes, and every measured WCAG pair.' },
+    { href: '/typography', title: 'Typography', body: 'Bricolage Grotesque and JetBrains Mono, self-hosted variable faces.' },
+    { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, zero radius, breakpoints and motion.' },
+    { href: '/components', title: 'Components', body: 'Eight Svelte 5 components built on tokens only.' },
+    { href: '/assets', title: 'Assets', body: 'Self-hosted font files and their licence.' },
+    { href: '/guidelines', title: 'Guidelines', body: 'The rules, the surfaces and the tells that mark generated work.' }
   ];
 </script>
 
 <PageHeader
-  title="The Jacobsens brand, as working parts"
-  lede="Tokens, components and guidance extracted from the marketing site at c0461971. Built for internal tools first; the cream canvas, navy chrome and pill primary actions carry the brand."
+  title="formwork"
+  lede="A personal brand kit with a blueprint palette and brutalist construction. Prussian blue ground, whiteprint paper, one pastel signal, zero radius. Every ratio is measured by the same script that gates the build."
 />
 
 <div class="hero">
   <div class="hero__copy">
     <Badge variant="success">Version 0.1.0</Badge>
-    <h2>One kit, three sections, two modes</h2>
+    <h2>One kit, two modes, three surfaces</h2>
     <p>
-      Every value is marked extracted or derived. Switched sections repaint the accent, chrome and
-      tints; dark mode is a derived companion the marketing site does not ship.
+      Reading defaults to whiteprint, tools default to cyanotype. Both modes are authored from the
+      same primitives, and npm run contrast refuses a regression in either.
     </p>
     <div class="hero__actions">
       <Button href="/components">Browse components</Button>
@@ -34,8 +34,8 @@
   </div>
   <div class="hero__specimen">
     <p class="eyebrow">Specimen</p>
-    <p class="hero__display">Gibson display</p>
-    <p class="hero__body">Unica body copy at 16 pixels, set on the page surface.</p>
+    <p class="hero__display">Blueprint</p>
+    <p class="hero__body">Bricolage Grotesque at 16 pixels on the page surface.</p>
     <div class="hero__row">
       <Badge variant="neutral">Neutral</Badge>
       <Badge variant="info">Info</Badge>
@@ -57,10 +57,11 @@
 <section class="notes">
   <h2>What ships</h2>
   <ul>
-    <li><code>tokens.css</code> for primitives and six section-and-mode palettes.</li>
-    <li><code>fonts.css</code> for brand faces and the Figtree and Inter fallbacks.</li>
+    <li><code>tokens.css</code> with one primitive set and two semantic modes.</li>
+    <li><code>fonts.css</code> with two self-hosted variable faces under the SIL Open Font License.</li>
     <li><code>tailwind.css</code> as an opt-in Tailwind v4 bridge.</li>
     <li>Eight Svelte 5 components exported from the package root.</li>
+    <li><code>npm run contrast</code> asserting 62 pairs and exiting non-zero on a failure.</li>
   </ul>
 </section>
 
@@ -73,7 +74,6 @@
     border: 1px solid var(--fw-border);
     border-radius: var(--fw-radius-lg);
     background: var(--fw-raised);
-    box-shadow: var(--fw-shadow-sm);
   }
 
   .hero__copy {
@@ -176,7 +176,7 @@
       padding: var(--fw-space-3);
     }
 
-    .hero__actions :global(.jcs-button) {
+    .hero__actions :global(.fw-button) {
       min-width: 0;
       flex: 1 1 100%;
     }
