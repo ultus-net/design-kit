@@ -18,7 +18,10 @@
     "./tailwind.css": "./dist/tokens/tailwind.css",
     "./tokens.json": "./dist/tokens/tokens.json"
   },
-  "files": ["dist", "!dist/**/*.test.*"],
+  "files": [
+    "dist",
+    "!dist/**/*.test.*"
+  ],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
     "contrast": "node scripts/check-contrast.mjs",
@@ -26,6 +29,7 @@
     "build": "npm run tokens && vite build",
     "preview": "vite preview",
     "check": "npm run tokens && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
     "package": "npm run tokens && svelte-kit sync && svelte-package -i src/lib -o dist"
   },
   "devDependencies": {
@@ -33,10 +37,13 @@
     "@sveltejs/kit": "^2.70.4",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "@testing-library/svelte": "^5.4.2",
+    "jsdom": "^31.0.1",
     "svelte": "^5.59.1",
     "svelte-check": "^4.7.8",
     "typescript": "^6.0.3",
-    "vite": "^6.4.6"
+    "vite": "^6.4.6",
+    "vitest": "^5.1.1"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
