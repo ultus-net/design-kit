@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>formwork</title>
+    <meta
+      name="description"
+      content="A personal brand kit. Tokens, components and guidance."
+    />
+    <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+    %sveltekit.head%
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('fw-mode') || 'light';
+          if (mode !== 'dark' && mode !== 'light') mode = 'light';
+          document.documentElement.dataset.mode = mode;
+        } catch (error) {
+          /* Private browsing can deny storage; the server-rendered defaults stand. */
+        }
+      })();
+    </script>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
