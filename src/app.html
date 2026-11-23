@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-section="about" data-mode="light" data-corners="brand">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jacobsens Brand Kit</title>
+    <meta
+      name="description"
+      content="Tokens, components and guidance for Jacobsens internal tools."
+    />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+    %sveltekit.head%
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('jcs-mode');
+          if (mode === 'dark' || mode === 'light') {
+            document.documentElement.dataset.mode = mode;
+          }
+          var section = localStorage.getItem('jcs-section');
+          if (section === 'about' || section === 'commercial' || section === 'residential') {
+            document.documentElement.dataset.section = section;
+          }
+          var corners = localStorage.getItem('jcs-corners');
+          if (corners === 'brand' || corners === 'sharp') {
+            document.documentElement.dataset.corners = corners;
+          }
+        } catch (error) {
+          /* Private browsing can deny storage; the server-rendered defaults stand. */
+        }
+      })();
+    </script>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
