@@ -133,6 +133,17 @@
 </section>
 
 <style>
+  .block {
+    display: grid;
+    gap: var(--fw-space-3);
+    margin-bottom: var(--fw-space-8);
+  }
+
+  .block h2 {
+    font-size: var(--fw-font-size-display-3);
+    line-height: var(--fw-line-height-display-3);
+  }
+
   .reading {
     list-style: none;
     padding: 0;

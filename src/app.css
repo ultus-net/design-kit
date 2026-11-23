@@ -117,7 +117,7 @@ svg {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--fw-font-size-body-xxs);
+  font-size: var(--fw-font-size-body-xs);
 }
 
 th,
@@ -136,6 +136,12 @@ th {
 
 tr:last-child td {
   border-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .table-wrap table {
+    min-width: 600px;
+  }
 }
 
 code {

@@ -3,7 +3,6 @@
   import PageHeader from '../_PageHeader.svelte';
 
   const spacing = Object.entries(tokens.primitives.space);
-  const radii = Object.entries(tokens.primitives.radius);
   const breakpoints = Object.entries(tokens.primitives.breakpoint);
   const motion = Object.entries(tokens.primitives.motion);
 </script>
@@ -28,20 +27,11 @@
 
 <section class="block">
   <h2>Radii</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Token</th><th>Value</th><th>Note</th></tr></thead>
-      <tbody>
-        {#each radii as [name, entry] (name)}
-          <tr>
-            <td><code>--fw-radius-{name}</code></td>
-            <td>{entry.value}</td>
-            <td>0px by rule; the token exists so components never invent a radius.</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
+  <p>
+    Every radius token resolves to <code>0px</code>: <code>--fw-radius-sm</code>,
+    <code>--fw-radius-md</code>, <code>--fw-radius-lg</code>, <code>--fw-radius-pill</code> and
+    <code>--fw-radius-full</code>. The tokens exist so components never invent a radius.
+  </p>
 </section>
 
 <section class="block">
@@ -110,7 +100,8 @@
 
   .scale li {
     display: grid;
-    grid-template-columns: 140px minmax(0, 1fr) 56px;
+    grid-template-columns: 140px 104px 56px;
+    justify-content: start;
     align-items: center;
     gap: var(--fw-space-3);
     font-size: var(--fw-font-size-body-xxs);
@@ -131,7 +122,7 @@
 
   @media (max-width: 420px) {
     .scale li {
-      grid-template-columns: 96px minmax(0, 1fr) 48px;
+      grid-template-columns: 96px 76px 48px;
     }
   }
 </style>

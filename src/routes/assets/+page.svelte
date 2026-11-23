@@ -44,11 +44,23 @@
 />
 
 <section class="block">
-  <h2>Self-hosted faces</h2>
+  <h2>Font files and licences</h2>
   <ul class="assets">
     {#each fonts as asset (asset.url)}
       <li>
-        <span class="preview preview--file" aria-hidden="true">FILE</span>
+        {#if asset.name.endsWith('.woff2')}
+          <span
+            class="preview preview--face"
+            aria-hidden="true"
+            style="font-family: {asset.name.startsWith('bricolage')
+              ? 'var(--fw-font-display)'
+              : 'var(--fw-font-mono)'}"
+          >
+            Aa
+          </span>
+        {:else}
+          <span class="preview preview--file" aria-hidden="true">OFL</span>
+        {/if}
         <a href={asset.url} download={asset.name}>{asset.name}</a>
       </li>
     {/each}
@@ -114,6 +126,12 @@
     color: var(--fw-text-muted);
     font-family: var(--fw-font-mono);
     font-size: var(--fw-font-size-body-xxs);
+  }
+
+  .preview--face {
+    color: var(--fw-text);
+    font-size: var(--fw-font-size-display-3);
+    line-height: 1;
   }
 
   .assets a {
