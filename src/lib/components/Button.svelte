@@ -137,7 +137,9 @@
   }
 
   .fw-button--danger:hover:not(:disabled) {
-    filter: brightness(0.94);
+    background: var(--fw-danger-tint);
+    border-color: var(--fw-danger);
+    color: var(--fw-danger);
   }
 
   .fw-button:disabled,

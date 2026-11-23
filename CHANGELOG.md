@@ -14,5 +14,8 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 ### Changed
 
 - Components squared onto zero-radius, zero-shadow tokens.
+- Danger button hover uses token-backed declarations, not a filter.
+- Tailwind bridge no longer emits shadow utilities.
+- Contrast gate asserts the white/black reference instead of printing it.
 - Docs shell and all documentation routes migrated from section themes to the two-mode model.
 - Package identity moved to `@ultus-net/formwork`, MIT.

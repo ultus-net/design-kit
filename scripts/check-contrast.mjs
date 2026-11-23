@@ -88,11 +88,13 @@ for (const row of rows) {
   );
 }
 
-console.log(`\n${rows.length} pairs, ${failures.length} failures`);
+const reference = contrast('#FFFFFF', '#000000');
+if (Math.abs(reference - 21) > 0.01) {
+  failures.push(`reference white/black: ${reference.toFixed(2)} != 21.00`);
+}
+console.log(`reference white/black ${reference.toFixed(2)}:1`);
 
-// Verify with #FFFFFF vs #000000
-const whiteRatio = contrast('#FFFFFF', '#000000');
-console.log(whiteRatio.toFixed(2));
+console.log(`\n${rows.length} pairs, ${failures.length} failures`);
 
 if (failures.length > 0) {
   console.error(`\n${failures.join('\n')}`);

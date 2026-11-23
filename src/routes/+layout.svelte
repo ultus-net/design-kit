@@ -53,7 +53,7 @@
   <aside class="docs__side">
     <a class="docs__home" href="/">formwork</a>
 
-    <nav class="docs__nav" aria-label="Brand kit sections">
+    <nav class="docs__nav" aria-label="Documentation">
       {#each nav as item (item.href)}
         <a href={item.href} aria-current={page.url.pathname === item.href ? 'page' : undefined}>
           {item.label}

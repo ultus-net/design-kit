@@ -80,10 +80,6 @@
   --spacing-fw-11: var(--fw-space-11);
   --spacing-fw-12: var(--fw-space-12);
 
-  --shadow-fw-sm: var(--fw-shadow-sm);
-  --shadow-fw-md: var(--fw-shadow-md);
-  --shadow-fw-lg: var(--fw-shadow-lg);
-
   --font-weight-fw-regular: var(--fw-weight-regular);
   --font-weight-fw-medium: var(--fw-weight-medium);
   --font-weight-fw-semibold: var(--fw-weight-semibold);

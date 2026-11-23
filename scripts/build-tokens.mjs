@@ -83,10 +83,6 @@ const spacingEntries = Object.keys(tokens.primitives.space)
   .map((name) => `  --spacing-${prefix}-${name}: var(--${prefix}-space-${name});`)
   .join('\n');
 
-const shadowEntries = Object.keys(tokens.primitives.shadow)
-  .map((name) => `  --shadow-${prefix}-${name}: var(--${prefix}-shadow-${name});`)
-  .join('\n');
-
 const breakpointEntries = Object.entries(tokens.primitives.breakpoint)
   .map(([name, entry]) => `  --breakpoint-${prefix}-${name}: ${entry.value};`)
   .join('\n');
@@ -110,8 +106,6 @@ ${typeEntries}
 ${radiusEntries}
 
 ${spacingEntries}
-
-${shadowEntries}
 
 ${weightEntries}
 
