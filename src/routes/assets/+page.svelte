@@ -59,6 +59,7 @@
   <h2>Usage notes</h2>
   <ul>
     <li>Bricolage Grotesque and JetBrains Mono are licensed under the SIL Open Font License 1.1.</li>
+    <li>The upstream OFL texts ship beside the font files and are listed above.</li>
     <li>The files are latin subsets. Add another subset only when a surface actually needs those glyphs.</li>
     <li>Declare both faces in fonts.css, then import tokens.css. Nothing else is required.</li>
   </ul>

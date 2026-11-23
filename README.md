@@ -27,4 +27,4 @@ Pre-1.0. Tokens, two themes, eight Svelte 5 components and the documentation sit
 
 ## Licence
 
-MIT. Type is licensed under the SIL Open Font License 1.1. The palette is authored from the Omoro Blueprint dataset and measured in this repo.
+MIT. Type is licensed under the SIL Open Font License 1.1; both upstream OFL texts ship in `src/lib/assets/fonts/`. The palette is authored from the Omoro Blueprint dataset and measured in this repo.

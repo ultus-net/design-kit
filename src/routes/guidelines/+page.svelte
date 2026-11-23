@@ -41,11 +41,11 @@
         </tr>
         <tr>
           <td>Text pairs at least 4.5:1</td>
-          <td>npm run contrast asserts 31 text pairs in each mode.</td>
+          <td>npm run contrast asserts 31 pairs per mode: 26 text pairs at 4.5:1 and 5 structural pairs at 3:1.</td>
         </tr>
         <tr>
           <td>Structural rules and focus at least 3:1</td>
-          <td>The same gate covers border, strong border and focus on page, raised and sunken surfaces.</td>
+          <td>The same gate covers border on page, raised and sunken, plus strong border and focus on page.</td>
         </tr>
         <tr>
           <td>A pastel is a fill, and text only where measured</td>
@@ -123,7 +123,7 @@
 
   <h2>The gate</h2>
   <p>
-    npm run contrast computes every pair in the browser script and prints 62 pairs, 0 failures; it
+    npm run contrast computes every pair in the Node script and prints 62 pairs, 0 failures; it
     exits non-zero on any miss. npm run check must report zero errors and zero warnings before a
     change lands. Readers new to the vocabulary can start with the
     <a href="/cheatsheet">cheatsheet</a>.
