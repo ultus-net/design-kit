@@ -13,58 +13,28 @@
 
   let { children }: Props = $props();
 
-  const sections = [
-    { id: 'about', label: 'About' },
-    { id: 'commercial', label: 'Commercial' },
-    { id: 'residential', label: 'Residential' }
-  ] as const;
-
   const modes = [
     { id: 'light', label: 'Light' },
     { id: 'dark', label: 'Dark' }
   ] as const;
 
-  const corners = [
-    { id: 'brand', label: 'Brand' },
-    { id: 'sharp', label: 'Sharp' }
-  ] as const;
-
-  type SectionId = (typeof sections)[number]['id'];
   type ModeId = (typeof modes)[number]['id'];
-  type CornerId = (typeof corners)[number]['id'];
 
-  const isSection = (value: string | null): value is SectionId =>
-    sections.some((entry) => entry.id === value);
   const isMode = (value: string | null): value is ModeId => modes.some((entry) => entry.id === value);
-  const isCorner = (value: string | null): value is CornerId =>
-    corners.some((entry) => entry.id === value);
 
-  let section = $state<SectionId>('about');
   let mode = $state<ModeId>('light');
-  let corner = $state<CornerId>('brand');
   let ready = $state(false);
 
   onMount(() => {
-    const storedSection = localStorage.getItem('jcs-section');
-    if (isSection(storedSection)) section = storedSection;
-    const storedMode = localStorage.getItem('jcs-mode');
+    const storedMode = localStorage.getItem('fw-mode');
     if (isMode(storedMode)) mode = storedMode;
-    const storedCorner = localStorage.getItem('jcs-corners');
-    if (isCorner(storedCorner)) corner = storedCorner;
     ready = true;
   });
 
   $effect(() => {
     if (!browser) return;
-    const root = document.documentElement;
-    root.dataset.section = section;
-    root.dataset.mode = mode;
-    root.dataset.corners = corner;
-    if (ready) {
-      localStorage.setItem('jcs-section', section);
-      localStorage.setItem('jcs-mode', mode);
-      localStorage.setItem('jcs-corners', corner);
-    }
+    document.documentElement.dataset.mode = mode;
+    if (ready) localStorage.setItem('fw-mode', mode);
   });
 
   const nav = [
@@ -77,16 +47,11 @@
     { href: '/guidelines', label: 'Guidelines' },
     { href: '/cheatsheet', label: 'Cheatsheet' }
   ];
-
-  const logoDark = new URL('../lib/assets/logos/jacobsen/dark.svg', import.meta.url).href;
-  const logoWhite = new URL('../lib/assets/logos/jacobsen/white.svg', import.meta.url).href;
 </script>
 
 <div class="docs">
   <aside class="docs__side">
-    <a class="docs__home" href="/">
-      <img alt="Jacobsen" width="168" src={mode === 'light' ? logoDark : logoWhite}>
-    </a>
+    <a class="docs__home" href="/">formwork</a>
 
     <nav class="docs__nav" aria-label="Brand kit sections">
       {#each nav as item (item.href)}
@@ -97,31 +62,9 @@
     </nav>
 
     <div class="docs__controls">
-      <div class="docs__group" role="group" aria-label="Section theme">
-        {#each sections as entry (entry.id)}
-          <button
-            type="button"
-            aria-pressed={section === entry.id}
-            onclick={() => (section = entry.id)}
-          >
-            {entry.label}
-          </button>
-        {/each}
-      </div>
       <div class="docs__group" role="group" aria-label="Colour mode">
         {#each modes as entry (entry.id)}
           <button type="button" aria-pressed={mode === entry.id} onclick={() => (mode = entry.id)}>
-            {entry.label}
-          </button>
-        {/each}
-      </div>
-      <div class="docs__group" role="group" aria-label="Surface corners">
-        {#each corners as entry (entry.id)}
-          <button
-            type="button"
-            aria-pressed={corner === entry.id}
-            onclick={() => (corner = entry.id)}
-          >
             {entry.label}
           </button>
         {/each}
@@ -153,14 +96,12 @@
   }
 
   .docs__home {
-    display: flex;
-    align-items: center;
-    gap: var(--fw-space-3);
-    color: var(--fw-text);
     font-family: var(--fw-font-display);
     font-size: var(--fw-font-size-display-4);
     line-height: 1.1;
+    letter-spacing: -0.02em;
     text-decoration: none;
+    color: var(--fw-text);
   }
 
   .docs__nav {
@@ -183,7 +124,7 @@
 
   .docs__nav a[aria-current='page'] {
     background: var(--fw-raised);
-    box-shadow: inset 3px 0 0 var(--fw-accent);
+    border-left: 3px solid var(--fw-accent);
     font-weight: var(--fw-weight-semibold);
   }
 

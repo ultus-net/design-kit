@@ -5,8 +5,6 @@ export interface TokenEntry {
 }
 
 export interface Theme {
-  section: string;
-  mode: string;
   tokens: Record<string, TokenEntry>;
 }
 
@@ -22,6 +20,12 @@ export const themePairs: Pair[] = [
   { foreground: 'text', background: 'raised', label: 'Body text on raised surface', minimum: 4.5 },
   { foreground: 'text', background: 'sunken', label: 'Body text on sunken surface', minimum: 4.5 },
   { foreground: 'text-muted', background: 'page', label: 'Muted text on page', minimum: 4.5 },
+  {
+    foreground: 'text-muted',
+    background: 'raised',
+    label: 'Muted text on raised surface',
+    minimum: 4.5
+  },
   { foreground: 'link', background: 'page', label: 'Link on page', minimum: 4.5 },
   { foreground: 'on-accent', background: 'accent', label: 'Button label on accent', minimum: 4.5 },
   {
@@ -32,8 +36,10 @@ export const themePairs: Pair[] = [
   },
   { foreground: 'on-danger', background: 'danger', label: 'Button label on danger', minimum: 4.5 },
   { foreground: 'chrome-text', background: 'chrome', label: 'Chrome text on chrome', minimum: 4.5 },
-  { foreground: 'accent', background: 'page', label: 'Accent boundary on page', minimum: 3 },
-  { foreground: 'border-strong', background: 'page', label: 'Strong border on page', minimum: 3 },
+  { foreground: 'accent-strong', background: 'page', label: 'Accent strong on page', minimum: 3 },
+  { foreground: 'border', background: 'page', label: 'Border on page', minimum: 3 },
+  { foreground: 'border', background: 'raised', label: 'Border on raised surface', minimum: 3 },
+  { foreground: 'border', background: 'sunken', label: 'Border on sunken surface', minimum: 3 },
   { foreground: 'focus', background: 'page', label: 'Focus ring on page', minimum: 3 },
   { foreground: 'text', background: 'accent-tint', label: 'Body text on accent tint', minimum: 4.5 },
   { foreground: 'success', background: 'page', label: 'Success on page', minimum: 4.5 },
