@@ -38,14 +38,14 @@
   );
 </script>
 
-<div class="jcs-field" class:jcs-field--error={Boolean(error)}>
-  <label class="jcs-field__label" for={inputId}>
+<div class="fw-field" class:fw-field--error={Boolean(error)}>
+  <label class="fw-field__label" for={inputId}>
     {label}
-    {#if required}<span class="jcs-field__required" aria-hidden="true">*</span>{/if}
+    {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
   </label>
   <input
     id={inputId}
-    class="jcs-field__control"
+    class="fw-field__control"
     {name}
     {type}
     {placeholder}
@@ -57,33 +57,32 @@
     aria-invalid={error ? true : undefined}
     aria-describedby={describedBy}
   />
-  {#if hint}<p class="jcs-field__hint" id={hintId}>{hint}</p>{/if}
-  {#if error}<p class="jcs-field__error" id={errorId}>{error}</p>{/if}
+  {#if hint}<p class="fw-field__hint" id={hintId}>{hint}</p>{/if}
+  {#if error}<p class="fw-field__error" id={errorId}>{error}</p>{/if}
 </div>
 
 <style>
-  .jcs-field {
+  .fw-field {
     display: grid;
     gap: var(--fw-space-2);
     font-family: var(--fw-font-body);
   }
 
-  .jcs-field__label {
+  .fw-field__label {
     color: var(--fw-text);
     font-size: var(--fw-font-size-body-xs);
     font-weight: var(--fw-weight-semibold);
     line-height: var(--fw-line-height-body-xs);
   }
 
-  .jcs-field__required {
+  .fw-field__required {
     color: var(--fw-danger);
   }
 
-  .jcs-field__control {
+  .fw-field__control {
     width: 100%;
     padding: var(--fw-space-3) var(--fw-space-3);
     border: 1px solid var(--fw-border-strong);
-    border-radius: var(--fw-radius-sm);
     background: var(--fw-raised);
     color: var(--fw-text);
     font-family: var(--fw-font-body);
@@ -92,38 +91,38 @@
     transition: border-color var(--fw-motion-fast) var(--fw-motion-ease);
   }
 
-  .jcs-field__control::placeholder {
+  .fw-field__control::placeholder {
     color: var(--fw-text-muted);
   }
 
-  .jcs-field__control:focus-visible {
+  .fw-field__control:focus-visible {
     outline: 2px solid var(--fw-focus);
     outline-offset: 2px;
     border-color: var(--fw-accent);
   }
 
-  .jcs-field__control:disabled {
+  .fw-field__control:disabled {
     background: var(--fw-sunken);
     color: var(--fw-text-muted);
     cursor: default;
   }
 
-  .jcs-field--error .jcs-field__control {
+  .fw-field--error .fw-field__control {
     border-color: var(--fw-danger);
   }
 
-  .jcs-field__hint,
-  .jcs-field__error {
+  .fw-field__hint,
+  .fw-field__error {
     margin: 0;
     font-size: var(--fw-font-size-body-xxs);
     line-height: var(--fw-line-height-body-xxs);
   }
 
-  .jcs-field__hint {
+  .fw-field__hint {
     color: var(--fw-text-muted);
   }
 
-  .jcs-field__error {
+  .fw-field__error {
     color: var(--fw-danger);
   }
 </style>

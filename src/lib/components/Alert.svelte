@@ -12,15 +12,15 @@
   let { variant = 'info', title, children }: Props = $props();
 </script>
 
-<div class="jcs-alert jcs-alert--{variant}" role={variant === 'danger' ? 'alert' : 'status'}>
-  <div class="jcs-alert__body">
-    {#if title}<p class="jcs-alert__title">{title}</p>{/if}
-    <div class="jcs-alert__content">{@render children()}</div>
+<div class="fw-alert fw-alert--{variant}" role={variant === 'danger' ? 'alert' : 'status'}>
+  <div class="fw-alert__body">
+    {#if title}<p class="fw-alert__title">{title}</p>{/if}
+    <div class="fw-alert__content">{@render children()}</div>
   </div>
 </div>
 
 <style>
-  .jcs-alert {
+  .fw-alert {
     padding: var(--fw-space-4);
     border: 1px solid var(--fw-border);
     border-left: 3px solid currentColor;
@@ -30,27 +30,27 @@
     line-height: var(--fw-line-height-body-xs);
   }
 
-  .jcs-alert--success {
+  .fw-alert--success {
     background: var(--fw-success-tint);
     color: var(--fw-success);
   }
 
-  .jcs-alert--warning {
+  .fw-alert--warning {
     background: var(--fw-warning-tint);
     color: var(--fw-warning);
   }
 
-  .jcs-alert--danger {
+  .fw-alert--danger {
     background: var(--fw-danger-tint);
     color: var(--fw-danger);
   }
 
-  .jcs-alert--info {
+  .fw-alert--info {
     background: var(--fw-info-tint);
     color: var(--fw-info);
   }
 
-  .jcs-alert__title {
+  .fw-alert__title {
     margin: 0 0 var(--fw-space-1);
     color: var(--fw-text);
     font-family: var(--fw-font-display);
@@ -59,7 +59,7 @@
     line-height: var(--fw-line-height-display-5);
   }
 
-  .jcs-alert__content :global(p) {
+  .fw-alert__content :global(p) {
     margin: 0;
   }
 </style>

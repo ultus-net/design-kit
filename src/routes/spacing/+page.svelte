@@ -6,8 +6,6 @@
   const radii = Object.entries(tokens.primitives.radius);
   const shadows = Object.entries(tokens.primitives.shadow);
   const breakpoints = Object.entries(tokens.primitives.breakpoint);
-  const motion = Object.entries(tokens.primitives.motion);
-  const sharpTokens = tokens.corners.sharp.tokens;
 </script>
 
 <PageHeader
@@ -70,130 +68,6 @@
         {/each}
       </tbody>
     </table>
-  </div>
-</section>
-
-<section class="block">
-  <h2>Motion</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Token</th><th>Value</th><th>Status</th></tr></thead>
-      <tbody>
-        {#each motion as [name, entry] (name)}
-          <tr>
-            <td><code>--fw-motion-{name}</code></td>
-            <td>{entry.value}</td>
-            <td>{entry.status}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="block">
-  <h2>Operator surface</h2>
-  <p class="note">
-    The sharp operator surface removes radius, shadow and long motion decoration for dense tools.
-    Values are derived from the brand primitives.
-  </p>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Token</th>
-          <th>Brand value</th>
-          <th>Sharp value</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>--fw-radius-sm</code></td>
-          <td>{radii.find(([k]) => k === 'sm')?.[1].value}</td>
-          <td>{sharpTokens['radius-sm']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-radius-md</code></td>
-          <td>{radii.find(([k]) => k === 'md')?.[1].value}</td>
-          <td>{sharpTokens['radius-md']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-radius-lg</code></td>
-          <td>{radii.find(([k]) => k === 'lg')?.[1].value}</td>
-          <td>{sharpTokens['radius-lg']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-radius-pill</code></td>
-          <td>{radii.find(([k]) => k === 'pill')?.[1].value}</td>
-          <td>{sharpTokens['radius-pill']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-radius-full</code></td>
-          <td>{radii.find(([k]) => k === 'full')?.[1].value}</td>
-          <td>not overridden</td>
-          <td>same as brand</td>
-        </tr>
-        <tr>
-          <td><code>--fw-shadow-sm</code></td>
-          <td>{shadows.find(([k]) => k === 'sm')?.[1].value}</td>
-          <td>{sharpTokens['shadow-sm']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-shadow-md</code></td>
-          <td>{shadows.find(([k]) => k === 'md')?.[1].value}</td>
-          <td>{sharpTokens['shadow-md']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-shadow-lg</code></td>
-          <td>{shadows.find(([k]) => k === 'lg')?.[1].value}</td>
-          <td>{sharpTokens['shadow-lg']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-motion-base</code></td>
-          <td>{motion.find(([k]) => k === 'base')?.[1].value}</td>
-          <td>{sharpTokens['motion-base']}</td>
-          <td>derived</td>
-        </tr>
-        <tr>
-          <td><code>--fw-motion-slow</code></td>
-          <td>{motion.find(([k]) => k === 'slow')?.[1].value}</td>
-          <td>{sharpTokens['motion-slow']}</td>
-          <td>derived</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="block">
-  <h2>Operator demo</h2>
-  <p class="note">
-    Compare the brand and sharp operator surfaces. The sharp panel has
-    <code>data-corners="sharp"</code> to trigger the overrides.
-  </p>
-  <div class="demo-wrap">
-    <h3 class="demo-label">Brand</h3>
-    <div class="demo-panel">
-      <h3 class="demo-heading">Pending review</h3>
-      <p class="demo-body">3 orders await your decision. Tap to open.</p>
-      <button class="demo-action">Review now</button>
-    </div>
-  </div>
-  <div class="demo-wrap">
-    <h3 class="demo-label">Sharp</h3>
-    <div class="demo-panel" data-corners="sharp">
-      <h3 class="demo-heading">Pending review</h3>
-      <p class="demo-body">3 orders await your decision. Tap to open.</p>
-      <button class="demo-action">Review now</button>
-    </div>
   </div>
 </section>
 
