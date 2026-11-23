@@ -1,6 +1,6 @@
 {
   "name": "@ultus-net/formwork",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "description": "Personal brand kit: blueprint design tokens, Svelte components and a usage rulebook. Brutalist structure, Prussian blue ground, two modes, zero radius.",
   "type": "module",

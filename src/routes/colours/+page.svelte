@@ -1,18 +1,27 @@
 <script lang="ts">
   import tokens from '$lib/tokens/tokens.json';
   import PageHeader from '../_PageHeader.svelte';
-  import { contrastRatio, ratioText, themePairs, type Theme } from '../_page';
+  import { contrastRatio, ratioText, themePairs, type Mode } from '../_page';
 
-  const themes: (Theme & { id: string })[] = Object.entries(tokens.themes).map(([id, theme]) => ({
-    id,
-    ...theme
-  }));
+  const profiles = Object.entries(tokens.profiles);
+  const modes = ['light', 'dark'] as const;
   const primitives = Object.entries(tokens.primitives.colour);
+  const signalRows = profiles.flatMap(([, profile]) =>
+    modes.map((mode) => {
+      const { tokens: modeTokens }: Mode = profile.modes[mode];
+      return {
+        key: `${profile.label} ${mode}`,
+        profile: profile.label,
+        mode,
+        ratio: contrastRatio(modeTokens.accent.value, modeTokens.page.value)
+      };
+    })
+  );
 </script>
 
 <PageHeader
   title="Colours"
-  lede="Blueprint ground, two modes. Every ratio on this page is computed in the browser from tokens.json, and npm run contrast asserts the same pairs at build time."
+  lede="Three profiles, two modes each. Every ratio on this page is computed in the browser from tokens.json, and npm run contrast asserts all 186 pairs at build time."
 />
 
 <section class="block">
@@ -29,42 +38,62 @@
   </ul>
 </section>
 
-{#each themes as theme (theme.id)}
-  <section class="block">
-    <h2>{theme.id}</h2>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Pair</th><th>Ratio</th><th>Minimum</th><th>Result</th><th>Values</th></tr>
-        </thead>
-        <tbody>
-          {#each themePairs as pair (pair.foreground + pair.background)}
-            {@const foreground = theme.tokens[pair.foreground]}
-            {@const background = theme.tokens[pair.background]}
-            {#if foreground && background}
-              {@const ratio = contrastRatio(foreground.value, background.value)}
-              <tr>
-                <td>{pair.label}</td>
-                <td>{ratioText(ratio)}</td>
-                <td>{pair.minimum}:1</td>
-                <td class:fail={ratio < pair.minimum}>{ratio >= pair.minimum ? 'Pass' : 'Fail'}</td>
-                <td><code>{foreground.value}</code> on <code>{background.value}</code></td>
-              </tr>
-            {/if}
-          {/each}
-        </tbody>
-      </table>
-    </div>
-  </section>
+{#each profiles as [id, profile] (id)}
+  {#each modes as mode (mode)}
+    {@const modeTokens: Mode = profile.modes[mode]}
+    <section class="block">
+      <h2>{profile.label} — {mode}</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Pair</th><th>Ratio</th><th>Minimum</th><th>Result</th><th>Values</th></tr>
+          </thead>
+          <tbody>
+            {#each themePairs as pair (pair.foreground + pair.background)}
+              {@const foreground = modeTokens.tokens[pair.foreground]}
+              {@const background = modeTokens.tokens[pair.background]}
+              {#if foreground && background}
+                {@const ratio = contrastRatio(foreground.value, background.value)}
+                <tr>
+                  <td>{pair.label}</td>
+                  <td>{ratioText(ratio)}</td>
+                  <td>{pair.minimum}:1</td>
+                  <td class:fail={ratio < pair.minimum}>{ratio >= pair.minimum ? 'Pass' : 'Fail'}</td>
+                  <td><code>{foreground.value}</code> on <code>{background.value}</code></td>
+                </tr>
+              {/if}
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  {/each}
 {/each}
 
 <section class="block">
   <h2>Pastel as ink</h2>
   <p>
-    On whiteprint the pastel <code>#B9A7F2</code> measures 1.92:1 and is fill-only, so text uses
-    <code>accent-strong</code>. On cyanotype the same pastel measures 6.84:1 and is legal annotation
-    text.
+    The signal is a fill. Where its ratio against the page falls below 4.5:1 it may never carry text,
+    so labels use accent-strong.
   </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Profile</th><th>Mode</th><th>Signal on page</th><th>Verdict</th></tr>
+      </thead>
+      <tbody>
+        {#each signalRows as row (row.key)}
+          {@const legal = row.ratio >= 4.5}
+          <tr>
+            <td>{row.profile}</td>
+            <td>{row.mode}</td>
+            <td>{ratioText(row.ratio)}</td>
+            <td class:fail={!legal}>{legal ? 'Legal as text' : 'Fill only'}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <style>
