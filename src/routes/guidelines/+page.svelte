@@ -36,6 +36,10 @@
           <td data-label="Enforced by">Consult the primitive and semantic tokens; npm run contrast fails the build on a measured regression.</td>
         </tr>
         <tr>
+          <td data-label="Rule">A profile changes colour, never construction</td>
+          <td data-label="Enforced by">npm run contrast measures every profile in both modes, 186 pairs, and npm run tokens rejects a profile with a missing token or source.</td>
+        </tr>
+        <tr>
           <td data-label="Rule">Radius 0, shadow none</td>
           <td data-label="Enforced by">Every --fw-radius-* resolves to 0px and every --fw-shadow-* to none. A literal radius or shadow is a defect.</td>
         </tr>
@@ -95,6 +99,22 @@
     <li>Status is always text plus a tint. Never colour alone.</li>
   </ul>
 
+  <h2>Profiles</h2>
+  <p>
+    The kit ships three palette families: <code>blueprint</code>, <code>oxide</code> and
+    <code>ledger</code>. <code>blueprint</code> is the default, and the light mode is the reading
+    surface in every family.
+  </p>
+  <p>
+    A profile is selected with <code>data-profile</code> on the document element. <code>data-mode</code>
+    keeps its meaning, and every profile lives in one <code>tokens.css</code>. The two attributes
+    compose: the profile picks the family, the mode picks light or dark inside it.
+  </p>
+  <p>
+    The signal is fill-only wherever its ratio against the page is below 4.5:1. The per-profile
+    numbers are on <a href="/profiles">the profiles page</a>.
+  </p>
+
   <h2>Tells</h2>
   <ul>
     <li>Defect: pill buttons, offset drop shadows, or thick black card borders on white. That is neubrutalism, a different and more common look.</li>
@@ -123,9 +143,10 @@
 
   <h2>The gate</h2>
   <p>
-    npm run contrast computes every pair in the Node script and prints 62 pairs, 0 failures; it
-    exits non-zero on any miss. npm run check must report zero errors and zero warnings before a
-    change lands. Readers new to the vocabulary can start with the
+    npm run contrast computes every pair in the Node script and prints 186 pairs, 0 failures; it
+    exits non-zero on any miss. The same run fails a profile that is missing a token, a label or a
+    source, so a half-filled palette cannot land. npm run check must report zero errors and zero
+    warnings before a change lands. Readers new to the vocabulary can start with the
     <a href="/cheatsheet">cheatsheet</a>.
   </p>
 </div>

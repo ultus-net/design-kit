@@ -5,7 +5,7 @@
     ['Token', 'A named value, such as a colour, a radius or a spacing step', 'src/lib/tokens/tokens.json'],
     ['CSS custom property', 'A CSS variable. It starts with two dashes and holds one value', '--fw-text'],
     ['Primitives', 'The blueprint ramp values this kit authors', 'tokens.primitives'],
-    ['Themes', 'The two modes, whiteprint and cyanotype', 'tokens.themes'],
+    ['Profiles', 'Three palette families, two modes each', 'tokens.profiles'],
     ['Derived value', 'A value computed in this kit from a measured base', 'marked derived'],
     ['Data attribute', 'An extra word on an HTML element that switches styling', 'data-mode="dark"'],
     ['Component', 'A reusable piece of interface with props and markup', 'src/lib/components/'],
@@ -25,6 +25,7 @@
     ['Preview the site', 'npm run dev', 'Serves http://localhost:5173 with reload'],
     ['Build static files', 'npm run build', 'Writes HTML and assets to build/'],
     ['Type-check', 'npm run check', 'Reports type and markup errors'],
+    ['Run the tests', 'npm test', 'Token schema and component behaviour, 34 tests'],
     ['Ship the package', 'npm run package', 'Writes the library to dist/']
   ] as const;
 

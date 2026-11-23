@@ -2,6 +2,21 @@
 
 All notable changes to this package. The format follows Keep a Changelog, and versions follow Semantic Versioning.
 
+## [0.2.0] - 2026-11-24
+
+### Added
+
+- Three palette profiles, `blueprint`, `oxide` and `ledger`, each with a light and a dark mode and all 27 semantic tokens.
+- `Table`, `Tabs`, `Dialog`, `Toast`, `Field` and `Pagination` components.
+- `npm test`: a vitest suite covering the token schema and the interactive components.
+- `/profiles` route with a live switcher, anchors and every measured pair.
+
+### Changed
+
+- `tokens.json` now exposes `profiles` instead of `themes`. Reading the file directly is a breaking change; importing `tokens.css` is not.
+- `npm run contrast` measures 186 pairs across three profiles instead of 62.
+- `Input` and `Select` forward `id` and arbitrary ARIA attributes, so `Field` can wire them.
+
 ## [0.1.0] - 2026-11-23
 
 ### Added

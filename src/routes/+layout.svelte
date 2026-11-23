@@ -40,6 +40,7 @@
   const nav = [
     { href: '/', label: 'Overview' },
     { href: '/colours', label: 'Colours' },
+    { href: '/profiles', label: 'Profiles' },
     { href: '/typography', label: 'Typography' },
     { href: '/spacing', label: 'Spacing' },
     { href: '/components', label: 'Components' },
