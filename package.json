@@ -1,10 +1,10 @@
 {
-  "name": "@jacobsens/brand-kit",
-  "version": "0.2.0",
-  "private": true,
-  "description": "Jacobsens brand tokens, components and documentation site",
+  "name": "@ultus-net/formwork",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Personal brand kit: blueprint design tokens, Svelte components and a usage rulebook. Brutalist structure, Prussian blue ground, two modes, zero radius.",
   "type": "module",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -18,10 +18,7 @@
     "./tailwind.css": "./dist/tokens/tailwind.css",
     "./tokens.json": "./dist/tokens/tokens.json"
   },
-  "files": [
-    "dist",
-    "!dist/**/*.test.*"
-  ],
+  "files": ["dist", "!dist/**/*.test.*"],
   "scripts": {
     "tokens": "node scripts/build-tokens.mjs",
     "contrast": "node scripts/check-contrast.mjs",
@@ -32,8 +29,6 @@
     "package": "npm run tokens && svelte-kit sync && svelte-package -i src/lib -o dist"
   },
   "devDependencies": {
-    "@fontsource/figtree": "^5.3.0",
-    "@fontsource/inter": "^5.3.0",
     "@sveltejs/adapter-static": "^3.0.11",
     "@sveltejs/kit": "^2.70.4",
     "@sveltejs/package": "^2.5.8",

@@ -4,9 +4,9 @@
   const terms = [
     ['Token', 'A named value, such as a colour, a radius or a spacing step', 'src/lib/tokens/tokens.json'],
     ['CSS custom property', 'A CSS variable. It starts with two dashes and holds one value', '--fw-text'],
-    ['Primitives', 'The raw values copied from the marketing site', 'tokens.primitives'],
-    ['Themes', 'The six section-and-mode combinations', 'tokens.themes'],
-    ['Derived value', 'A value this kit corrects or adds, rather than extracts', 'marked derived'],
+    ['Primitives', 'The blueprint ramp values this kit authors', 'tokens.primitives'],
+    ['Themes', 'The two modes, whiteprint and cyanotype', 'tokens.themes'],
+    ['Derived value', 'A value computed in this kit from a measured base', 'marked derived'],
     ['Data attribute', 'An extra word on an HTML element that switches styling', 'data-mode="dark"'],
     ['Component', 'A reusable piece of interface with props and markup', 'src/lib/components/'],
     ['Prop', 'An input a component accepts', 'variant, size, disabled'],
@@ -47,7 +47,7 @@
       group: 'CSS and HTML basics',
       items: [
         ['MDN: Using CSS custom properties', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties', 'What a variable starting with two dashes actually does.'],
-        ['MDN: data-* attributes', 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/data-*', 'The attribute family this kit uses for section, mode and corners.'],
+        ['MDN: data-* attributes', 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/data-*', 'The attribute family this kit uses to switch mode.'],
         ['MDN: prefers-reduced-motion', 'https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion', 'How a page detects a user who asked for less motion.']
       ]
     },
