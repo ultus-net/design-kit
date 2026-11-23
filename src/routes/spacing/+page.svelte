@@ -37,14 +37,14 @@
 <section class="block">
   <h2>Breakpoints</h2>
   <div class="table-wrap">
-    <table>
+    <table class="stack-table">
       <thead><tr><th>Token</th><th>Width</th><th>Status</th></tr></thead>
       <tbody>
         {#each breakpoints as [name, entry] (name)}
           <tr>
-            <td><code>--fw-breakpoint-{name}</code></td>
-            <td>{entry.value}</td>
-            <td>{entry.status}</td>
+            <td data-label="Token"><code>--fw-breakpoint-{name}</code></td>
+            <td data-label="Width">{entry.value}</td>
+            <td data-label="Status">{entry.status}</td>
           </tr>
         {/each}
       </tbody>
@@ -55,14 +55,14 @@
 <section class="block">
   <h2>Motion</h2>
   <div class="table-wrap">
-    <table>
+    <table class="stack-table">
       <thead><tr><th>Token</th><th>Value</th><th>Status</th></tr></thead>
       <tbody>
         {#each motion as [name, entry] (name)}
           <tr>
-            <td><code>--fw-motion-{name}</code></td>
-            <td>{entry.value}</td>
-            <td>{entry.status}</td>
+            <td data-label="Token"><code>--fw-motion-{name}</code></td>
+            <td data-label="Value">{entry.value}</td>
+            <td data-label="Status">{entry.status}</td>
           </tr>
         {/each}
       </tbody>

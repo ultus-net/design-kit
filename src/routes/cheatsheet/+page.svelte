@@ -79,16 +79,16 @@
 <section class="block">
   <h2>Words you will meet</h2>
   <div class="table-wrap">
-    <table>
+    <table class="stack-table">
       <thead>
         <tr><th>Term</th><th>Plain meaning</th><th>Where it lives</th></tr>
       </thead>
       <tbody>
         {#each terms as [term, meaning, where] (term)}
           <tr>
-            <td><strong>{term}</strong></td>
-            <td>{meaning}</td>
-            <td><code>{where}</code></td>
+            <td data-label="Term"><strong>{term}</strong></td>
+            <td data-label="Plain meaning">{meaning}</td>
+            <td data-label="Where it lives"><code>{where}</code></td>
           </tr>
         {/each}
       </tbody>
@@ -99,16 +99,16 @@
 <section class="block">
   <h2>Common tasks</h2>
   <div class="table-wrap">
-    <table>
+    <table class="stack-table">
       <thead>
         <tr><th>Task</th><th>Command or file</th><th>What you get</th></tr>
       </thead>
       <tbody>
         {#each tasks as [task, how, result] (task)}
           <tr>
-            <td>{task}</td>
-            <td><code>{how}</code></td>
-            <td>{result}</td>
+            <td data-label="Task">{task}</td>
+            <td data-label="Command or file"><code>{how}</code></td>
+            <td data-label="What you get">{result}</td>
           </tr>
         {/each}
       </tbody>

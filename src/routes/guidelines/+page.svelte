@@ -26,7 +26,7 @@
 <div class="prose">
   <h2>Global invariants</h2>
   <div class="table-wrap">
-    <table class="rules-table">
+    <table class="stack-table">
       <thead>
         <tr><th>Rule</th><th>Enforced by</th></tr>
       </thead>
@@ -57,7 +57,7 @@
 
   <h2>Three surfaces</h2>
   <div class="table-wrap">
-    <table class="rules-table">
+    <table class="stack-table">
       <thead>
         <tr><th>Surface</th><th>Default mode</th><th>Rules</th></tr>
       </thead>
@@ -130,48 +130,3 @@
   </p>
 </div>
 
-<style>
-  @media (max-width: 640px) {
-    .rules-table,
-    .rules-table tbody,
-    .rules-table tr,
-    .rules-table td {
-      display: block;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .rules-table thead {
-      display: none;
-    }
-
-    .rules-table tr {
-      padding: var(--fw-space-3) 0;
-      border-bottom: 1px solid var(--fw-border);
-    }
-
-    .rules-table tr:last-child {
-      border-bottom: 0;
-    }
-
-    .rules-table td {
-      padding: 0;
-      border: 0;
-    }
-
-    .rules-table td + td {
-      margin-top: var(--fw-space-2);
-    }
-
-    .rules-table td::before {
-      display: block;
-      margin-bottom: 2px;
-      color: var(--fw-text-muted);
-      font-size: var(--fw-font-size-body-xxs);
-      font-weight: var(--fw-weight-semibold);
-      letter-spacing: var(--fw-tracking-caps);
-      text-transform: uppercase;
-      content: attr(data-label);
-    }
-  }
-</style>
