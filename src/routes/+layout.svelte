@@ -6,6 +6,7 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
+  import { chrome, defaultProfile, isMode, isProfile, modes, profiles } from './_chrome.svelte';
 
   interface Props {
     children: Snippet;
@@ -13,28 +14,27 @@
 
   let { children }: Props = $props();
 
-  const modes = [
-    { id: 'light', label: 'Light' },
-    { id: 'dark', label: 'Dark' }
-  ] as const;
-
-  type ModeId = (typeof modes)[number]['id'];
-
-  const isMode = (value: string | null): value is ModeId => modes.some((entry) => entry.id === value);
-
-  let mode = $state<ModeId>('light');
   let ready = $state(false);
 
   onMount(() => {
     const storedMode = localStorage.getItem('fw-mode');
-    if (isMode(storedMode)) mode = storedMode;
+    if (isMode(storedMode)) chrome.mode = storedMode;
+
+    const storedProfile = localStorage.getItem('fw-profile');
+    if (isProfile(storedProfile)) chrome.profile = storedProfile;
+
     ready = true;
   });
 
   $effect(() => {
     if (!browser) return;
-    document.documentElement.dataset.mode = mode;
-    if (ready) localStorage.setItem('fw-mode', mode);
+    document.documentElement.dataset.mode = chrome.mode;
+    if (chrome.profile === defaultProfile) delete document.documentElement.dataset.profile;
+    else document.documentElement.dataset.profile = chrome.profile;
+    if (ready) {
+      localStorage.setItem('fw-mode', chrome.mode);
+      localStorage.setItem('fw-profile', chrome.profile);
+    }
   });
 
   const nav = [
@@ -62,9 +62,24 @@
     </nav>
 
     <div class="docs__controls">
+      <div class="docs__group" role="group" aria-label="Profile">
+        {#each profiles as entry (entry.id)}
+          <button
+            type="button"
+            aria-pressed={chrome.profile === entry.id}
+            onclick={() => (chrome.profile = entry.id)}
+          >
+            {entry.label}
+          </button>
+        {/each}
+      </div>
       <div class="docs__group" role="group" aria-label="Colour mode">
         {#each modes as entry (entry.id)}
-          <button type="button" aria-pressed={mode === entry.id} onclick={() => (mode = entry.id)}>
+          <button
+            type="button"
+            aria-pressed={chrome.mode === entry.id}
+            onclick={() => (chrome.mode = entry.id)}
+          >
             {entry.label}
           </button>
         {/each}
