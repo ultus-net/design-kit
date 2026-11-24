@@ -6,13 +6,15 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
-  import { chrome, defaultProfile, isMode, isProfile, modes, profiles } from './_chrome.svelte';
+  import { setChrome, defaultProfile, isMode, isProfile, modes, profiles } from './_chrome.svelte';
 
   interface Props {
     children: Snippet;
   }
 
   let { children }: Props = $props();
+
+  const chrome = setChrome();
 
   let ready = $state(false);
 

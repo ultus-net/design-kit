@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
 import { createRawSnippet, tick } from 'svelte';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Dialog from './Dialog.svelte';
 
 const body = createRawSnippet(() => ({
@@ -29,6 +29,9 @@ function defineDialogMethods() {
   });
 }
 
+// jsdom does not implement either method, so define them before each render.
+beforeEach(defineDialogMethods);
+
 afterEach(() => {
   vi.restoreAllMocks();
   delete (HTMLDialogElement.prototype as Partial<HTMLDialogElement>).showModal;
@@ -36,17 +39,27 @@ afterEach(() => {
 });
 
 describe('Dialog', () => {
-  it('renders a dialog named by its title', () => {
+  it('renders a dialog named by its title', async () => {
     render(Dialog, {
       props: { id: 'delete-orders', title: 'Delete 12 orders', open: true, children: body }
     });
+    await tick();
 
     expect(screen.getByRole('dialog', { name: 'Delete 12 orders' })).toBeTruthy();
   });
 
+  it('opens once through showModal', async () => {
+    const showModal = vi.spyOn(HTMLDialogElement.prototype, 'showModal');
+
+    render(Dialog, {
+      props: { id: 'delete-orders', title: 'Delete 12 orders', open: true, children: body }
+    });
+    await tick();
+
+    expect(showModal).toHaveBeenCalledTimes(1);
+  });
+
   it('reflects open into the native dialog state', async () => {
-    // jsdom does not implement either method, so define them before spying.
-    defineDialogMethods();
     const showModal = vi.spyOn(HTMLDialogElement.prototype, 'showModal');
 
     render(Dialog, {
@@ -59,7 +72,7 @@ describe('Dialog', () => {
     expect(dialog.open).toBe(true);
   });
 
-  it('associates the description through aria-describedby', () => {
+  it('associates the description through aria-describedby', async () => {
     render(Dialog, {
       props: {
         id: 'delete-orders',
@@ -69,6 +82,7 @@ describe('Dialog', () => {
         children: body
       }
     });
+    await tick();
 
     const dialog = screen.getByRole('dialog');
     expect(dialog.getAttribute('aria-describedby')).toBe('delete-orders-description');
@@ -79,6 +93,7 @@ describe('Dialog', () => {
     render(Dialog, {
       props: { id: 'delete-orders', title: 'Delete 12 orders', open: true, children: body, actions }
     });
+    await tick();
 
     const onClick = vi.fn();
     const button = screen.getByRole('button', { name: 'Confirm' });
@@ -100,6 +115,7 @@ describe('Dialog', () => {
         children: body
       }
     });
+    await tick();
 
     const dialog = screen.getByRole('dialog') as HTMLDialogElement;
     dialog.dispatchEvent(new Event('close'));

@@ -83,6 +83,7 @@ if (Object.keys(tokens.profiles).length > 0 && !tokens.profiles[defaultId]) {
 for (const [id, profile] of Object.entries(tokens.profiles)) {
   if (!profile.source) failures.push(`${id}: missing source`);
   if (!profile.label) failures.push(`${id}: missing label`);
+  if (profile.id !== id) failures.push(`${id}: id ${profile.id} does not match the profile key`);
   for (const mode of ['light', 'dark']) {
     const names = Object.keys(profile.modes?.[mode]?.tokens ?? {});
     if (names.length === 0) {

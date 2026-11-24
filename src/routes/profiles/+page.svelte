@@ -2,7 +2,9 @@
   import tokens from '$lib/tokens/tokens.json';
   import PageHeader from '../_PageHeader.svelte';
   import { contrastRatio, ratioText, themePairs, type Mode } from '../_page';
-  import { chrome, profiles } from '../_chrome.svelte';
+  import { getChrome, profiles } from '../_chrome.svelte';
+
+  const chrome = getChrome();
 
   const entries = Object.entries(tokens.profiles);
   const modes = ['light', 'dark'] as const;

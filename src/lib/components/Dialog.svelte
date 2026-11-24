@@ -41,7 +41,6 @@
 
 <dialog
   class="fw-dialog"
-  open={open}
   bind:this={element}
   aria-labelledby={`${id}-title`}
   aria-describedby={description ? `${id}-description` : undefined}

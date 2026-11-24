@@ -1,3 +1,4 @@
+import { getContext, setContext } from 'svelte';
 import tokens from '$lib/tokens/tokens.json';
 
 export type ModeId = 'light' | 'dark';
@@ -14,10 +15,24 @@ export const profiles = Object.entries(tokens.profiles).map(([id, entry]) => ({
 
 export const defaultProfile: string = tokens.meta.defaultProfile;
 
-export const chrome = $state<{ mode: ModeId; profile: string }>({
-  mode: 'light',
-  profile: defaultProfile
-});
+export interface Chrome {
+  mode: ModeId;
+  profile: string;
+}
+
+const key = Symbol('chrome');
+
+export function setChrome(): Chrome {
+  const chrome = $state<Chrome>({ mode: 'light', profile: defaultProfile });
+  setContext(key, chrome);
+  return chrome;
+}
+
+export function getChrome(): Chrome {
+  const chrome = getContext<Chrome | undefined>(key);
+  if (!chrome) throw new Error('Chrome context is missing. Render this inside the docs layout.');
+  return chrome;
+}
 
 export const isMode = (value: string | null): value is ModeId => value === 'light' || value === 'dark';
 
