@@ -30,6 +30,16 @@ describe('Pagination', () => {
     expect(container.querySelectorAll('.fw-pagination__gap')).toHaveLength(2);
   });
 
+  it('collapses a three-page gap at the window edge to one ellipsis', () => {
+    const { container } = render(Pagination, { props: { page: 1, pageCount: 5 } });
+
+    for (const number of ['1', '2', '5']) {
+      expect(screen.getByText(number)).toBeTruthy();
+    }
+    expect(container.querySelectorAll('.fw-pagination__gap')).toHaveLength(1);
+    expect(screen.getByText('Previous').getAttribute('aria-disabled')).toBe('true');
+  });
+
   it('renders every page when the range is contiguous', () => {
     const { container } = render(Pagination, { props: { page: 2, pageCount: 3 } });
 

@@ -6,7 +6,9 @@
 </script>
 
 <div class="demo-stack">
-  <Button onclick={() => (open = true)}>Delete orders</Button>
+  <div class="demo-trigger">
+    <Button onclick={() => (open = true)}>Delete orders</Button>
+  </div>
 
   <Dialog
     id="delete-orders"
@@ -29,6 +31,10 @@
   .demo-stack {
     display: grid;
     gap: var(--fw-space-5);
+  }
+
+  .demo-trigger {
+    justify-self: start;
   }
 
   .demo-copy {

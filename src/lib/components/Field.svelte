@@ -25,8 +25,10 @@
 </script>
 
 <div class="fw-field" class:fw-field--invalid={Boolean(error)}>
-  <label class="fw-field__label" for={id}>{label}</label>
-  {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
+  <span class="fw-field__labelrow">
+    <label class="fw-field__label" for={id}>{label}</label>
+    {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
+  </span>
   {#if hint}<p class="fw-field__hint" id={`${id}-hint`}>{hint}</p>{/if}
   {@render children({
     id,
@@ -42,6 +44,12 @@
     display: grid;
     gap: var(--fw-space-1);
     font-family: var(--fw-font-body);
+  }
+
+  .fw-field__labelrow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--fw-space-1);
   }
 
   .fw-field__label {
