@@ -76,7 +76,9 @@ const themePairs = [
 const defaultId = tokens.meta.defaultProfile;
 const defaultNames = Object.keys(tokens.profiles[defaultId]?.modes?.light?.tokens ?? {});
 
-if (Object.keys(tokens.profiles).length > 0 && !tokens.profiles[defaultId]) {
+if (typeof defaultId !== 'string' || defaultId.length === 0) {
+  failures.push('meta.defaultProfile: missing a profile name');
+} else if (!tokens.profiles[defaultId]) {
   failures.push(`meta.defaultProfile: no profile named ${defaultId}`);
 }
 

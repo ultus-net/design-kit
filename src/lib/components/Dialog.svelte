@@ -26,9 +26,9 @@
   $effect(() => {
     if (!element?.isConnected) return;
 
-    if (open) {
+    if (open && !element.open) {
       if (typeof element.showModal === 'function') element.showModal();
-    } else if (typeof element.close === 'function') {
+    } else if (!open && element.open && typeof element.close === 'function') {
       element.close();
     }
   });
