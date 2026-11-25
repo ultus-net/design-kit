@@ -17,10 +17,18 @@ interface Profile {
   modes: Record<string, Mode>;
 }
 
+interface CornerPreset {
+  id: string;
+  label: string;
+  source: string;
+  tokens: Record<string, TokenLeaf>;
+}
+
 // JSON imports are literal types, which cannot be indexed by runtime strings.
 const document = tokens as unknown as {
-  meta: { defaultProfile: string };
+  meta: { defaultProfile: string; defaultCorners: string };
   profiles: Record<string, Profile>;
+  corners: Record<string, CornerPreset>;
 };
 
 const defaultProfile = document.profiles[document.meta.defaultProfile];
@@ -73,6 +81,26 @@ describe('tokens.json', () => {
         expect(leaf.value, path).toMatch(/^#[0-9A-Fa-f]{6}$/);
         expect(['extracted', 'derived'], path).toContain(leaf.status);
       }
+    }
+  });
+
+  it('every corner preset carries one radius scale', () => {
+    const reference = Object.keys(document.corners[document.meta.defaultCorners].tokens).sort();
+
+    for (const [key, preset] of Object.entries(document.corners)) {
+      expect(preset.id).toBe(key);
+      expect(Object.keys(preset.tokens).sort()).toEqual(reference);
+
+      for (const [name, leaf] of Object.entries(preset.tokens)) {
+        const path = `${key}.${name}`;
+        expect(typeof leaf.value, path).toBe('string');
+        expect(leaf.value, path).toMatch(/^[0-9]+(px|%)$/);
+        expect(leaf.status, path).toBe('derived');
+      }
+    }
+
+    for (const leaf of Object.values(document.corners.sharp.tokens)) {
+      expect(leaf.value).toBe('0px');
     }
   });
 });

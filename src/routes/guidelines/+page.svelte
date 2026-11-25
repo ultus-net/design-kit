@@ -40,8 +40,12 @@
           <td data-label="Enforced by">npm run contrast measures every profile in both modes, 186 pairs, and npm run tokens rejects a profile with a missing token or source.</td>
         </tr>
         <tr>
-          <td data-label="Rule">Radius 0, shadow none</td>
-          <td data-label="Enforced by">Every --fw-radius-* resolves to 0px and every --fw-shadow-* to none. A literal radius or shadow is a defect.</td>
+          <td data-label="Rule">A profile changes colour, shape changes radius</td>
+          <td data-label="Enforced by">The three axes compose: three profiles, two modes, three presets</td>
+        </tr>
+        <tr>
+          <td data-label="Rule">Radius comes from the active corner preset</td>
+          <td data-label="Enforced by">npm run tokens rejects a preset with a missing step or a non-zero sharp value; a literal radius in a component is a defect</td>
         </tr>
         <tr>
           <td data-label="Rule">Text pairs at least 4.5:1</td>

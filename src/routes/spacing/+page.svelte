@@ -9,7 +9,7 @@
 
 <PageHeader
   title="Spacing and structure"
-  lede="A 4px rhythm carries layout. Radius and shadow are fixed at zero by rule, so structure comes from spacing and 1px rules."
+  lede="A 4px rhythm carries layout. Radius comes from the active corner preset and shadow stays off, so structure comes from spacing and 1px rules."
 />
 
 <section class="block">
@@ -28,9 +28,8 @@
 <section class="block">
   <h2>Radii</h2>
   <p>
-    Every radius token resolves to <code>0px</code>: <code>--fw-radius-sm</code>,
-    <code>--fw-radius-md</code>, <code>--fw-radius-lg</code>, <code>--fw-radius-pill</code> and
-    <code>--fw-radius-full</code>. The tokens exist so components never invent a radius.
+    Radius comes from the active corner preset. <code>sharp</code> is the default and writes no
+    attribute. Pick another preset on <a href="/corners">the corners page</a>.
   </p>
 </section>
 

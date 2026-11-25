@@ -133,9 +133,8 @@ with no change of their own.
   construction baseline.
 - Emit the default preset's five variables inside `:root`, where the primitives
   block sits today.
-- Emit one `[data-corners="<id>"]` block per non-default preset, after `:root`,
-  in `corners` insertion order. Source order does the work at equal specificity.
-  Do not use `!important`.
+- Emit a `[data-corners="<id>"]` block for every preset, including the default,
+  so a subtree can pin a preset while the page uses another.
 - Derive the Tailwind bridge's `--radius-fw-*` from the default preset's keys
   instead of `primitives.radius`.
 - Remove the `primitives.radius` block. Nothing may read it afterwards,
@@ -262,8 +261,8 @@ Rename:
 
 Corners:
 
-- `grep -c "data-corners" src/lib/tokens/tokens.css` equals 2 (soft and round;
-  sharp lives in `:root`).
+- `grep -c "data-corners" src/lib/tokens/tokens.css` equals 3 (one block per
+  preset; the generated CSS includes the default so a subtree can pin it).
 - A preset with a missing step or a non-zero `sharp` value fails
   `npm run tokens`.
 - The throwaway audit harness at `.tmp/visual/audit.mjs`, regenerated per phase

@@ -113,6 +113,7 @@
     font-family: var(--fw-font-body);
     font-size: var(--fw-font-size-input);
     line-height: var(--fw-line-height-input);
+    border-radius: var(--fw-radius-sm);
     appearance: none;
   }
 

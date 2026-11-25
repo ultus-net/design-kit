@@ -65,6 +65,7 @@
     gap: var(--fw-space-2);
     min-width: 200px;
     border: 1px solid transparent;
+    border-radius: var(--fw-radius-sm);
     font-family: var(--fw-font-display);
     font-weight: var(--fw-weight-regular);
     line-height: 1.2;

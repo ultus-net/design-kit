@@ -21,7 +21,7 @@
 
 <PageHeader
   title="Colours"
-  lede="Three profiles, two modes each. Every ratio on this page is computed in the browser from tokens.json, and npm run contrast asserts all 186 pairs at build time."
+  lede="Three profiles, each with light and dark. Every ratio on this page is computed in the browser from tokens.json, and npm run contrast asserts all 186 pairs at build time."
 />
 
 <section class="block">

@@ -28,6 +28,7 @@
     background: var(--fw-raised);
     color: var(--fw-text);
     font-family: var(--fw-font-body);
+    border-radius: var(--fw-radius-md);
   }
 
   .fw-card__header {
