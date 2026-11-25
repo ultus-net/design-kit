@@ -94,7 +94,7 @@ describe('tokens.json', () => {
       for (const [name, leaf] of Object.entries(preset.tokens)) {
         const path = `${key}.${name}`;
         expect(typeof leaf.value, path).toBe('string');
-        expect(leaf.value, path).toMatch(/^[0-9]+(px|%)$/);
+        expect(leaf.value, path).toMatch(/^[0-9]+px$/);
         expect(leaf.status, path).toBe('derived');
       }
     }
