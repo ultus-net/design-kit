@@ -127,4 +127,48 @@ describe('Combobox', () => {
     expect(onselect).toHaveBeenCalledTimes(1);
     expect(screen.queryByRole('listbox')).toBeNull();
   });
+
+  it('restores the selection when Escape follows a fresh query', async () => {
+    renderCombobox();
+    const input = combobox();
+
+    await fireEvent.input(input, { target: { value: 'Lis' } });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'ArrowDown' });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'Enter' });
+    await tick();
+
+    expect(input).toHaveProperty('value', 'Lisbon');
+
+    await fireEvent.input(input, { target: { value: 'Lisbonx' } });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'Escape' });
+    await tick();
+
+    expect(input).toHaveProperty('value', 'Lisbon');
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    expect(screen.queryByRole('listbox')).toBeNull();
+  });
+
+  it('keeps the selection when ArrowDown opens the listbox and Escape closes it', async () => {
+    renderCombobox();
+    const input = combobox();
+
+    await fireEvent.input(input, { target: { value: 'Lis' } });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'ArrowDown' });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'Enter' });
+    await tick();
+
+    expect(input).toHaveProperty('value', 'Lisbon');
+
+    await fireEvent.keyDown(input, { key: 'ArrowDown' });
+    await tick();
+    await fireEvent.keyDown(input, { key: 'Escape' });
+    await tick();
+
+    expect(input).toHaveProperty('value', 'Lisbon');
+  });
 });

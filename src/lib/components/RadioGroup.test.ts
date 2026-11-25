@@ -62,6 +62,54 @@ describe('RadioGroup', () => {
     expect(document.activeElement).toBe(weekly);
   });
 
+  it('skips a disabled option when arrowing from the first enabled option', async () => {
+    renderGroup({
+      value: 'monthly',
+      options: [
+        { value: 'monthly', label: 'Monthly' },
+        { value: 'yearly', label: 'Yearly', disabled: true },
+        { value: 'weekly', label: 'Weekly' }
+      ]
+    });
+
+    const group = screen.getByRole('group', { name: 'Billing period' });
+    const monthly = screen.getByRole('radio', { name: 'Monthly' }) as HTMLInputElement;
+    const weekly = screen.getByRole('radio', { name: 'Weekly' }) as HTMLInputElement;
+
+    monthly.focus();
+    await fireEvent.keyDown(group, { key: 'ArrowDown' });
+    await tick();
+
+    expect(weekly.checked).toBe(true);
+    expect(document.activeElement).toBe(weekly);
+  });
+
+  it('starts at the first enabled option on ArrowDown and the last on ArrowUp without a value', async () => {
+    const first = renderGroup();
+    const group = screen.getByRole('group', { name: 'Billing period' });
+
+    await fireEvent.keyDown(group, { key: 'ArrowDown' });
+    await tick();
+
+    const monthly = screen.getByRole('radio', { name: 'Monthly' }) as HTMLInputElement;
+
+    expect(monthly.checked).toBe(true);
+    expect(document.activeElement).toBe(monthly);
+
+    first.unmount();
+
+    renderGroup();
+    const freshGroup = screen.getByRole('group', { name: 'Billing period' });
+
+    await fireEvent.keyDown(freshGroup, { key: 'ArrowUp' });
+    await tick();
+
+    const weekly = screen.getByRole('radio', { name: 'Weekly' }) as HTMLInputElement;
+
+    expect(weekly.checked).toBe(true);
+    expect(document.activeElement).toBe(weekly);
+  });
+
   it('wires an error to the group and lists hint then error in aria-describedby', () => {
     const { container } = renderGroup({
       hint: 'Cancel any time.',

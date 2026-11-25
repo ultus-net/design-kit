@@ -1,15 +1,12 @@
 <script lang="ts">
-  interface Option {
-    value: string;
-    label: string;
-  }
+  import { filterOptions, stepIndex, type ComboboxOption } from './combobox-model';
 
   interface Props {
     id?: string;
     label: string;
-    options: Option[];
+    options: ComboboxOption[];
     value?: string;
-    onselect?: (option: Option) => void;
+    onselect?: (option: ComboboxOption) => void;
     hint?: string;
     error?: string;
     disabled?: boolean;
@@ -44,23 +41,20 @@
   let active = $state(-1);
   let queryAtOpen = '';
   // The query as of the last committed keystroke, so the keystroke that opens
-  // the listbox can capture the text from before it.
+  // the listbox can capture the text from before it. Sync it whenever the value
+  // changes from outside while the listbox is closed.
   let lastQuery = value;
   let shell: HTMLDivElement;
+
+  $effect(() => {
+    if (!open) lastQuery = value;
+  });
 
   function optionId(index: number) {
     return `${uid}-option-${index}`;
   }
 
-  function filterOptions(query: string) {
-    const needle = query.trim().toLowerCase();
-
-    if (!needle) return options;
-
-    return options.filter((option) => option.label.toLowerCase().includes(needle));
-  }
-
-  const filtered = $derived(filterOptions(value));
+  const filtered = $derived(filterOptions(options, value));
 
   function openList(query: string) {
     queryAtOpen = query;
@@ -91,7 +85,7 @@
 
     value = query;
     lastQuery = query;
-    active = filterOptions(query).length ? 0 : -1;
+    active = filterOptions(options, query).length ? 0 : -1;
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -103,7 +97,7 @@
         return;
       }
 
-      if (filtered.length) active = (active + 1) % filtered.length;
+      if (filtered.length) active = stepIndex(active, filtered.length, 1);
       return;
     }
 
@@ -111,7 +105,7 @@
       event.preventDefault();
       if (!open || !filtered.length) return;
 
-      active = (active - 1 + filtered.length) % filtered.length;
+      active = stepIndex(active, filtered.length, -1);
       return;
     }
 
@@ -132,10 +126,6 @@
       lastQuery = queryAtOpen;
       close();
     }
-  }
-
-  function handleFocus() {
-    if (!open) lastQuery = value;
   }
 
   function handleFocusOut(event: FocusEvent) {
@@ -179,7 +169,6 @@
       bind:value
       oninput={handleInput}
       onkeydown={handleKeydown}
-      onfocus={handleFocus}
       aria-invalid={error ? true : undefined}
       aria-describedby={describedBy}
       {...rest}

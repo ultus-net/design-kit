@@ -51,9 +51,14 @@
 
     if (!radios.length) return;
 
-    const currentIndex = radios.findIndex((radio) => radio.value === value);
+    const focusedIndex = radios.findIndex((radio) => radio === document.activeElement);
+    const valueIndex = radios.findIndex((radio) => radio.value === value);
+    // Move from the focused radio when there is one, otherwise from the selected
+    // value. With neither, ArrowDown starts at the first enabled option and
+    // ArrowUp at the last.
+    const base = focusedIndex !== -1 ? focusedIndex : valueIndex;
+    const start = base === -1 ? (isNext ? -1 : 0) : base;
     const step = isNext ? 1 : -1;
-    const start = currentIndex === -1 ? (isNext ? -1 : 0) : currentIndex;
     const next = radios[(start + step + radios.length) % radios.length];
 
     event.preventDefault();

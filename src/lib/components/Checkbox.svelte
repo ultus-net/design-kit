@@ -44,8 +44,9 @@
   });
 
   function handleClick(event: MouseEvent) {
-    // jsdom still runs the activation behaviour for a synthetic click on a disabled input.
-    if (disabled) event.preventDefault();
+    // Browsers never dispatch click on a disabled control; jsdom does.
+    // Restrict the guard to untrusted events so real input is untouched.
+    if (disabled && !event.isTrusted) event.preventDefault();
   }
 </script>
 

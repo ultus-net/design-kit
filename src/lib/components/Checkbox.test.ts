@@ -36,6 +36,19 @@ describe('Checkbox', () => {
     expect(error?.textContent).toBe('You must accept.');
   });
 
+  it('toggles on a click when enabled', async () => {
+    render(Checkbox, { props: { label: 'Email me' } });
+
+    const input = screen.getByLabelText('Email me') as HTMLInputElement;
+
+    expect(input.checked).toBe(false);
+
+    await fireEvent.click(input);
+    await tick();
+
+    expect(input.checked).toBe(true);
+  });
+
   it('blocks interaction when disabled', async () => {
     render(Checkbox, { props: { label: 'Archived', disabled: true } });
 
