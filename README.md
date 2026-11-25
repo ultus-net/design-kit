@@ -14,7 +14,7 @@ Profiles select a palette family, modes select light or dark inside that family,
     npm run dev       # tokens, then the docs site on http://localhost:5173
     npm run check     # svelte-check, zero errors and zero warnings
     npm run contrast  # 186 pairs, 0 failures
-    npm test          # 60 tests, token schema and components
+    npm test          # unit and component tests
     npm run build     # static site
 
 ## What is in it
