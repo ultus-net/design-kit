@@ -2,6 +2,7 @@
   import type { HTMLInputAttributes } from 'svelte/elements';
 
   interface Props {
+    id?: string;
     label: string;
     value?: string;
     name?: string;
@@ -13,9 +14,11 @@
     placeholder?: string;
     autocomplete?: HTMLInputAttributes['autocomplete'];
     oninput?: (event: Event) => void;
+    [key: string]: unknown;
   }
 
   let {
+    id,
     label,
     value = $bindable(''),
     name,
@@ -26,11 +29,12 @@
     disabled = false,
     placeholder,
     autocomplete,
-    oninput
+    oninput,
+    ...rest
   }: Props = $props();
 
   const uid = $props.id();
-  const inputId = `${uid}-input`;
+  const inputId = $derived(id ?? `${uid}-input`);
   const hintId = `${uid}-hint`;
   const errorId = `${uid}-error`;
   const describedBy = $derived(
@@ -39,10 +43,12 @@
 </script>
 
 <div class="fw-field" class:fw-field--error={Boolean(error)}>
-  <label class="fw-field__label" for={inputId}>
-    {label}
-    {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
-  </label>
+  {#if label}
+    <label class="fw-field__label" for={inputId}>
+      {label}
+      {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
+    </label>
+  {/if}
   <input
     id={inputId}
     class="fw-field__control"
@@ -56,6 +62,7 @@
     {oninput}
     aria-invalid={error ? true : undefined}
     aria-describedby={describedBy}
+    {...rest}
   />
   {#if hint}<p class="fw-field__hint" id={hintId}>{hint}</p>{/if}
   {#if error}<p class="fw-field__error" id={errorId}>{error}</p>{/if}

@@ -6,6 +6,7 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
+  import { setChrome, defaultProfile, isMode, isProfile, modes, profiles } from './_chrome.svelte';
 
   interface Props {
     children: Snippet;
@@ -13,33 +14,35 @@
 
   let { children }: Props = $props();
 
-  const modes = [
-    { id: 'light', label: 'Light' },
-    { id: 'dark', label: 'Dark' }
-  ] as const;
+  const chrome = setChrome();
 
-  type ModeId = (typeof modes)[number]['id'];
-
-  const isMode = (value: string | null): value is ModeId => modes.some((entry) => entry.id === value);
-
-  let mode = $state<ModeId>('light');
   let ready = $state(false);
 
   onMount(() => {
     const storedMode = localStorage.getItem('fw-mode');
-    if (isMode(storedMode)) mode = storedMode;
+    if (isMode(storedMode)) chrome.mode = storedMode;
+
+    const storedProfile = localStorage.getItem('fw-profile');
+    if (isProfile(storedProfile)) chrome.profile = storedProfile;
+
     ready = true;
   });
 
   $effect(() => {
     if (!browser) return;
-    document.documentElement.dataset.mode = mode;
-    if (ready) localStorage.setItem('fw-mode', mode);
+    document.documentElement.dataset.mode = chrome.mode;
+    if (chrome.profile === defaultProfile) delete document.documentElement.dataset.profile;
+    else document.documentElement.dataset.profile = chrome.profile;
+    if (ready) {
+      localStorage.setItem('fw-mode', chrome.mode);
+      localStorage.setItem('fw-profile', chrome.profile);
+    }
   });
 
   const nav = [
     { href: '/', label: 'Overview' },
     { href: '/colours', label: 'Colours' },
+    { href: '/profiles', label: 'Profiles' },
     { href: '/typography', label: 'Typography' },
     { href: '/spacing', label: 'Spacing' },
     { href: '/components', label: 'Components' },
@@ -53,6 +56,31 @@
   <aside class="docs__side">
     <a class="docs__home" href="/">formwork</a>
 
+    <div class="docs__controls">
+      <div class="docs__group" role="group" aria-label="Profile">
+        {#each profiles as entry (entry.id)}
+          <button
+            type="button"
+            aria-pressed={chrome.profile === entry.id}
+            onclick={() => (chrome.profile = entry.id)}
+          >
+            {entry.label}
+          </button>
+        {/each}
+      </div>
+      <div class="docs__group" role="group" aria-label="Colour mode">
+        {#each modes as entry (entry.id)}
+          <button
+            type="button"
+            aria-pressed={chrome.mode === entry.id}
+            onclick={() => (chrome.mode = entry.id)}
+          >
+            {entry.label}
+          </button>
+        {/each}
+      </div>
+    </div>
+
     <nav class="docs__nav" aria-label="Documentation">
       {#each nav as item (item.href)}
         <a href={item.href} aria-current={page.url.pathname === item.href ? 'page' : undefined}>
@@ -60,16 +88,6 @@
         </a>
       {/each}
     </nav>
-
-    <div class="docs__controls">
-      <div class="docs__group" role="group" aria-label="Colour mode">
-        {#each modes as entry (entry.id)}
-          <button type="button" aria-pressed={mode === entry.id} onclick={() => (mode = entry.id)}>
-            {entry.label}
-          </button>
-        {/each}
-      </div>
-    </div>
   </aside>
 
   <div class="docs__content">
@@ -93,6 +111,11 @@
     padding: var(--fw-space-6) var(--fw-space-5);
     border-right: 1px solid var(--fw-border);
     background: var(--fw-sunken);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
   }
 
   .docs__home {
@@ -135,7 +158,6 @@
   .docs__controls {
     display: grid;
     gap: var(--fw-space-3);
-    margin-top: auto;
   }
 
   .docs__group {
@@ -177,6 +199,9 @@
       padding: var(--fw-space-4);
       border-right: 0;
       border-bottom: 1px solid var(--fw-border);
+      position: static;
+      height: auto;
+      overflow: visible;
     }
 
     .docs__nav {

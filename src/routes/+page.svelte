@@ -5,10 +5,10 @@
   import PageHeader from './_PageHeader.svelte';
 
   const routes = [
-    { href: '/colours', title: 'Colours', body: 'Blueprint primitives, two modes, and every measured WCAG pair.' },
+    { href: '/colours', title: 'Colours', body: 'Three palette families, two modes each, and every measured pair.' },
     { href: '/typography', title: 'Typography', body: 'Bricolage Grotesque and JetBrains Mono, self-hosted variable faces.' },
     { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, zero radius, breakpoints and motion.' },
-    { href: '/components', title: 'Components', body: 'Eight Svelte 5 components built on tokens only.' },
+    { href: '/components', title: 'Components', body: 'Fourteen Svelte 5 components built on tokens only.' },
     { href: '/assets', title: 'Assets', body: 'Self-hosted font files and their licence.' },
     { href: '/guidelines', title: 'Guidelines', body: 'The rules, the surfaces and the tells that mark generated work.' }
   ];
@@ -60,8 +60,10 @@
     <li><code>tokens.css</code> with one primitive set and two semantic modes.</li>
     <li><code>fonts.css</code> with two self-hosted variable faces under the SIL Open Font License.</li>
     <li><code>tailwind.css</code> as an opt-in Tailwind v4 bridge.</li>
-    <li>Eight Svelte 5 components exported from the package root.</li>
-    <li><code>npm run contrast</code> asserting 62 pairs and exiting non-zero on a failure.</li>
+    <li>Three profiles in one <code>tokens.css</code>, selected with the <code>data-profile</code> attribute.</li>
+    <li>Fourteen Svelte 5 components, including a dense table and a native dialog.</li>
+    <li><code>npm run contrast</code> asserting 186 pairs across three profiles and exiting non-zero on a failure.</li>
+    <li><code>npm test</code> covering the token schema and the interactive components.</li>
   </ul>
 </section>
 

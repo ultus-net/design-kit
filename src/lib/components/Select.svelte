@@ -6,6 +6,7 @@
   }
 
   interface Props {
+    id?: string;
     label: string;
     options: Option[];
     value?: string;
@@ -15,9 +16,11 @@
     required?: boolean;
     disabled?: boolean;
     onchange?: (event: Event) => void;
+    [key: string]: unknown;
   }
 
   let {
+    id,
     label,
     options,
     value = $bindable(''),
@@ -26,11 +29,12 @@
     error,
     required = false,
     disabled = false,
-    onchange
+    onchange,
+    ...rest
   }: Props = $props();
 
   const uid = $props.id();
-  const selectId = `${uid}-select`;
+  const selectId = $derived(id ?? `${uid}-select`);
   const hintId = `${uid}-hint`;
   const errorId = `${uid}-error`;
   const describedBy = $derived(
@@ -54,6 +58,7 @@
       {onchange}
       aria-invalid={error ? true : undefined}
       aria-describedby={describedBy}
+      {...rest}
     >
       {#each options as option (option.value)}
         <option value={option.value} disabled={option.disabled}>{option.label}</option>

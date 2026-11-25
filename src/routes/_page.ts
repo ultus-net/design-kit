@@ -4,7 +4,7 @@ export interface TokenEntry {
   source?: string;
 }
 
-export interface Theme {
+export interface Mode {
   tokens: Record<string, TokenEntry>;
 }
 

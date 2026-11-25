@@ -8,6 +8,12 @@
   import Select from '$lib/components/Select.svelte';
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
+  import DialogDemo from '../_demos/DialogDemo.svelte';
+  import FieldDemo from '../_demos/FieldDemo.svelte';
+  import PaginationDemo from '../_demos/PaginationDemo.svelte';
+  import TableDemo from '../_demos/TableDemo.svelte';
+  import TabsDemo from '../_demos/TabsDemo.svelte';
+  import ToastDemo from '../_demos/ToastDemo.svelte';
 
   let email = $state('dispatch@example.com');
   let density = $state('compact');
@@ -21,7 +27,7 @@
 
 <PageHeader
   title="Components"
-  lede="Eight Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Fourteen Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -110,6 +116,42 @@
     <Stat label="Queue depth" value="128" delta="12 fewer than yesterday" tone="success" />
     <Stat label="Held orders" value="3" delta="Needs review" tone="warning" />
   </div>
+</section>
+
+<section class="block">
+  <h2>Table</h2>
+  <p class="note">Default and dense rows, tabular numerals, and a scroll region that takes keyboard focus.</p>
+  <TableDemo />
+</section>
+
+<section class="block">
+  <h2>Field</h2>
+  <p class="note">Label, hint and error wired through aria-describedby and aria-invalid.</p>
+  <FieldDemo />
+</section>
+
+<section class="block">
+  <h2>Pagination</h2>
+  <p class="note">Anchors or buttons, aria-current on the active page, and an ellipsis window.</p>
+  <PaginationDemo />
+</section>
+
+<section class="block">
+  <h2>Tabs</h2>
+  <p class="note">Roving tabindex with arrow, Home and End keys on the native button role.</p>
+  <TabsDemo />
+</section>
+
+<section class="block">
+  <h2>Dialog</h2>
+  <p class="note">Native dialog element with showModal, a token backdrop and focus return.</p>
+  <DialogDemo />
+</section>
+
+<section class="block">
+  <h2>Toast</h2>
+  <p class="note">A polite live region by default, alert for danger, and no timers.</p>
+  <ToastDemo />
 </section>
 
 <section class="block">
