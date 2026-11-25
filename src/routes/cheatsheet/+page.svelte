@@ -27,7 +27,7 @@
     ['Preview the site', 'npm run dev', 'Serves http://localhost:5173 with reload'],
     ['Build static files', 'npm run build', 'Writes HTML and assets to build/'],
     ['Type-check', 'npm run check', 'Reports type and markup errors'],
-    ['Run the tests', 'npm test', 'Token schema and component behaviour, 34 tests'],
+    ['Run the tests', 'npm test', 'Token schema and component behaviour, 60 tests'],
     ['Ship the package', 'npm run package', 'Writes the library to dist/']
   ] as const;
 
