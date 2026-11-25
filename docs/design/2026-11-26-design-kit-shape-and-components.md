@@ -109,8 +109,9 @@ nothing changes for existing consumers.
 
 ### Component change
 
-`src/lib/components/Button.svelte` sets no `border-radius` on `.fw-button`
-today. Its only `--fw-radius-full` use is the loading spinner. Add
+`src/lib/components/Button.svelte:159` holds the file's only `border-radius`, and
+it belongs to the loading spinner. `.fw-button` itself, declared at line 61, sets
+none, so buttons are square today by omission rather than by token. Add
 `border-radius: var(--fw-radius-sm)` to `.fw-button` and leave the spinner on
 `var(--fw-radius-full)`.
 
@@ -253,8 +254,10 @@ rename lands cleanly.
 
 Rename:
 
-- `grep -rn "formwork" --include="*.md" --include="*.svelte" --include="*.json" --include="*.ts" .`
-  returns only changelog history.
+- `git grep -n formwork -- '*.md' '*.svelte' '*.json' '*.ts' '*.html'
+  ':!CHANGELOG.md' ':!docs/design/'` prints nothing. The only permitted mentions
+  are changelog history and this spec's context paragraph, which record what the
+  package was called then.
 - `npm pack --dry-run` lists the package as `@ultus-net/design-kit`.
 
 Corners:
@@ -263,8 +266,10 @@ Corners:
   sharp lives in `:root`).
 - A preset with a missing step or a non-zero `sharp` value fails
   `npm run tokens`.
-- The browser audit runs three corner presets at 1440 and 390 and passes every
-  existing assertion.
+- The throwaway audit harness at `.tmp/visual/audit.mjs`, regenerated per phase
+  and never committed, runs three corner presets at 1440 and 390 and passes every
+  existing assertion. It restarts `vite preview` first, because a preview server
+  started before a build caches its file map and 404s new hashed chunks.
 - No page claims zero radius as a global invariant.
 
 Components:
