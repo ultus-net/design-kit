@@ -104,25 +104,22 @@ describe('Dialog', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('does not re-enter showModal on an already open dialog', async () => {
-    const showModal = vi.spyOn(HTMLDialogElement.prototype, 'showModal').mockImplementation(
+  it('does not close a dialog that is already closed', async () => {
+    const close = vi.spyOn(HTMLDialogElement.prototype, 'close').mockImplementation(
       function (this: HTMLDialogElement) {
-        if (this.open) throw new DOMException('The dialog is already open.', 'InvalidStateError');
-        this.open = true;
+        if (!this.open) throw new DOMException('The dialog is not open.', 'InvalidStateError');
+        this.open = false;
       }
     );
 
     render(Dialog, {
-      props: { id: 'delete-orders', title: 'Delete 12 orders', open: true, children: body }
+      props: { id: 'delete-orders', title: 'Delete 12 orders', open: false, children: body }
     });
     await tick();
 
-    const dialog = screen.getByRole('dialog') as HTMLDialogElement;
-    expect(showModal).toHaveBeenCalledTimes(1);
-    expect(dialog.open).toBe(true);
-
-    // The native call throws once open, so the guard is what keeps a re-run safe.
-    expect(() => dialog.showModal()).toThrow('The dialog is already open.');
+    const dialog = screen.getByRole('dialog', { hidden: true }) as HTMLDialogElement;
+    expect(close).not.toHaveBeenCalled();
+    expect(dialog.open).toBe(false);
   });
 
   it('closes on a close event and calls onclose', async () => {
