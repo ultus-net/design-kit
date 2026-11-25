@@ -15,7 +15,7 @@
 </script>
 
 <PageHeader
-  title="formwork"
+  title="Design Kit"
   lede="A personal brand kit with a blueprint palette and brutalist construction. Prussian blue ground, whiteprint paper, one pastel signal, zero radius. Every ratio is measured by the same script that gates the build."
 />
 

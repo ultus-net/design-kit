@@ -1,4 +1,4 @@
-# formwork
+# Design Kit
 
 A personal brand kit. Blueprint palette, brutalist construction: Prussian blue and whiteprint grounds, one pastel signal, zero radius, no elevation, and rules that hold a measured 3:1 or 4.5:1.
 
