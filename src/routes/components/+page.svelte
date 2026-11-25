@@ -8,11 +8,16 @@
   import Select from '$lib/components/Select.svelte';
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
+  import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
+  import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
   import DialogDemo from '../_demos/DialogDemo.svelte';
   import FieldDemo from '../_demos/FieldDemo.svelte';
   import PaginationDemo from '../_demos/PaginationDemo.svelte';
+  import RadioGroupDemo from '../_demos/RadioGroupDemo.svelte';
+  import SwitchDemo from '../_demos/SwitchDemo.svelte';
   import TableDemo from '../_demos/TableDemo.svelte';
   import TabsDemo from '../_demos/TabsDemo.svelte';
+  import TextareaDemo from '../_demos/TextareaDemo.svelte';
   import ToastDemo from '../_demos/ToastDemo.svelte';
 
   let email = $state('dispatch@example.com');
@@ -27,7 +32,7 @@
 
 <PageHeader
   title="Components"
-  lede="Fourteen Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Nineteen Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -83,6 +88,36 @@
     />
     <Input label="Project key" value="blueprint-021" error="This key already exists." />
   </div>
+</section>
+
+<section class="block">
+  <h2>Checkbox</h2>
+  <p class="note">Native checkboxes with label, hint, error and an indeterminate state.</p>
+  <CheckboxDemo />
+</section>
+
+<section class="block">
+  <h2>RadioGroup</h2>
+  <p class="note">Native radios in a fieldset, sharing one name, with arrow-key selection and a bound value.</p>
+  <RadioGroupDemo />
+</section>
+
+<section class="block">
+  <h2>Switch</h2>
+  <p class="note">A native button with role switch, a bound checked state and Space to toggle.</p>
+  <SwitchDemo />
+</section>
+
+<section class="block">
+  <h2>Textarea</h2>
+  <p class="note">A native textarea with typed rows, label, hint and error wiring.</p>
+  <TextareaDemo />
+</section>
+
+<section class="block">
+  <h2>Combobox</h2>
+  <p class="note">An ARIA combobox over caller-supplied options with arrow navigation, Enter to select and Escape to restore the query.</p>
+  <ComboboxDemo />
 </section>
 
 <section class="block">

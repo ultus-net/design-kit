@@ -2,6 +2,13 @@
 
 All notable changes to this package. The format follows Keep a Changelog, and versions follow Semantic Versioning.
 
+## [0.5.0] - 2026-11-26
+
+### Added
+
+- Five form controls: `Checkbox`, `RadioGroup`, `Switch`, `Textarea` and `Combobox`, each with typed props, token-only CSS, behavioural tests and a demo on `/components`.
+- `Combobox` implements the ARIA combobox contract: `aria-expanded`, `aria-controls`, `aria-activedescendant`, arrow navigation, Enter to select, and Escape to close and restore the query.
+
 ## [0.4.0] - 2026-11-26
 
 ### Added
