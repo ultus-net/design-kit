@@ -1,10 +1,10 @@
 # Design Kit
 
-A personal brand kit. Blueprint palette, brutalist construction: Prussian blue and whiteprint grounds, one pastel signal, zero radius, no elevation, and rules that hold a measured 3:1 or 4.5:1.
+A personal brand kit. Blueprint palette, brutalist construction: Prussian blue and whiteprint grounds, one pastel signal, no elevation, and rules that hold a measured 3:1 or 4.5:1.
 
 ## Status
 
-Pre-1.0. Tokens, three palette profiles, fourteen Svelte 5 components and the documentation site are in place. The gate is real: `npm run contrast` asserts 186 colour pairs across every profile and mode, and fails the build on any regression.
+Pre-1.0. Tokens, three palette profiles, three corner presets, fourteen Svelte 5 components and the documentation site are in place. The gate is real: `npm run contrast` asserts 186 colour pairs across every profile and mode, and fails the build on any regression.
 
 Profiles select a palette family, modes select light or dark inside that family, and the two attributes compose.
 
@@ -26,6 +26,7 @@ Profiles select a palette family, modes select light or dark inside that family,
 | `scripts/check-contrast.mjs` | The contrast gate. 31 pairs per mode, non-zero exit on a miss. |
 | `src/lib/components/` | Fourteen Svelte 5 components, tokens only. |
 | `src/routes/profiles/` | The profile switcher and every measured pair. |
+| `src/routes/corners/` | The three corner presets and live samples. |
 | `src/lib/assets/fonts/` | Bricolage Grotesque and JetBrains Mono, latin subsets. |
 | `src/routes/guidelines/` | The rulebook: invariants, surfaces, type, colour, tells. |
 

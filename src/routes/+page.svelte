@@ -2,12 +2,13 @@
   import Badge from '$lib/components/Badge.svelte';
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
+  import tokens from '$lib/tokens/tokens.json';
   import PageHeader from './_PageHeader.svelte';
 
   const routes = [
-    { href: '/colours', title: 'Colours', body: 'Three palette families, two modes each, and every measured pair.' },
+    { href: '/colours', title: 'Colours', body: 'Three palette families, each with light and dark, and every measured pair.' },
     { href: '/typography', title: 'Typography', body: 'Bricolage Grotesque and JetBrains Mono, self-hosted variable faces.' },
-    { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, zero radius, breakpoints and motion.' },
+    { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, corner presets, breakpoints and motion.' },
     { href: '/components', title: 'Components', body: 'Fourteen Svelte 5 components built on tokens only.' },
     { href: '/assets', title: 'Assets', body: 'Self-hosted font files and their licence.' },
     { href: '/guidelines', title: 'Guidelines', body: 'The rules, the surfaces and the tells that mark generated work.' }
@@ -16,16 +17,16 @@
 
 <PageHeader
   title="Design Kit"
-  lede="A personal brand kit with a blueprint palette and brutalist construction. Prussian blue ground, whiteprint paper, one pastel signal, zero radius. Every ratio is measured by the same script that gates the build."
+  lede="A personal brand kit with a blueprint palette and brutalist construction. Prussian blue ground, whiteprint paper, one pastel signal, sharp corners by default. Every ratio is measured by the same script that gates the build."
 />
 
 <div class="hero">
   <div class="hero__copy">
-    <Badge variant="success">Version 0.1.0</Badge>
-    <h2>One kit, two modes, three surfaces</h2>
+    <Badge variant="success">Version {tokens.meta.version}</Badge>
+    <h2>Three profiles, two modes, three corner presets</h2>
     <p>
-      Reading defaults to whiteprint, tools default to cyanotype. Both modes are authored from the
-      same primitives, and npm run contrast refuses a regression in either.
+      Blueprint, oxide and ledger are hand-authored in both modes. The contrast gate measures all 186
+      pairs and refuses a regression in any of them.
     </p>
     <div class="hero__actions">
       <Button href="/components">Browse components</Button>
@@ -57,10 +58,11 @@
 <section class="notes">
   <h2>What ships</h2>
   <ul>
-    <li><code>tokens.css</code> with one primitive set and two semantic modes.</li>
+    <li><code>tokens.css</code> with one primitive set, three colour profiles and two modes per profile.</li>
     <li><code>fonts.css</code> with two self-hosted variable faces under the SIL Open Font License.</li>
     <li><code>tailwind.css</code> as an opt-in Tailwind v4 bridge.</li>
     <li>Three profiles in one <code>tokens.css</code>, selected with the <code>data-profile</code> attribute.</li>
+    <li>Three corner presets, switchable with the <code>data-corners</code> attribute.</li>
     <li>Fourteen Svelte 5 components, including a dense table and a native dialog.</li>
     <li><code>npm run contrast</code> asserting 186 pairs across three profiles and exiting non-zero on a failure.</li>
     <li><code>npm test</code> covering the token schema and the interactive components.</li>

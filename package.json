@@ -1,8 +1,8 @@
 {
   "name": "@ultus-net/design-kit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": false,
-  "description": "Personal brand kit: blueprint design tokens, Svelte components and a usage rulebook. Brutalist structure, Prussian blue ground, two modes, zero radius.",
+  "description": "A design kit: tokens, palette profiles, corner presets, components and guidance.",
   "type": "module",
   "license": "MIT",
   "svelte": "./dist/index.js",

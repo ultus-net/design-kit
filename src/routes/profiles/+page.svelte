@@ -14,7 +14,7 @@
 
 <PageHeader
   title="Profiles"
-  lede="Three palette families, each with a light and a dark mode. A profile changes colour, never construction: radius stays zero, shadows stay off, and the signal stays a fill."
+  lede="Three palette families, each with a light and a dark mode. A profile changes colour, never construction: corner geometry comes from its own preset, shadows stay off, and the signal stays a fill."
 />
 
 <div class="switcher" role="group" aria-label="Profile">

@@ -5,7 +5,8 @@
     ['Token', 'A named value, such as a colour, a radius or a spacing step', 'src/lib/tokens/tokens.json'],
     ['CSS custom property', 'A CSS variable. It starts with two dashes and holds one value', '--fw-text'],
     ['Primitives', 'The blueprint ramp values this kit authors', 'tokens.primitives'],
-    ['Profiles', 'Three palette families, two modes each', 'tokens.profiles'],
+    ['Profiles', 'Three palette families, each with light and dark', 'tokens.profiles'],
+    ['Corners', 'Sharp, soft and round presets over one radius scale', 'tokens.corners'],
     ['Derived value', 'A value computed in this kit from a measured base', 'marked derived'],
     ['Data attribute', 'An extra word on an HTML element that switches styling', 'data-mode="dark"'],
     ['Component', 'A reusable piece of interface with props and markup', 'src/lib/components/'],
@@ -21,6 +22,7 @@
 
   const tasks = [
     ['Change a colour', 'Edit tokens.json, then run npm run tokens', 'Generated CSS updates and every component follows'],
+    ['Change corner shape', 'Click a preset in the rail, or set data-corners', 'Sharp is the default and writes no attribute'],
     ['Check accessibility', 'npm run contrast', 'Prints every pair and exits non-zero on a miss'],
     ['Preview the site', 'npm run dev', 'Serves http://localhost:5173 with reload'],
     ['Build static files', 'npm run build', 'Writes HTML and assets to build/'],

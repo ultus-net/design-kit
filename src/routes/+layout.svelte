@@ -6,7 +6,7 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
-  import { setChrome, defaultProfile, isMode, isProfile, modes, profiles } from './_chrome.svelte';
+  import { setChrome, defaultProfile, defaultCorners, isMode, isProfile, isCornerPreset, modes, profiles, cornerPresets } from './_chrome.svelte';
 
   interface Props {
     children: Snippet;
@@ -25,6 +25,9 @@
     const storedProfile = localStorage.getItem('fw-profile');
     if (isProfile(storedProfile)) chrome.profile = storedProfile;
 
+    const storedCorners = localStorage.getItem('fw-corners');
+    if (isCornerPreset(storedCorners)) chrome.corners = storedCorners;
+
     ready = true;
   });
 
@@ -33,9 +36,12 @@
     document.documentElement.dataset.mode = chrome.mode;
     if (chrome.profile === defaultProfile) delete document.documentElement.dataset.profile;
     else document.documentElement.dataset.profile = chrome.profile;
+    if (chrome.corners === defaultCorners) delete document.documentElement.dataset.corners;
+    else document.documentElement.dataset.corners = chrome.corners;
     if (ready) {
       localStorage.setItem('fw-mode', chrome.mode);
       localStorage.setItem('fw-profile', chrome.profile);
+      localStorage.setItem('fw-corners', chrome.corners);
     }
   });
 
@@ -43,6 +49,7 @@
     { href: '/', label: 'Overview' },
     { href: '/colours', label: 'Colours' },
     { href: '/profiles', label: 'Profiles' },
+    { href: '/corners', label: 'Corners' },
     { href: '/typography', label: 'Typography' },
     { href: '/spacing', label: 'Spacing' },
     { href: '/components', label: 'Components' },
@@ -74,6 +81,17 @@
             type="button"
             aria-pressed={chrome.mode === entry.id}
             onclick={() => (chrome.mode = entry.id)}
+          >
+            {entry.label}
+          </button>
+        {/each}
+      </div>
+      <div class="docs__group" role="group" aria-label="Corners">
+        {#each cornerPresets as entry (entry.id)}
+          <button
+            type="button"
+            aria-pressed={chrome.corners === entry.id}
+            onclick={() => (chrome.corners = entry.id)}
           >
             {entry.label}
           </button>

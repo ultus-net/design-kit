@@ -2,6 +2,19 @@
 
 All notable changes to this package. The format follows Keep a Changelog, and versions follow Semantic Versioning.
 
+## [0.4.0] - 2026-11-26
+
+### Added
+
+- A corners axis with three presets, `sharp`, `soft` and `round`, emitted as `[data-corners="<id>"]`. `sharp` is the default.
+- `/corners` with live samples of every preset and the radius scale.
+
+### Changed
+
+- Radius left `primitives` for the top-level `corners` object. `--fw-radius-*` names are unchanged.
+- `Button`, `Input` and `Select` take their radius from `--fw-radius-sm`, and `Card` from `--fw-radius-md`, so they follow the preset.
+- Documentation no longer claims zero radius as a global invariant.
+
 ## [0.3.0] - 2026-11-26
 
 ### Changed
