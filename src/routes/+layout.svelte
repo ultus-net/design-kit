@@ -56,14 +56,6 @@
   <aside class="docs__side">
     <a class="docs__home" href="/">formwork</a>
 
-    <nav class="docs__nav" aria-label="Documentation">
-      {#each nav as item (item.href)}
-        <a href={item.href} aria-current={page.url.pathname === item.href ? 'page' : undefined}>
-          {item.label}
-        </a>
-      {/each}
-    </nav>
-
     <div class="docs__controls">
       <div class="docs__group" role="group" aria-label="Profile">
         {#each profiles as entry (entry.id)}
@@ -88,6 +80,14 @@
         {/each}
       </div>
     </div>
+
+    <nav class="docs__nav" aria-label="Documentation">
+      {#each nav as item (item.href)}
+        <a href={item.href} aria-current={page.url.pathname === item.href ? 'page' : undefined}>
+          {item.label}
+        </a>
+      {/each}
+    </nav>
   </aside>
 
   <div class="docs__content">
@@ -111,6 +111,11 @@
     padding: var(--fw-space-6) var(--fw-space-5);
     border-right: 1px solid var(--fw-border);
     background: var(--fw-sunken);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
   }
 
   .docs__home {
@@ -153,7 +158,6 @@
   .docs__controls {
     display: grid;
     gap: var(--fw-space-3);
-    margin-top: auto;
   }
 
   .docs__group {
@@ -195,6 +199,9 @@
       padding: var(--fw-space-4);
       border-right: 0;
       border-bottom: 1px solid var(--fw-border);
+      position: static;
+      height: auto;
+      overflow: visible;
     }
 
     .docs__nav {
