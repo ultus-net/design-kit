@@ -132,7 +132,7 @@
   <h2>Migration checklist</h2>
   <ol>
     <li>Install the package or vendor dist/ into the host repository.</li>
-    <li>Import @ultus-net/formwork/fonts.css, then tokens.css, before host styles.</li>
+    <li>Import @ultus-net/design-kit/fonts.css, then tokens.css, before host styles.</li>
     <li>Set data-mode to light or dark on the document root, and persist it under fw-mode before paint.</li>
     <li>Map host tokens to kit tokens. --page-bg maps to --fw-page and --page-fg to --fw-text.</li>
     <li>Replace raw hex and palette classes with semantic tokens.</li>

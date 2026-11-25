@@ -54,7 +54,7 @@
 
 <div class="docs">
   <aside class="docs__side">
-    <a class="docs__home" href="/">formwork</a>
+    <a class="docs__home" href="/">Design Kit</a>
 
     <div class="docs__controls">
       <div class="docs__group" role="group" aria-label="Profile">

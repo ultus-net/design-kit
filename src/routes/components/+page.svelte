@@ -31,7 +31,7 @@
 />
 
 {#snippet shellBrand()}
-  <a href="/">formwork</a>
+  <a href="/">Design Kit</a>
 {/snippet}
 
 {#snippet shellNav()}

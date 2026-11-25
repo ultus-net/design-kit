@@ -2,6 +2,13 @@
 
 All notable changes to this package. The format follows Keep a Changelog, and versions follow Semantic Versioning.
 
+## [0.3.0] - 2026-11-26
+
+### Changed
+
+- Renamed the repository, npm package and documentation to Design Kit. The package is now `@ultus-net/design-kit`, so consumers change one import specifier. The `fw` token prefix and every custom property name are unchanged.
+- Added the design spec for corner presets and the 29-component range at `docs/design/2026-11-26-design-kit-shape-and-components.md`.
+
 ## [0.2.0] - 2026-11-24
 
 ### Added
