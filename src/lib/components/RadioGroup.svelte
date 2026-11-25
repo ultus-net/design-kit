@@ -51,7 +51,11 @@
 
     if (!radios.length) return;
 
-    const focusedIndex = radios.findIndex((radio) => radio === document.activeElement);
+    // Keydown bubbles from the radio that has focus, so the event target is the
+    // origin. Reading document.activeElement would couple the group to page focus
+    // and to any other group on the page.
+    const target = event.target instanceof HTMLInputElement ? event.target : null;
+    const focusedIndex = target ? radios.indexOf(target) : -1;
     const valueIndex = radios.findIndex((radio) => radio.value === value);
     // Move from the focused radio when there is one, otherwise from the selected
     // value. With neither, ArrowDown starts at the first enabled option and

@@ -124,4 +124,29 @@ describe('RadioGroup', () => {
     expect(group.getAttribute('aria-describedby')).toBe(`${hint?.id} ${error?.id}`);
     expect(screen.getByText('Choose a billing period.')).toBeTruthy();
   });
+
+  it('moves from the event target when another group holds focus', async () => {
+    renderGroup();
+    renderGroup({
+      legend: 'Contact method',
+      name: 'contact',
+      options: [
+        { value: 'email', label: 'Email' },
+        { value: 'phone', label: 'Phone' }
+      ]
+    });
+
+    const phone = screen.getByRole('radio', { name: 'Phone' }) as HTMLInputElement;
+    const yearly = screen.getByRole('radio', { name: 'Yearly' }) as HTMLInputElement;
+    const weekly = screen.getByRole('radio', { name: 'Weekly' }) as HTMLInputElement;
+
+    phone.focus();
+    expect(document.activeElement).toBe(phone);
+
+    await fireEvent.keyDown(yearly, { key: 'ArrowDown' });
+    await tick();
+
+    expect(weekly.checked).toBe(true);
+    expect(phone.checked).toBe(false);
+  });
 });
