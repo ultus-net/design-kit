@@ -89,6 +89,7 @@
         aria-describedby={option.hint ? `${uid}-${option.value}-hint` : undefined}
         {onchange}
       />
+      <span class="fw-radio-group__dot" aria-hidden="true"></span>
       <span class="fw-radio-group__label">{option.label}</span>
     </label>
     {#if option.hint}
@@ -122,6 +123,7 @@
   }
 
   .fw-radio-group__option {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--fw-space-2);
@@ -131,19 +133,66 @@
   }
 
   .fw-radio-group__control {
-    width: var(--fw-space-4);
-    height: var(--fw-space-4);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 1;
+    width: var(--fw-space-6);
+    height: var(--fw-space-6);
     margin: 0;
-    accent-color: var(--fw-accent);
+    opacity: 0;
+    appearance: none;
+    border-radius: var(--fw-radius-full);
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 
-  .fw-radio-group__control:disabled + .fw-radio-group__label {
-    color: var(--fw-text-muted);
+  .fw-radio-group__control:disabled {
+    cursor: default;
   }
 
-  .fw-radio-group__control:focus-visible {
+  .fw-radio-group__dot {
+    box-sizing: border-box;
+    display: inline-grid;
+    place-content: center;
+    flex: none;
+    width: var(--fw-space-6);
+    height: var(--fw-space-6);
+    border: 1px solid var(--fw-border-strong);
+    border-radius: var(--fw-radius-full);
+    background: var(--fw-raised);
+  }
+
+  .fw-radio-group__dot::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: inherit;
+    background: var(--fw-accent);
+    transform: scale(0);
+    transition: transform var(--fw-motion-fast) var(--fw-motion-ease);
+  }
+
+  .fw-radio-group__control:checked + .fw-radio-group__dot {
+    border-color: var(--fw-accent);
+  }
+
+  .fw-radio-group__control:checked + .fw-radio-group__dot::after {
+    transform: scale(1);
+  }
+
+  .fw-radio-group__control:focus-visible + .fw-radio-group__dot {
     outline: 2px solid var(--fw-focus);
     outline-offset: 2px;
+  }
+
+  .fw-radio-group__control:disabled + .fw-radio-group__dot {
+    border-color: var(--fw-border);
+    background: var(--fw-sunken);
+  }
+
+  .fw-radio-group__control:disabled ~ .fw-radio-group__label {
+    color: var(--fw-text-muted);
   }
 
   .fw-radio-group__option-hint,

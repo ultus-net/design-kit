@@ -67,6 +67,7 @@
       aria-describedby={describedBy}
       {...rest}
     />
+    <span class="fw-checkbox__box" aria-hidden="true"></span>
     <span class="fw-checkbox__label">
       {label}
       {#if required}<span class="fw-checkbox__required" aria-hidden="true">*</span>{/if}
@@ -84,6 +85,7 @@
   }
 
   .fw-checkbox__row {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--fw-space-2);
@@ -93,17 +95,76 @@
   }
 
   .fw-checkbox__control {
-    width: var(--fw-space-4);
-    height: var(--fw-space-4);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 1;
+    width: var(--fw-space-6);
+    height: var(--fw-space-6);
     margin: 0;
-    accent-color: var(--fw-accent);
+    opacity: 0;
+    appearance: none;
+    border-radius: var(--fw-radius-sm);
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 
   .fw-checkbox__control:disabled {
     cursor: default;
   }
 
-  .fw-checkbox__control:disabled + .fw-checkbox__label {
+  .fw-checkbox__box {
+    box-sizing: border-box;
+    display: inline-grid;
+    place-content: center;
+    flex: none;
+    width: var(--fw-space-6);
+    height: var(--fw-space-6);
+    border: 1px solid var(--fw-border-strong);
+    border-radius: var(--fw-radius-sm);
+    background: var(--fw-raised);
+    color: var(--fw-on-accent);
+    transition: background var(--fw-motion-fast) var(--fw-motion-ease);
+  }
+
+  .fw-checkbox__box::after {
+    content: '';
+    width: 6px;
+    height: 11px;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform var(--fw-motion-fast) var(--fw-motion-ease);
+  }
+
+  .fw-checkbox__control:checked + .fw-checkbox__box,
+  .fw-checkbox__control:indeterminate + .fw-checkbox__box {
+    border-color: var(--fw-accent);
+    background: var(--fw-accent);
+  }
+
+  .fw-checkbox__control:checked + .fw-checkbox__box::after {
+    transform: rotate(45deg) scale(1);
+  }
+
+  .fw-checkbox__control:indeterminate + .fw-checkbox__box::after {
+    width: 10px;
+    height: 0;
+    border-width: 0 0 2px;
+    transform: none;
+  }
+
+  .fw-checkbox__control:focus-visible + .fw-checkbox__box {
+    outline: 2px solid var(--fw-focus);
+    outline-offset: 2px;
+  }
+
+  .fw-checkbox__control:disabled + .fw-checkbox__box {
+    border-color: var(--fw-border);
+    background: var(--fw-sunken);
+  }
+
+  .fw-checkbox__control:disabled ~ .fw-checkbox__label {
     color: var(--fw-text-muted);
   }
 
@@ -113,11 +174,6 @@
 
   .fw-checkbox--error .fw-checkbox__label {
     color: var(--fw-danger);
-  }
-
-  .fw-checkbox__control:focus-visible {
-    outline: 2px solid var(--fw-focus);
-    outline-offset: 2px;
   }
 
   .fw-checkbox__hint,
