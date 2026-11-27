@@ -286,6 +286,24 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `docs/agents/ledger.md` n=4..n=6 (each records a component added with tests, but no record audited the seven untested exports); `docs/agents/rsi-loop-playbook.md` "Anchors for this repo", whose metric line is the artefact under audit. The playbook's own "Grounding" section states this repo carries no reading list and no arXiv ids, so no citation id is asserted.
 - prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (the n=6 preregistration block, the highest top-level `### n=` below 7 that the gate's `reduce` selects when two records share n=6; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: new `src/lib/tested-exports.test.ts`; `docs/agents/rsi-loop-playbook.md` metric line corrected. No component, token or pre-existing test changed.
+- commit SHA + git tree: `5a91731f2279` + `0c87741f0a61026a9767baf8bf6611a409eb80db`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 21 files, 108 tests passed (104 baseline plus 4 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports unchanged at 24.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 new ratchet assertions passed (4 items).
+- held-out score: 104/104 pre-existing tests passed (104 items, never used for selection), plus the unchanged contrast, check and build gates.
+- negative controls: adding `export { default as NewThing } from './components/NewThing.svelte';` to `index.ts` failed the set comparison with `+ "NewThing"`; removing `Stat` from the allowlist failed with `+ "Stat"`. Both restored to 4/4.
+- gains: the metric is now honest and pinned at 17 of 24 exports with a sibling test; the seven-name gap cannot grow, cannot be silently substituted, and cannot linger after a component gains a test. The playbook's overstated 19 -> 24 history is corrected in place.
+- losses: none observed. Suite 20 -> 21 files.
+- exceptions: written by the calling session, not delegated, because it changes what the metric counts. The first review returned REQUEST CHANGES with one P1 (the sibling-file proxy could mislabel coverage). The fix relabelled the property everywhere to "sibling test file", added the evidence that no test imports any of the seven, and the reviewer withdrew the request with no P0/P1.
+- token/cost/duration: tokens not captured; one session, one reviewer pass plus one follow-up.
+- interpretation: the ruler is now measured, not assumed, and the gap is documented instead of hidden.
+- keep/revert: keep.
+- next hypothesis: `Progress` from PR E moves the tested count 17 -> 18 and pins `role="progressbar"`, `aria-valuenow/min/max`, and an indeterminate state that omits `aria-valuenow`.
+- prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (same link as the preregistration, restated for the gate).
+
 
 
 
