@@ -449,6 +449,26 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45968883095 — `gates` passed in 26s on the PR head.
 - final gate run after the last code mutation: `npm test` 24 files / 125 tests passed.
 
+### n=11 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T09:20Z
+- change-type: test
+- hypothesis (falsifiable): adding sibling test files for the seven exports the ratchet allowlists (`Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select`, `Stat`) moves `npm test` 125 -> 146 with 0 failures, shrinks the allowlist to empty, and moves the tested-export metric 19 -> 26 of 26, while exports stay 26, the count claims stay twenty-six, and the four gates stay green.
+- candidate source: campaign 3 screener position 2 (C2); ledger n=10 `next hypothesis`; `src/lib/tested-exports.test.ts` allowlist, which names the seven.
+- selection score (21 items): three behavioural assertions per component, listed in the dispatch: alert role by variant, badge variant class, card header/footer snippets, stat delta and tone class, input label/hint/error wiring, select options and disabled option, app shell skip link and nav landmark.
+- held-out score (125 items, never used for selection): the 125 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 146 passed with 0 failures, the ratchet green with `WITHOUT_SIBLING_TEST = []`, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 26.
+- reject rule: any gate red, any component edited to make a test pass, a test that asserts a class name instead of a behaviour where a behaviour is observable, or the allowlist emptied while a listed component still has no test file.
+- non-goals: changing any component, adding exports, changing the count gate, adding a coverage tool or a dependency.
+- at-risk regressions: a component edited to satisfy a test (the rule above forbids it, and the reviewer checks the diff); tests that pass vacuously on an empty render; `Input` and `Select` generated ids making label association assertions fragile; `AppShell` asserting CSS classes rather than the skip link's target and the main landmark.
+- honest limit: three assertions per component is a floor, not coverage. The metric this iteration moves counts sibling files, not depth, and the playbook wording says so.
+- router decision: dispatched to `executor-strong`. Seven files across seven contracts in one dispatch is beyond the cheap tier's demonstrated capacity, and the sustained-difficulty trigger is already met.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive tests only; every component and gate is the incumbent.
+- citations used: `src/lib/tested-exports.test.ts` (the allowlist being emptied); `src/lib/components/{Alert,AppShell,Badge,Card,Input,Select,Stat}.svelte` (the contracts the tests pin); ledger n=10. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:84464f7fe6ac98cf1d5b9f3d73da4d24d6b1313996bafc340fe1dc6baa7b2ec9 (the n=10 preregistration block, the highest top-level `### n=` below 11 that the gate's `reduce` selects when two records share n=10; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
