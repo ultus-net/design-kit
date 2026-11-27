@@ -494,6 +494,57 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45969839584 — `gates` passed on the PR head.
 - final gate run after the last code mutation: `npm test` 31 files / 146 tests passed.
 
+### n=12 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T09:40Z
+- change-type: feature
+- hypothesis (falsifiable): adding `Avatar` from PR E lifts exports 26 -> 27 and tested exports 26 -> 27, and passes five behavioural assertions (an image with its required alt text and a size class, a two-word name falling back to two initials, a single-word name falling back to one initial, the default `md` size, and initials trimmed from a name with extra spaces), while the 146-test held-out baseline, the count gate and the now-empty ratchet stay green.
+- candidate source: campaign 3 screener position 3 (C3, denied there only because Accordion ranked higher); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR E, `Avatar` row: "Image with required `alt`, initials fallback from `name`, size scale | alt text, fallback initials, size class"; ledger n=11 `next hypothesis`.
+- contract decision: `alt` is required whenever `src` is present, and forbidden when it is absent, expressed as a discriminated union so TypeScript enforces it. The fallback renders as `role="img"` with `aria-label` set to the name, because initials alone are not a usable accessible name.
+- selection score (5 items): the five new `Avatar` assertions.
+- held-out score (146 items, never used for selection): the 146 pre-existing tests (count gate, ratchet, workflow text and the seven sibling files), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 151 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 27, five count claims read twenty-seven.
+- reject rule: any gate red, any pre-existing test edited, an image rendered without alt text, initials that are not derived from the name, or a fallback with no accessible name.
+- non-goals: image loading states, an avatar group or stack, status dots, a photo-upload affordance, the remaining PR E components.
+- at-risk regressions: a missing `alt` slipping through because the union is widened with `alt?: string`; initials computed from a non-breaking space or punctuation; the size class being asserted while the default is unasserted; `role="img"` on the fallback colliding with an ancestor landmark.
+- router decision: dispatched to `executor-strong`. The cheap tier has produced no acceptable diff in seven dispatches, and the union-typed props plus initials derivation need the type checker to cooperate.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive; every existing gate is the incumbent.
+- citations used: the design spec section 3 PR E `Avatar` row (repo document, no id); `src/lib/components/Input.svelte` (the house pattern for derived ids and typed unions is not needed here, but the field wiring is); ledger n=11. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (the n=11 preregistration block, the highest top-level `### n=` below 12 that the gate's `reduce` selects when two records share n=11; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: new `src/lib/components/Avatar.svelte`, `Avatar.test.ts`, `src/routes/_demos/AvatarDemo.svelte`; export between `AppShell` and `Badge`; `/components` section with its note; five count claims; `[Unreleased]` bullet; playbook metric line refreshed to 27 of 27.
+- commit SHA + git tree: `7b058af1faac` + `2e78e187a14f8854375f0f8836b7a5a395d6f889`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 32 files, 156 tests passed (146 baseline plus 10 new; the preregistration predicted five and the review rounds added the hyphen, three-part, empty-name, punctuation-name and type-rejection assertions). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 27; the ratchet is green, so tested exports move 26 -> 27 of 27.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 10/10 new `Avatar` assertions passed (exact `src` with alt text and the lg class, two initials from two words, one initial from one word, md by default, whitespace collapsed in the accessible name, `AL` across a hyphen, middle names ignored, whitespace-only name decorative, punctuation-only name decorative, and `alt` without `src` rejected at the type level).
+- held-out score: 146/146 pre-existing tests passed (146 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 26 -> 27 and tested exports 26 -> 27; `alt` cannot be omitted because the union rejects it and a test pins the rejection; a fallback always carries the full name as its accessible name, and a name with no letter or digit renders as decorative instead of announcing punctuation.
+- losses: a `name` that is one token gives one initial, so a CJK or mononym name shows a single character rather than two. That is the intended shape for those names, not a defect, and it is recorded rather than silent.
+- exceptions: dispatched to `executor-strong`, which passed the gates at 151 on its first attempt with four documented deviations (a `body-s` font token substituted for the absent `body-sm`; the Avatar section placed before Badge because AppShell renders after Badge; the demo image using `/favicon.svg` because no portrait asset exists; the raw spaced `aria-label` asserted as observed). The first review rejected the union as unsound, the empty and hyphenated names as user-visible defects and `aria-label` on `role=img` as the wrong pattern. Probing the union with the `@ts-expect-error` removed showed the compiler rejects `{ name, alt }` without `src` (`Property 'src' is missing`), so the shape was already sound and the fix was to pin it with that directive. The initials derivation then split on hyphens, rejected parts with no letter or digit, and keyed the decorative rendering off the derived initials instead of the raw name. A second review round asked for the ARIA citation for `aria-label` on `role=img`; WAI-ARIA 1.2 answered it ("MUST provide a label using the aria-label or aria-labelledby attribute", with children presentational), and the third verdict was ACCEPT.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and three reviewer rounds.
+- interpretation: the component meets the spec row, and the two rules that matter most are now enforced where a caller cannot escape them, at the type for `alt` and in the rendered markup for the accessible name.
+- keep/revert: keep.
+- next hypothesis: none inside PR E that the brake allows next; `Drawer` and `CommandPalette` are the remaining PR E rows, and branch protection is still deferred to the operator.
+- prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (same link as the preregistration, restated for the gate).
+
+### n=12 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3c153b6ffeXBMEdw3AeD282T`, bound to commit `9cbf966e64a3` (tracked fingerprint `83030d7bdd7c`).
+- work item: GitHub issue #33.
+- PR: #34, `feature/avatar-component` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45971116704 — `gates` passed on the PR head.
+- final gate run after the last code mutation: `npm test` 32 files / 156 tests passed.
+
+### campaign 3 close-out
+
+- iterations: n=10 `feature` (PR #30), n=11 `test` (PR #32), n=12 `feature` (PR #34), all merged.
+- stop reason: N=3 reached, the campaign size the request asked for. No iteration produced a no-gain result, so the no-gain brake never fired, and no two consecutive iterations shared a change-type, so the diversity brake never fired.
+- metric: exported components 25 -> 27; tested exports 18 -> 27 of 27. Tests 118 -> 156 across 23 -> 32 files.
+
 
 
 
