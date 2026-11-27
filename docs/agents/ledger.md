@@ -580,6 +580,25 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `Button.svelte` (the contract), `Button.test.ts` (the gap), `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 (the kit-wide rule that every component ships a behavioural test file), ledger n=12. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:45801c90002133a09a4b32135693033eea1bb5f0e82fd0c692df77975d2282d0 (the n=12 preregistration block, the highest top-level `### n=` below 13 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: `src/lib/components/Button.test.ts` only. The single existing assertion was replaced by eleven contract tests. No component, gate, token, claim or other test touched.
+- commit SHA + git tree: `9bca341d77a3` + `a2e31a29a9be53a2fb7dc3ba06d1df0b056c479d`.
+- artifact name + checksum: no packaged artifact; the test tree at that commit is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 32 files, 166 tests passed (156 baseline; the one replaced assertion became eleven). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports stay 27, so the tested-export metric stays 27 of 27.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 11/11 preregistered behaviours passed. The preregistration listed ten; the two-render size test was split into two tests on review, which is where the eleventh came from.
+- held-out score: 155 of the 155 untouched pre-existing tests passed (the single replaced `Button` assertion is superseded by test 1, which carries its four claims), plus the unchanged contrast, check and build gates.
+- gains: `Button`, the most-used export, moves from 1 assertion to 11, and the branches a caller relies on are now pinned: the loading state's `disabled`, `aria-busy`, `is-loading`, `aria-hidden` spinner and screen-reader text; the anchor branch's `href`, absent `type`, `aria-disabled` and tab order; the busy anchor's `tabindex="-1"` and dropped handler; `type`, `variant`, `size` and `class` passthrough.
+- losses: none observed. The export metric does not move, which the campaign plan anticipated.
+- exceptions: dispatched to `executor-strong`, which passed all four gates on the first attempt. Two corrections followed. First, the preregistration's arithmetic was wrong: it predicted 166 as `156 + 10`, but replacing the single existing test yields `156 - 1 + 10 = 165`. The executor reported the mismatch instead of adding an eleventh test to hit the number, which is the behaviour the preregistration wanted. 166 was reached later by splitting the two-render test on review, not by padding. Second, the jsdom "Not implemented: navigation to another Document" notice from clicking a real `href` was removed by using a fragment href, since the assertion is about the handler, not navigation.
+- defect found, not fixed here: the busy anchor drops its handler and its tab stop but not its default action, so a pointer click still navigates. MDN on `aria-disabled` says the attribute "only semantically exposes these elements as being disabled. Web developers must manually ensure such elements have functionality suppressed". The first review called the test's comment a papering-over, and it was right about the comment: describing the mechanism is not reporting a defect. The test now names the defect in its title, carries a comment that calls it a known defect, and cites issue #35 with a `TODO(#35)`. Fixing it in this iteration would have broken the preregistration's `test` change-type and its rule against editing `Button.svelte`; the second review agreed with that order and approved.
+- plan change for the campaign: the n=15 slot moves from the `id`/ARIA forwarding tests to `fix` for issue #35. Reason: a test iteration surfaced a user-visible defect on the most-used component, and closing it is worth more than four more forwarding assertions. The type sequence becomes `test` -> `feature` -> `fix`, still brake-clean.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and two reviewer rounds.
+- interpretation: the campaign found the first real defect of the three campaigns, and it found it in the component the kit uses most, which is what a contract test is for.
+- keep/revert: keep.
+- next hypothesis: a busy `Button` with `href` cancels activation, so a pointer click neither calls the caller's handler nor navigates, and the test's `TODO(#35)` becomes an `event.defaultPrevented` assertion without changing the test count.
+- prev-chain: sha256:45801c90002133a09a4b32135693033eea1bb5f0e82fd0c692df77975d2282d0 (same link as the preregistration, restated for the gate).
+
 
 
 

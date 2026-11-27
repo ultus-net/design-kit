@@ -35,3 +35,4 @@ carrying its id in the bullet and registered below.
 - L010 — A controlled native element must cancel its default action and be the only writer; test the activation path the user takes, not the event the code listens for. (evidence: `2026-11-27T084700Z-controlled-native-element.md`)
 - L011 — When a query fails, fix the query before weakening the claim: a replacement assertion must prove at least as much, or say what it stopped proving. (evidence: `2026-11-27T085551Z-query-failure-not-claim-failure.md`)
 - L012 — A type-level rule needs a type-level test, pinned with `@ts-expect-error`; read the suppressed error once, because an unrelated error satisfies it too. (evidence: `2026-11-27T090500Z-type-rule-needs-type-test.md`)
+- L013 — A test that documents defective behaviour must call it a defect and cite the fix's work item, or a green suite hides it. (evidence: `2026-11-27T092500Z-name-the-defect-in-the-test.md`)
