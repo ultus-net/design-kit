@@ -843,7 +843,7 @@ the feature commit was amended and before the fresh-eyes review returned.
 - prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (the n=17 preregistration record with its result and close-out, the highest top-level `### n=` below 18 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
 - code change: `package.json` version 0.5.0 -> 0.7.0; `CHANGELOG.md` gains an empty `## [Unreleased]` and renames the section below it to `## [0.7.0] - 2026-11-27`, entry text unchanged; new `src/lib/version-claims.test.ts`. No component, workflow, dependency or existing test touched.
-- commit SHA + git tree: `c27abb222096` + `5af6d9f133d07e5ff3129a11eb5f40c549e06c34`.
+- commit SHA + git tree: release commit `c27abb222096` + `5af6d9f133d07e5ff3129a11eb5f40c549e06c34`, plus the follow-up `e2515f3` + `8b8546523dfe2509f48336cb6dfb86c57f9a5942` that syncs `package-lock.json` to 0.7.0 after the PR preflight rejected a manifest change without its lockfile. The release commit had not touched the two root lockfile version fields, which `npm install --package-lock-only` rewrites to the manifest version; nothing else in the lockfile changed.
 - artifact name + checksum: no published artifact; `dist/` is not built in this iteration and no tag is created.
 - exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
 - test results: 35 files, 188 tests passed (186 baseline plus two). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 29, five count claims read twenty-nine, `package.json` reads 0.7.0.
@@ -859,6 +859,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - keep/revert: keep.
 - next hypothesis: nothing from the campaign 4 or 5 candidate sets remains unstarted except the `Field` seam refactor, which the campaign 5 screener denied as a multi-iteration restructure, and the branch-protection decision, which is the operator's.
 - prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (same link as the preregistration, restated for the gate).
+
+### n=18 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3776b55ffeaJXpKmm5EekT6k`, bound to commit `e2515f3ee85e` (tracked fingerprint `162b8e566f7c`).
+- work item: GitHub issue #46.
+- PR: #47, `chore/release-0-7-0` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45982193718 — `gates` passed in 37s on the PR head.
+- final gate run after the last code mutation: `npm test` 35 files / 188 tests passed, plus check 0/0, contrast 186/0 and a clean build.
 
 
 
