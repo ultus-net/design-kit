@@ -764,6 +764,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `CommandPalette` (PR E, the last spec row) reuses `filterOptions` and `stepIndex` from `combobox-model.ts` rather than a second keyboard handler, and ships with its own test file so the tested-export metric moves to 29.
 - prev-chain: sha256:64dc891e85bafb5b7a1f83c34e0c30d997f1f85a45eee2f4dacda98c21eac522 (same link as the preregistration, restated for the gate).
 
+### n=16 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de38577f5ffeJDP5e6Det6Vk6R`, bound to commit `0560ad876f0f` (tracked fingerprint `efa17c86da29`).
+- work item: GitHub issue #42.
+- PR: #43, `test/form-control-forwarding` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45979936799 — `gates` passed in 43s on the PR head.
+- final gate run after the last code mutation: `npm test` 33 files / 177 tests passed.
+
 
 
 
