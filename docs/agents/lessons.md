@@ -32,3 +32,4 @@ carrying its id in the bullet and registered below.
 - L007 — A known-gap allowlist ratchets only when the gate compares it to the derived gap as a set in both directions: a new gap fails, and a stale allowlisted name fails too. (evidence: `2026-11-27T081940Z-bidirectional-ratchet.md`)
 - L008 — An under-specified spec row is a contract decision the component owns: state it in the rendered note, pin it with an assertion, and record the rationale in the ledger. (evidence: `2026-11-27T082407Z-under-specified-contract.md`)
 - L009 — A workflow file is prose until it runs: claim only what the text-level test proves (step order and fatality), and say so where a reader checks. (evidence: `2026-11-27T082818Z-workflow-is-prose-until-it-runs.md`)
+- L010 — A controlled native element must cancel its default action and be the only writer; test the activation path the user takes, not the event the code listens for. (evidence: `2026-11-27T084700Z-controlled-native-element.md`)

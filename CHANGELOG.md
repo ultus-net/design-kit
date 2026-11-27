@@ -12,6 +12,7 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - `EmptyState`: a decorative mark slot, a title, an optional description and an optional action snippet, with the action always interactive.
 - `Skeleton`: an aria-hidden placeholder with line, block and circle shapes built from radius tokens.
 - `Progress`: a role="progressbar" bar with aria-valuenow/min/max, a custom max, clamped values and an indeterminate state that omits aria-valuenow.
+- `Accordion`: native details and summary items in one-open or multiple mode, with aria-expanded on each summary.
 
 ### Changed
 

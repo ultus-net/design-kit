@@ -1,3 +1,4 @@
+export { default as Accordion } from './components/Accordion.svelte';
 export { default as Alert } from './components/Alert.svelte';
 export { default as AppShell } from './components/AppShell.svelte';
 export { default as Badge } from './components/Badge.svelte';

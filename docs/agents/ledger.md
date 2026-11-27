@@ -403,6 +403,52 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45966249719 — job `gates` passed in 39s on the PR head, which is the run the preregistration said the local verifier could not supply. The workflow executed `npm ci` and all four gates on GitHub.
 - final gate run after the last code mutation: `npm test` 23 files / 118 tests passed.
 
+### n=10 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T09:10Z
+- change-type: feature
+- hypothesis (falsifiable): adding `Accordion` from PR E lifts exports 25 -> 26 and tested exports 18 -> 19, and passes five new behavioural assertions (one `details`/`summary` per item with titles, one-open mode closing the previously open sibling, multiple mode keeping both open, closing the open item leaving none open, and the content snippet rendering inside its own item), while the 118-test held-out baseline, the count gate, the tested-export ratchet and the other gates stay green.
+- candidate source: campaign 3 screener position 1 (C1); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR E, `Accordion` row: "Native `details`/`summary` per item, `multiple` prop, `aria-expanded` on the summary | one-open mode closes siblings, multiple mode keeps them"; ledger n=9 `next hypothesis`.
+- screener disagreement recorded: the screener proposed `gate` (branch protection) first, which would repeat the previous iteration's type and break the diversity brake. Branch protection also changes the merge path for every future session, which is an operator decision. It is deferred, not adopted, and the campaign runs feature -> test -> feature.
+- selection score (5 items): the five new `Accordion` assertions.
+- held-out score (118 items, never used for selection): the 118 pre-existing tests (count gate, tested-export ratchet and workflow text test included), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 123 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count 26, count gate green after the five claims read twenty-six.
+- reject rule: any gate red, any pre-existing test edited, a literal colour in the component CSS, or a one-open mode that closes the newly opened item instead of the sibling.
+- non-goals: animation of the disclosure, a heading-level prop, an `openIds` controlled API beyond the bindable default, the other PR E components.
+- at-risk regressions: jsdom not dispatching a native `toggle` on summary click, so the tests drive the state change explicitly; the `open` attribute and internal `openIds` disagreeing after a close event; `aria-expanded` duplicating the native details state and drifting from it; `role="group"` without an accessible name.
+- router decision: dispatched to `executor-strong`. The cheap tier has produced no acceptable diff in seven dispatches across two campaigns, the sustained-difficulty trigger is already met, and this component needs a toggle-synchronisation design the tests can observe.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the component is additive; the count gate and the ratchet are the incumbents that must stay green.
+- citations used: the design spec section 3 PR E `Accordion` row (repo document, no id); `src/lib/components/Tabs.svelte` and `Tabs.test.ts` (the repo's array-plus-snippet idiom this component follows); ledger n=9. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:e1f0c7a8090c9cb72c8d53a0be1ab31ecacbf6156b50069d74fdfeddfb9ef16b (the n=9 preregistration block, the highest top-level `### n=` below 10 that the gate's `reduce` selects when two records share n=9; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: new `src/lib/components/Accordion.svelte`, `Accordion.test.ts`, `src/routes/_demos/AccordionDemo.svelte`; export before `Alert`; `/components` section; five count claims; `[Unreleased]` bullet; playbook metric line refreshed to 19 of 26.
+- commit SHA + git tree: `55b49175d6b6` + `93bb890674d6347563a75334bc05639b1904dcd3`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 24 files, 125 tests passed (118 baseline plus 7 new; the preregistration predicted five assertions, and the review rounds replaced the synthetic toggle machine with the real click path and added a controlled-state test and a keyboard-dispatched click test). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 26; the ratchet stayed green because `Accordion` has a sibling test, so the tested count moved 18 -> 19.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 7/7 new `Accordion` assertions passed (seven items: per-item details and summaries, one-open closes the sibling on a click, multiple keeps both, closing leaves none, bound `openIds` opens the named item, a keyboard-dispatched click opens and keeps focus, and each item's content stays inside its own details).
+- held-out score: 118/118 pre-existing tests passed (118 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 25 -> 26, tested exports 18 -> 19; the disclosure group has one writer for its open state, with pointer and keyboard activation on the same path.
+- losses: none observed.
+- exceptions: dispatched to `executor-strong`, which passed the four gates at 123 tests on its first attempt. The first review rejected the design: the `toggle` handler could be raced by a sibling close event, and the tests drove a synthetic state machine rather than the click path. A probe showed jsdom never fires `toggle`, so the handler was untested and the aria state never left `false` under a real click. The component was redesigned to render from `openIds` and to suppress the native toggle with `preventDefault()` on the summary click. A second review round held the change until keyboard activation was shown; a keyboard-dispatched click test plus the HTML activation-behaviour evidence cleared it, and the third verdict was ACCEPT.
+- real-browser check, attempted and not obtained: Chrome DevTools could not drive a page because no Chrome binary exists at `/opt/google/chrome/chrome`. The keyboard evidence is therefore the `detail: 0` click test plus the platform's activation behaviour, not an observed browser session.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and three reviewer rounds.
+- interpretation: the component meets the spec row with a single state writer; the review caught a test that would have passed while the component was inert in jsdom.
+- keep/revert: keep.
+- next hypothesis: sibling behavioural tests for the seven exports the ratchet allowlists (Alert, AppShell, Badge, Card, Input, Select, Stat) empty that allowlist and move the tested count 19 -> 26 without adding exports.
+- prev-chain: sha256:e1f0c7a8090c9cb72c8d53a0be1ab31ecacbf6156b50069d74fdfeddfb9ef16b (same link as the preregistration, restated for the gate).
+
+### n=10 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3ce6600ffeRGy46JGzzcIxFT`, bound to commit `be2c26b873f7` (tracked fingerprint `45036cbec372`).
+- work item: GitHub issue #29.
+- PR: #30, `feature/accordion-component` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45968883095 — `gates` passed in 26s on the PR head.
+- final gate run after the last code mutation: `npm test` 24 files / 125 tests passed.
+
 
 
 
