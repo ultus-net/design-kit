@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import { createRawSnippet, type ComponentProps } from 'svelte';
 import { describe, expect, it, vi } from 'vitest';
 import Button from './Button.svelte';
@@ -76,21 +76,26 @@ describe('Button', () => {
     expect(button.textContent).toContain('Loading');
   });
 
-  it('renders a link when href is set', () => {
-    renderButton({ href: '/orders' });
+  it('renders a working link when href is set', () => {
+    const onclick = vi.fn<(event: MouseEvent) => void>();
+    renderButton({ href: '#orders', onclick });
 
     const link = screen.getByRole('link') as HTMLAnchorElement;
-    expect(link.href.endsWith('/orders')).toBe(true);
+    expect(link.getAttribute('href')).toBe('#orders');
     expect(link.hasAttribute('type')).toBe(false);
     expect(link.getAttribute('aria-disabled')).toBe('false');
     expect(link.getAttribute('tabindex')).toBeNull();
+
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    link.dispatchEvent(event);
+
+    expect(onclick).toHaveBeenCalledTimes(1);
+    expect(event.defaultPrevented).toBe(false);
   });
 
-  // Known defect, tracked in #35: the busy anchor loses its handler and its tab
-  // stop but not its default action, so a pointer click still navigates. That is
-  // what this test pins; the fix lands as its own change, never as a test edit.
-  // TODO(#35): assert event.defaultPrevented once the busy anchor cancels it.
-  it('removes a busy link from the tab order and drops its handler, while a pointer click still navigates', async () => {
+  // A busy anchor keeps its href and its link role, so the component must cancel
+  // the default action itself: aria-disabled only describes the state.
+  it('cancels activation on a busy link and keeps the caller handler off', async () => {
     const onclick = vi.fn<(event: MouseEvent) => void>();
     // A fragment href keeps the click from navigating the jsdom document.
     renderButton({ href: '#orders', disabled: true, onclick });
@@ -99,7 +104,13 @@ describe('Button', () => {
     expect(link.getAttribute('aria-disabled')).toBe('true');
     expect(link.getAttribute('tabindex')).toBe('-1');
 
-    await fireEvent.click(link);
+    // Svelte delegates click handlers to the mount root, so a listener on the
+    // link runs first. Dispatch directly and read the event afterwards instead
+    // of depending on listener order.
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    link.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(true);
     expect(onclick).not.toHaveBeenCalled();
   });
 

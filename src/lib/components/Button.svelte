@@ -43,7 +43,14 @@
     aria-disabled={busy}
     aria-busy={loading}
     tabindex={busy ? -1 : undefined}
-    onclick={busy ? undefined : onclick}
+    onclick={(event) => {
+      if (busy) {
+        // aria-disabled does not cancel an anchor's navigation.
+        event.preventDefault();
+        return;
+      }
+      onclick?.(event);
+    }}
   >
     {#if loading}<span class="fw-button__spinner" aria-hidden="true"></span>{/if}
     {@render children()}
