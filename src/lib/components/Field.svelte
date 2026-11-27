@@ -24,38 +24,36 @@
   );
 </script>
 
-<div class="fw-field" class:fw-field--invalid={Boolean(error)}>
+<div class="fw-field" class:fw-field--error={Boolean(error)}>
   <span class="fw-field__labelrow">
     <label class="fw-field__label" for={id}>{label}</label>
     {#if required}<span class="fw-field__required" aria-hidden="true">*</span>{/if}
   </span>
-  {#if hint}<p class="fw-field__hint" id={`${id}-hint`}>{hint}</p>{/if}
   {@render children({
     id,
     required: required || undefined,
     invalid: error ? true : undefined,
     'aria-describedby': describedBy
   })}
+  {#if hint}<p class="fw-field__hint" id={`${id}-hint`}>{hint}</p>{/if}
   {#if error}<p class="fw-field__error" id={`${id}-error`}>{error}</p>{/if}
 </div>
 
 <style>
   .fw-field {
     display: grid;
-    gap: var(--fw-space-1);
+    gap: var(--fw-space-2);
     font-family: var(--fw-font-body);
   }
 
   .fw-field__labelrow {
-    display: flex;
-    align-items: baseline;
-    gap: var(--fw-space-1);
+    display: inline;
   }
 
   .fw-field__label {
     color: var(--fw-text);
     font-size: var(--fw-font-size-body-xs);
-    font-weight: var(--fw-weight-medium);
+    font-weight: var(--fw-weight-semibold);
     line-height: var(--fw-line-height-body-xs);
   }
 
