@@ -79,3 +79,11 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis unchanged: `Tooltip` from PR D, count 20 -> 21.
 - prev-chain: sha256:4b89a72771807000cfce457a0e8e030dd9590221c778b3a40351b7b2508856ac (the `### n=1` block above, from its heading to its prev-chain line).
 
+### n=1 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de43236efffeLJlCfHIXbCTh9Y`, bound to commit `bd33a570f968` (tree fingerprint `93828194f0ad`). The re-review was required because the first approval predated the amended assertion and the docs commit.
+- work item: GitHub issue #11.
+- PR: #12, `feature/breadcrumbs-component` into `main`.
+- final gate run after the last mutation: `npm test` 15 files / 79 tests passed.
+
+
