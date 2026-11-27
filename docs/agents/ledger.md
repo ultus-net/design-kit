@@ -224,6 +224,24 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #20, `feature/count-claim-gate` into `main`.
 - final gate run after the last code mutation: `npm test` 19 files / 100 tests passed.
 
+### n=6 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T07:58Z
+- change-type: feature
+- hypothesis (falsifiable): adding `Skeleton` from PR D lifts exported components 23 -> 24 and passes four new behavioural assertions (root is `aria-hidden`, default shape is `line`, all three shape classes apply, explicit `width`/`height` reach the style attribute), while the 100-test held-out baseline, the count gate and the three other gates stay green.
+- candidate source: campaign screener shortlist position 3 (C3); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D, `Skeleton` row: "`aria-hidden`, shapes `line`, `block`, `circle` built from radius tokens | hidden from the accessibility tree, shape classes".
+- selection score (4 items): the four new `Skeleton` assertions, authored this iteration from the spec row.
+- held-out score (100 items, never used for selection): the 100 pre-existing tests (including the n=5 count gate), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` > 100 with 0 failures (the count gate included), svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count 24.
+- reject rule: any gate red, any pre-existing test edited, or a literal colour in the component CSS.
+- non-goals: animation or shimmer, a `lines` convenience prop, the PR E `Progress` component, token changes.
+- at-risk regressions: the count gate fails until all five claims read twenty-four (expected signal, not a regression to suppress); `aria-hidden` placed on an inner node instead of the root; a circle without an explicit size collapsing to zero; a literal colour instead of a token.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the change is additive; the count gate is the unchanged incumbent that must stay green.
+- citations used: `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 PR D `Skeleton` row (repo document, no id); `docs/agents/ledger.md` n=5 (the count gate this iteration must satisfy). This repo has no `docs/agents/reading-list.md`, so no harness citation id is asserted.
+- prev-chain: sha256:353ced258faf37987f89bd6b4e62d03127d3edf8da352f6d1cd065e3ba129ee4 (the n=5 preregistration block, the highest top-level `### n=` below 6 that the gate's `reduce` selects when two records share n=5; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
