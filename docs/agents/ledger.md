@@ -494,6 +494,26 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45969839584 — `gates` passed on the PR head.
 - final gate run after the last code mutation: `npm test` 31 files / 146 tests passed.
 
+### n=12 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T09:40Z
+- change-type: feature
+- hypothesis (falsifiable): adding `Avatar` from PR E lifts exports 26 -> 27 and tested exports 26 -> 27, and passes five behavioural assertions (an image with its required alt text and a size class, a two-word name falling back to two initials, a single-word name falling back to one initial, the default `md` size, and initials trimmed from a name with extra spaces), while the 146-test held-out baseline, the count gate and the now-empty ratchet stay green.
+- candidate source: campaign 3 screener position 3 (C3, denied there only because Accordion ranked higher); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR E, `Avatar` row: "Image with required `alt`, initials fallback from `name`, size scale | alt text, fallback initials, size class"; ledger n=11 `next hypothesis`.
+- contract decision: `alt` is required whenever `src` is present, and forbidden when it is absent, expressed as a discriminated union so TypeScript enforces it. The fallback renders as `role="img"` with `aria-label` set to the name, because initials alone are not a usable accessible name.
+- selection score (5 items): the five new `Avatar` assertions.
+- held-out score (146 items, never used for selection): the 146 pre-existing tests (count gate, ratchet, workflow text and the seven sibling files), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 151 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 27, five count claims read twenty-seven.
+- reject rule: any gate red, any pre-existing test edited, an image rendered without alt text, initials that are not derived from the name, or a fallback with no accessible name.
+- non-goals: image loading states, an avatar group or stack, status dots, a photo-upload affordance, the remaining PR E components.
+- at-risk regressions: a missing `alt` slipping through because the union is widened with `alt?: string`; initials computed from a non-breaking space or punctuation; the size class being asserted while the default is unasserted; `role="img"` on the fallback colliding with an ancestor landmark.
+- router decision: dispatched to `executor-strong`. The cheap tier has produced no acceptable diff in seven dispatches, and the union-typed props plus initials derivation need the type checker to cooperate.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive; every existing gate is the incumbent.
+- citations used: the design spec section 3 PR E `Avatar` row (repo document, no id); `src/lib/components/Input.svelte` (the house pattern for derived ids and typed unions is not needed here, but the field wiring is); ledger n=11. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (the n=11 preregistration block, the highest top-level `### n=` below 12 that the gate's `reduce` selects when two records share n=11; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
