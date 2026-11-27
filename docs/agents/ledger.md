@@ -514,6 +514,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: the design spec section 3 PR E `Avatar` row (repo document, no id); `src/lib/components/Input.svelte` (the house pattern for derived ids and typed unions is not needed here, but the field wiring is); ledger n=11. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (the n=11 preregistration block, the highest top-level `### n=` below 12 that the gate's `reduce` selects when two records share n=11; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: new `src/lib/components/Avatar.svelte`, `Avatar.test.ts`, `src/routes/_demos/AvatarDemo.svelte`; export between `AppShell` and `Badge`; `/components` section with its note; five count claims; `[Unreleased]` bullet; playbook metric line refreshed to 27 of 27.
+- commit SHA + git tree: `7b058af1faac` + `2e78e187a14f8854375f0f8836b7a5a395d6f889`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 32 files, 156 tests passed (146 baseline plus 10 new; the preregistration predicted five and the review rounds added the hyphen, three-part, empty-name, punctuation-name and type-rejection assertions). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 27; the ratchet is green, so tested exports move 26 -> 27 of 27.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 10/10 new `Avatar` assertions passed (exact `src` with alt text and the lg class, two initials from two words, one initial from one word, md by default, whitespace collapsed in the accessible name, `AL` across a hyphen, middle names ignored, whitespace-only name decorative, punctuation-only name decorative, and `alt` without `src` rejected at the type level).
+- held-out score: 146/146 pre-existing tests passed (146 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 26 -> 27 and tested exports 26 -> 27; `alt` cannot be omitted because the union rejects it and a test pins the rejection; a fallback always carries the full name as its accessible name, and a name with no letter or digit renders as decorative instead of announcing punctuation.
+- losses: a `name` that is one token gives one initial, so a CJK or mononym name shows a single character rather than two. That is the intended shape for those names, not a defect, and it is recorded rather than silent.
+- exceptions: dispatched to `executor-strong`, which passed the gates at 151 on its first attempt with four documented deviations (a `body-s` font token substituted for the absent `body-sm`; the Avatar section placed before Badge because AppShell renders after Badge; the demo image using `/favicon.svg` because no portrait asset exists; the raw spaced `aria-label` asserted as observed). The first review rejected the union as unsound, the empty and hyphenated names as user-visible defects and `aria-label` on `role=img` as the wrong pattern. Probing the union with the `@ts-expect-error` removed showed the compiler rejects `{ name, alt }` without `src` (`Property 'src' is missing`), so the shape was already sound and the fix was to pin it with that directive. The initials derivation then split on hyphens, rejected parts with no letter or digit, and keyed the decorative rendering off the derived initials instead of the raw name. A second review round asked for the ARIA citation for `aria-label` on `role=img`; WAI-ARIA 1.2 answered it ("MUST provide a label using the aria-label or aria-labelledby attribute", with children presentational), and the third verdict was ACCEPT.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and three reviewer rounds.
+- interpretation: the component meets the spec row, and the two rules that matter most are now enforced where a caller cannot escape them, at the type for `alt` and in the rendered markup for the accessible name.
+- keep/revert: keep.
+- next hypothesis: none inside PR E that the brake allows next; `Drawer` and `CommandPalette` are the remaining PR E rows, and branch protection is still deferred to the operator.
+- prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (same link as the preregistration, restated for the gate).
+
 
 
 
