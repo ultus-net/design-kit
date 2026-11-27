@@ -956,6 +956,31 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `Field.svelte`, `Input.svelte`, `Select.svelte`, `Textarea.svelte`, `FieldDemo.svelte`, campaign 6 plan C6, ledger n=19. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:ff87116d24cedf4fb83a4c391a74149d6d5503d03cbb78b829a7b87301b7af9c (the n=19 record with its result and close-out, the highest top-level `### n=` below 20 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: `src/lib/components/Field.svelte` renders the hint and error after the control, uses `fw-field--error`, gap `--fw-space-2` and a semibold label, and makes the label row one inline run; `src/lib/components/Field.test.ts` gains two tests; one `[Unreleased]` `### Fixed` bullet. No component other than `Field` changed, and no existing test was edited.
+- commit SHA + git tree: `2c8a20d5c1` + `ed68883330974aa8da1a83ffceca9bee60542d33`.
+- artifact name + checksum: not a packaging iteration; the artifact is the static build in `build/`, which is gitignored and not checksummed.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1, npm 11.6.2.
+- test results: 36 files, 193 tests passed (191 baseline plus two). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 29.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 2/2 new tests passed: the order test (the hint paragraph follows the control in DOM order, `compareDocumentPosition` masked with `DOCUMENT_POSITION_FOLLOWING`) and the modifier test (`fw-field--error` present with an error, absent without one, `fw-field--invalid` absent).
+- held-out score: 191/191 pre-existing tests passed, including the four `Field` tests and the `Input`, `Select` and `Textarea` suites, plus the unchanged contrast, check and build gates.
+- gains: the one exported component that owns a field now renders the field layout the three controls render. Before, `Field` put the hint above the control, used `fw-field--invalid`, stacked with `--fw-space-1` and a medium label, so the same class names meant two different fields.
+- losses: none in behaviour. The label row keeps one inert inline wrapper, which the two held-out `Field` tests require.
+- exceptions: two. First, the planned markup change (move the required marker inside the label, drop the row span) was measured and reverted: with the marker inside, the held-out `getByLabelText('Email')` lookup fails (`Unable to find a label with the text of: Email`), and the same test reads `.fw-field__required`, so a pseudo-element cannot replace the element either. The row span stays with `display: inline`, which gives the same `Email *` run as the controls. Second, review round one returned REQUEST CHANGES with a P0 whose stated facts were wrong (it claimed a medium label and no wrapper in `Input`) and a P1 claiming the marker could move without breaking the lookup. The claim was tested and is false. The review's real point, a 4px flex gap before the asterisk, was fixed by the inline row, and round two APPROVED with no P0 or P1 remaining. Both corrections are recorded in the preregistration's `layout decision` clause.
+- token/cost/duration: tokens not captured; one session, no executor dispatch and two reviewer rounds.
+- interpretation: the defect was coherence rather than a broken render: each component looked fine alone, and the mismatch only appeared to a consumer who composed `Field` with a control. It mattered because `Field` exists to own that composition, and it was the only one of the four that disagreed.
+- keep/revert: keep.
+- next hypothesis: the modal guard is copied byte for byte in three components (`Dialog.svelte:26-34`, `Drawer.svelte:26-34`, `CommandPalette.svelte:47-55`), which is the repo's third-use extraction trigger, and the three suites already test it, so the extraction can be verified without a new behavioural claim.
+- prev-chain: sha256:ff87116d24cedf4fb83a4c391a74149d6d5503d03cbb78b829a7b87301b7af9c (same link as the preregistration, restated for the gate).
+
+### n=20 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de0d24839ffebsiZx7govseIp4`, bound to commit `2c8a20d5c170` (tracked fingerprint `02b86792fcb0`).
+- work item: GitHub issue #50.
+- PR: #51, `fix/field-layout` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/46078780374 — `gates` passed in 39s on the PR head.
+- final gate run after the last code mutation: `npm test` 36 files / 193 tests passed, plus check 0/0, contrast 186/0 and a clean build.
+
 
 
 
