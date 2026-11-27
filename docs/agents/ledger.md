@@ -710,6 +710,43 @@ the feature commit was amended and before the fresh-eyes review returned.
 - lessons: L013 (name the defect in a test), L014 (declare UA layout dependencies), L015 (read a delegated event after dispatch).
 - unstarted: `CommandPalette` (the last PR E row), the `id`/ARIA forwarding assertions for `Checkbox`/`Input`/`Select`/`Textarea`, the `Field` seam refactor (three controls duplicate the wrapper's wiring), and the branch-protection decision for `main`.
 
+### campaign 5 (plan)
+
+- request: "next." after the campaign 4 report; no count given, so N=3 (default, cap 5).
+- base: `db3ed72`, clean tree, 33 test files, 173 tests, 28 exports, 28 of 28 tested, 186 contrast pairs, svelte-check 0/0, clean build.
+- planned positions: n=16 `test` (`id`/ARIA forwarding across `Checkbox`, `Input`, `Select`, `Textarea`), n=17 `feature` (`CommandPalette`, the last PR E row), n=18 `chore` (release 0.7.0 plus a version/CHANGELOG agreement gate).
+- brake state: n=15 was `fix`, so position 1 cannot be `fix`. The sequence is `test` -> `feature` -> `chore`, so no two consecutive iterations share a change-type.
+- gain measure: the export metric is saturated at 28 of 28, so each iteration is measured by (a) preregistered assertions passed, (b) held-out suite green, (c) exports where the iteration adds one, and (d) a named contract-depth or release-state before/after. "No gain" means the preregistered claim did not hold, never that the export count stayed flat.
+- screener output and its limits: the screener returned a partial report headed "VERIFICATION PENDING - Tool access blocked", after reading the component sources but without finishing its held-out enumeration. Its component reads agree with the driver's own: all four controls forward `id` and ARIA through `{...rest}`. Its verdicts are therefore recorded, and the driver overrides three of the six.
+- screener denials upheld, with reasons:
+  - `refactor` `Field` seam is **denied**. Four components would change their markup for a structural gain the suite cannot measure as a behavioural difference, and the screener could not establish it as a provable zero-op. Deferred to a campaign where it can be the only change.
+  - `test` `Combobox` contract depth is **denied as its own iteration**. `Combobox.test.ts:21-102` already pins open, arrow movement, Enter, Escape and the query restore; the remaining gap is grouping, which n=17 builds.
+  - `instrument` branch protection is **denied**. It needs the operator to change GitHub settings, denied at n=10, status unchanged.
+- driver overrides, with reasons:
+  - `test` forwarding is **admitted over the screener's "structural vacuity" denial**. The screener read the components correctly and drew the wrong conclusion: an unasserted forwarding contract is exactly what a `test` iteration is for. Spec lines 199 and 202 name forwarding as the contract, `Checkbox`/`Input`/`Select` hold no assertion for it, and `Textarea.test.ts:29-40` covers only `data-*` and `aria-label`, not `id`. Without an assertion, `{...rest}` can move above the computed `aria-describedby` and the suite stays green.
+  - `chore` release is **admitted over the screener's "incomplete"**. The screener could not read `package.json`. `package.json:3` reads `0.5.0` and `private` is `false` with a `svelte-package` build, while `CHANGELOG.md:5` holds ten PR D and PR E components under `[Unreleased]` and the top released section is `[0.5.0]`. A publish today would ship two minor versions of components as `0.5.0`.
+
+### n=16 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T10:20Z
+- change-type: test
+- hypothesis (falsifiable): adding one forwarding test to each of `Checkbox`, `Input`, `Select` and `Textarea` moves the suite from 173 to 177 tests with 0 failures and pins twelve behaviours: a caller `id` reaching the control element and the sibling `label` `for` matching it in all four; a caller `aria-describedby` overriding the computed hint/error list in `Checkbox`, the documented escape hatch; a caller `aria-errormessage` forwarded onto the `Input` control while the computed `aria-describedby` survives; and the `Textarea` `id` forwarding that its existing attribute test does not cover. No component, gate, claim or existing test changes, exports stay 28.
+- candidate source: campaign 5 screener findings plus the driver's read of `Checkbox.svelte:53-69`, `Input.svelte:44-66`, `Select.svelte:51-62`, `Textarea.svelte:46-59`, `Field.svelte:22-38`; spec lines 199 and 202; the ledger's `### campaign 4 close-out` unstarted list.
+- contract decision: the forwarding contract is "the caller's `id` names the control and the label points at it", plus "caller-supplied ARIA reaches the control". The `{...rest}` spread sits last, so a caller's `aria-describedby` replaces the computed hint/error list. That precedence is pinned once, in `Checkbox`, and stated in the ledger rather than left as an accident of attribute order.
+- selection score (12 items): 3 `Checkbox` assertions, 4 `Input`, 2 `Select`, 3 `Textarea`.
+- held-out score (173 items, never used for selection): the 173 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 177 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 28, five count claims still read twenty-eight.
+- reject rule: any gate red, any component edited (a real forwarding bug is a `fix` and gets its own preregistration), an assertion that reads an internal `${uid}-*` id instead of the label-to-control relationship, or an assertion that duplicates one already in the file.
+- non-goals: changing any component, changing `Field`, merging the four controls onto that seam, adding attributes to the props interfaces, and touching `Combobox`.
+- at-risk regressions: `Select` nests the `select` inside `.fw-select` so a `container.querySelector('label')` could pick the wrong node; `Checkbox` renders hint and error outside the `<label>`; `Textarea`'s existing test already uses `aria-label`, so a new test must use `id` and must not collide with it; `Input`'s existing hint test asserts the computed list, so the new test must prove the caller attribute is additive.
+- honest limit: four tests prove the forwarding path for one attribute family each, not for every ARIA attribute a caller may pass, and they prove the spread order but not that the order is the right design for every attribute.
+- router decision: dispatched to `executor-strong`. The cheap tier has failed nine of nine dispatches, and the four-file spread needs per-file contracts rather than one pattern applied four times.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive tests only; the four components and every gate are the incumbent.
+- citations used: `Checkbox.svelte:53-69`, `Input.svelte:44-66`, `Select.svelte:51-62`, `Textarea.svelte:46-59`, `Field.svelte:22-38`, `Textarea.test.ts:29-40`, the four sibling test files, spec lines 199 and 202, ledger campaign 4 close-out. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:64dc891e85bafb5b7a1f83c34e0c30d997f1f85a45eee2f4dacda98c21eac522 (the n=15 preregistration record with its result block, the highest top-level `### n=` below 16 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
