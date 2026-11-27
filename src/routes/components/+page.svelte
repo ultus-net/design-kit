@@ -14,6 +14,7 @@
   import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
   import DialogDemo from '../_demos/DialogDemo.svelte';
+  import DrawerDemo from '../_demos/DrawerDemo.svelte';
   import EmptyStateDemo from '../_demos/EmptyStateDemo.svelte';
   import FieldDemo from '../_demos/FieldDemo.svelte';
   import MenuDemo from '../_demos/MenuDemo.svelte';
@@ -40,7 +41,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-seven Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-eight Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -207,6 +208,12 @@
   <h2>Dialog</h2>
   <p class="note">Native dialog element with showModal, a token backdrop and focus return.</p>
   <DialogDemo />
+</section>
+
+<section class="block">
+  <h2>Drawer</h2>
+  <p class="note">A native dialog pinned to the start or end edge, reusing the Dialog guard and the native focus return.</p>
+  <DrawerDemo />
 </section>
 
 <section class="block">
