@@ -37,3 +37,4 @@ carrying its id in the bullet and registered below.
 - L012 — A type-level rule needs a type-level test, pinned with `@ts-expect-error`; read the suppressed error once, because an unrelated error satisfies it too. (evidence: `2026-11-27T090500Z-type-rule-needs-type-test.md`)
 - L013 — A test that documents defective behaviour must call it a defect and cite the fix's work item, or a green suite hides it. (evidence: `2026-11-27T092500Z-name-the-defect-in-the-test.md`)
 - L014 — Declare the layout a component depends on even when the UA stylesheet provides it; `inset` without `position` floats once the element is not modal. (evidence: `2026-11-27T094000Z-declare-ua-layout-dependency.md`)
+- L015 — With delegated events, a listener on the element runs before the component's handler; dispatch the event yourself and read `event.defaultPrevented` after. (evidence: `2026-11-27T100500Z-delegated-events-read-after-dispatch.md`)
