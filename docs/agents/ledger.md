@@ -747,6 +747,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `Checkbox.svelte:53-69`, `Input.svelte:44-66`, `Select.svelte:51-62`, `Textarea.svelte:46-59`, `Field.svelte:22-38`, `Textarea.test.ts:29-40`, the four sibling test files, spec lines 199 and 202, ledger campaign 4 close-out. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:64dc891e85bafb5b7a1f83c34e0c30d997f1f85a45eee2f4dacda98c21eac522 (the n=15 preregistration record with its result block, the highest top-level `### n=` below 16 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: four test files only, one test each: `Checkbox.test.ts`, `Input.test.ts`, `Select.test.ts`, `Textarea.test.ts`. No `.svelte`, gate, token, claim or other test touched.
+- commit SHA + git tree: `4f67e77c65d5` + `f17c242bfb15b34cd0ac5a9f6b6a32ac8e5962d5`.
+- artifact name + checksum: no packaged artifact; the test tree at that commit is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 33 files, 177 tests passed (173 baseline plus four). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 28, so the tested-export metric stays 28 of 28 and the five count claims still read twenty-eight.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 tests passed, carrying seventeen assertions across the twelve preregistered behaviours: `Checkbox` (found node is an `HTMLInputElement`, wrapping label tag, caller `id`, label `htmlFor`, label query resolves to the same node, `aria-invalid` true, caller `aria-describedby` wins), `Input` (non-empty computed list, caller `id`, caller `aria-errormessage`, list resolves to `['Work address']`), `Select` (tag, caller `id`, label `htmlFor`), `Textarea` (caller `id`, label `htmlFor`, caller `aria-describedby` wins over the hint).
+- held-out score: 173/173 untouched tests passed, plus the unchanged contrast, check and build gates.
+- gains: the forwarding contract is now pinned for four controls. `{...rest}` can no longer move above the computed `aria-describedby`, or drop the caller `id`, without a failure. `Textarea`'s existing attribute test covered `data-testid` and `aria-label` but not `id`; that gap is closed.
+- losses: none observed. No component changed, so no behaviour moved.
+- exceptions: dispatched to `executor-strong`, which passed all four gates on the first attempt and reported one deviation from the spec: the `Textarea` label is a sibling, not a wrapper, so the test uses the render container to read `htmlFor`. The first review returned REQUEST CHANGES with one P0 and three P1s. The P0 said the `Checkbox` assertion could pass on a stale node; the test now checks the looked-up node is an `HTMLInputElement` before casting, so a missing forward fails at that line. Two review claims were wrong on the mechanics and are recorded rather than silently accepted: `document.getElementById` cannot return a node from a previous render because testing-library unmounts in cleanup and the id is unique per render, and an empty `aria-describedby` already failed the Input assertion, since `split('')` yields `['']`, `getElementById('')` is null and the mapped array is `[undefined]`. The guard was added anyway because it states the intent. The remaining P1s were real and are fixed: precedence is now pinned in two files, `Select` asserts the control is a `select`, and `Textarea` asserts the override rather than only the label link. Second review APPROVED.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and two reviewer rounds.
+- interpretation: a `test` iteration over already-correct components produces no behaviour change, which is what the export metric cannot show. Its gain is the ratchet: four contracts that a refactor would otherwise break silently.
+- keep/revert: keep.
+- next hypothesis: `CommandPalette` (PR E, the last spec row) reuses `filterOptions` and `stepIndex` from `combobox-model.ts` rather than a second keyboard handler, and ships with its own test file so the tested-export metric moves to 29.
+- prev-chain: sha256:64dc891e85bafb5b7a1f83c34e0c30d997f1f85a45eee2f4dacda98c21eac522 (same link as the preregistration, restated for the gate).
+
 
 
 
