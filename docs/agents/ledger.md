@@ -144,6 +144,45 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #16, `feature/menu-component` into `main`.
 - final gate run after the last code mutation: `npm test` 17 files / 92 tests passed.
 
+### n=4 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T07:26Z
+- change-type: feature
+- hypothesis (falsifiable): adding `EmptyState` from PR D lifts exported components 22 -> 23 and passes four new behavioural assertions (title+description render, decorative mark is `aria-hidden`, action snippet fires, optional parts omitted), while the 92-test held-out baseline and the three other gates stay green.
+- candidate source: campaign screener shortlist position 1 (C1); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D, `EmptyState` row; `docs/agents/ledger.md` n=3 `next hypothesis`.
+- selection score (4 items): the four new `EmptyState` assertions, authored this iteration from the spec row.
+- held-out score (92 items, never used for selection): the 92 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` > 92 with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count 23.
+- reject rule: any gate red, or the change requires editing a pre-existing test, the verifier, or a token file.
+- non-goals: PR E components, token changes, refactoring existing components, any change to the measured baseline.
+- at-risk regressions: the five hand-maintained count claims go stale (flagged in n=1, n=2 and n=3); the decorative mark leaks into the accessibility tree; a required prop is added to an optional slot.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic (`vitest`, `svelte-check`, a contrast script, a static build), so compute per item is fixed and the harness edit cannot buy a gain with more sampling.
+- citations used: the design spec section 3 PR D row (repo document, no id); `docs/agents/ledger.md` records n=1..n=3. This repo has no `docs/agents/reading-list.md` and no `docs/agents/findings/`, so the campaign's harness citations are not asserted as grounding for a component addition; the record says so rather than borrowing ids.
+- code change: new `src/lib/components/EmptyState.svelte`, `EmptyState.test.ts`, `src/routes/_demos/EmptyStateDemo.svelte`; export between `Dialog` and `Field`; `/components` section; five count claims; `[Unreleased]` bullet.
+- commit SHA + git tree: `0ff4583` + `93c8b302d1b896221a2efaf669fd870efc762c81`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 18 files, 96 tests passed (92 baseline plus 4 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 new `EmptyState` assertions passed (4 items).
+- held-out score: 92/92 pre-existing tests passed (92 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 22 -> 23; one PR D component with decorative mark, title, optional description and optional action.
+- losses: none observed.
+- exceptions: the cheap tier exhausted its step cap with two wrong assertions (a `<span>` has no `img` role; the omission test queried a title it never rendered) and a demo that passed snippet factory calls, producing 3 type errors and 1 unused-selector warning. The strong tier corrected the new tests structurally, replaced the factories with `{#snippet}` blocks, and finished the count claims and changelog. The first review returned REJECT with both P1 entries affirming the code and one P2 (the action test proved a child click but not that the snippet rendered inside `.fw-empty__action`); the test now asserts the wrapper exists and `action.contains(button)`, and the reviewer withdrew the rejection.
+- token/cost/duration: tokens not captured; one session, two executor dispatches and two reviewer passes.
+- interpretation: the component meets the spec row, the action slot is pinned by a test, and the frozen baseline is intact.
+- keep/revert: keep.
+- next hypothesis: the count-claim gate (`instrument`) derives the export count and asserts the five hand-maintained claims, moving nothing in the component count while catching the regression flagged in n=1..n=4.
+- prev-chain: sha256:351867578e3fbe21e8689828dc6e83bbc6a674368acde84c314e9b25bfccc623 (record n=3, the highest top-level `### n=` below 4, hashed with the repo's `validate-ledger.cjs` `parseRecords`/`sha256` so the bytes match the gate).
+
+### n=4 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de40e470cffe5GfvmbW2hFWvmT`, bound to commit `f30f4bdb141d` (tracked fingerprint `86c3909ce2ff`).
+- work item: GitHub issue #17.
+- PR: #18, `feature/emptystate-component` into `main`.
+- final gate run after the last code mutation: `npm test` 18 files / 96 tests passed.
+
+
 
 
 

@@ -7,6 +7,7 @@ export { default as Card } from './components/Card.svelte';
 export { default as Checkbox } from './components/Checkbox.svelte';
 export { default as Combobox } from './components/Combobox.svelte';
 export { default as Dialog } from './components/Dialog.svelte';
+export { default as EmptyState } from './components/EmptyState.svelte';
 export { default as Field } from './components/Field.svelte';
 export { default as Input } from './components/Input.svelte';
 export { default as Menu } from './components/Menu.svelte';

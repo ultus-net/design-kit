@@ -12,6 +12,7 @@
   import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
   import DialogDemo from '../_demos/DialogDemo.svelte';
+  import EmptyStateDemo from '../_demos/EmptyStateDemo.svelte';
   import FieldDemo from '../_demos/FieldDemo.svelte';
   import MenuDemo from '../_demos/MenuDemo.svelte';
   import PaginationDemo from '../_demos/PaginationDemo.svelte';
@@ -35,7 +36,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-two Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-three Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -208,6 +209,12 @@
   <h2>Menu</h2>
   <p class="note">A trigger button with a <code>role="menu"</code> popup, arrow and Home/End navigation, Enter or click to select, and Escape or Tab to close with focus back on the trigger.</p>
   <MenuDemo />
+</section>
+
+<section class="block">
+  <h2>EmptyState</h2>
+  <p class="note">A decorative mark slot, title, optional description and optional action snippet.</p>
+  <EmptyStateDemo />
 </section>
 
 <section class="block">
