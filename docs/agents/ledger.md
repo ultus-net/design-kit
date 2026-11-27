@@ -469,6 +469,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `src/lib/tested-exports.test.ts` (the allowlist being emptied); `src/lib/components/{Alert,AppShell,Badge,Card,Input,Select,Stat}.svelte` (the contracts the tests pin); ledger n=10. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:84464f7fe6ac98cf1d5b9f3d73da4d24d6b1313996bafc340fe1dc6baa7b2ec9 (the n=10 preregistration block, the highest top-level `### n=` below 11 that the gate's `reduce` selects when two records share n=10; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: seven new test files, `src/lib/components/{Alert,AppShell,Badge,Card,Input,Select,Stat}.test.ts`; `src/lib/tested-exports.test.ts` allowlist emptied. No component, token, claim or gate changed.
+- commit SHA + git tree: `4ecd6c53d136` + `3e9868b5257aac9bdc2d5e0972e08b870a93b55b`.
+- artifact name + checksum: no packaged artifact; the test tree at that commit is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 31 files, 146 tests passed (125 baseline plus 21 new, three per component). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports stay 26; the ratchet is green with an empty allowlist, so the metric moves 19 -> 26 of 26.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 21/21 preregistered assertions passed (three per component).
+- held-out score: 125/125 pre-existing tests passed (125 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: every exported component now has a sibling behavioural test; the allowlist is empty and still ratchets, so a new export without a test fails and a name that stops being exported cannot linger. The metric reads 26 of 26 instead of 19 of 26.
+- losses: three assertions per component is a floor, not depth. `Card` and `Stat` have no interaction to test; `AppShell` and `Stat` variants are colour or layout only, so their class assertions are documented proxies.
+- exceptions: dispatched to `executor-strong`, which passed the gates at 146 on the first attempt and touched no component. Two test-level deviations: `Input` queried the control by role because the required asterisk breaks `getByLabelText('Email')`, and `Badge` snippets return bare text so `getByText` resolves to the badge span. The first review rejected the Input deviation as a P1 (label association was no longer proven) and the class assertions as P1 implementation detail; the fix restored the label proof with `getByLabelText(/Email/)` plus `htmlFor === id`, scoped the `Alert` queries with `within(container)`, and documented why the two class assertions have no behavioural alternative. The reviewer withdrew with no P0/P1.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and two reviewer rounds.
+- interpretation: the allowlist is closed, so the tested-export metric is now total and self-enforcing.
+- keep/revert: keep.
+- next hypothesis: `Avatar` from PR E (`img` with required `alt`, initials fallback from `name`, size scale) moves the metric's tested and exported counts together, 26 -> 27 of 27.
+- prev-chain: sha256:84464f7fe6ac98cf1d5b9f3d73da4d24d6b1313996bafc340fe1dc6baa7b2ec9 (same link as the preregistration, restated for the gate).
+
 
 
 

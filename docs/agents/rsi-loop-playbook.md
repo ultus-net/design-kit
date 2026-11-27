@@ -70,15 +70,14 @@ date claims no sweep happened.
   fatal, and that each named script exists in `package.json`. The test reads the
   workflow text, so `actionlint` is the YAML check, not the test.
 - **metric** — exported components that carry a sibling `*.test.ts` of their
-  own. **Audited 2026-11-27:** 19 of 26 exports have one. The seven without
-  are `Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select` and `Stat`;
-  `src/lib/tested-exports.test.ts` pins that set, so a new export without a
-  sibling test fails the suite and an allowlist entry that gains one also fails
-  it. **The measured property is a sibling file, not coverage depth.** The
-  proxy and "no test imports it" agree today: no test file imports any of the
-  seven. The earlier history (19 -> 24) counted exports, not tested exports, so
-  those deltas overstated the metric by the size of the gap. The candidate is
-  one component from
+  own. **Audited 2026-11-27:** 26 of 26 exports have one, because n=11 added the
+  seven that were missing (`Alert`, `AppShell`, `Badge`, `Card`, `Input`,
+  `Select`, `Stat`). `src/lib/tested-exports.test.ts` pins that set with an
+  empty allowlist, so a new export without a sibling test fails the suite.
+  **The measured property is a sibling file, not coverage depth**, and three
+  assertions per component is a floor rather than a ceiling. The earlier
+  history (19 -> 24) counted exports, not tested exports, and n=7's audit
+  corrected that overstatement. The candidate is one component from
   `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3.
 - **frozen ruler** — the HEAD `bfcdf42` baseline: 14 test files, 74 tests
   passing, 186 contrast pairs with 0 failures, svelte-check 0/0, clean build.
