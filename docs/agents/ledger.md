@@ -395,6 +395,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `Accordion` from PR E (`details`/`summary` per item, `multiple` prop, `aria-expanded` on the summary) is the next feature candidate, and the campaign's remaining structural gap is that the CI checks are advisory until branch protection requires them.
 - prev-chain: sha256:237be1d9876a65eb9851fc632ef86b3be444387e6b8916ed97c087f7aafe813e (same link as the preregistration, restated for the gate).
 
+### n=9 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3e14790ffeMxTnEfv6EvWppf`, bound to commit `b75a7b9a47c6` (tracked fingerprint `55bfd41ac4db`).
+- work item: GitHub issue #27.
+- PR: #28, `feature/ci-gate` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45966249719 — job `gates` passed in 39s on the PR head, which is the run the preregistration said the local verifier could not supply. The workflow executed `npm ci` and all four gates on GitHub.
+- final gate run after the last code mutation: `npm test` 23 files / 118 tests passed.
+
 
 
 
