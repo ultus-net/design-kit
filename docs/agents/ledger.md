@@ -311,6 +311,25 @@ the feature commit was amended and before the fresh-eyes review returned.
 - final gate run after the last code mutation: `npm test` 21 files / 108 tests passed.
 - prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (same link as the preregistration, restated for the gate).
 
+### n=8 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T08:32Z
+- change-type: feature
+- hypothesis (falsifiable): adding `Progress` from PR E lifts exports 24 -> 25 and tested exports 17 -> 18, and passes four new behavioural assertions (determinate ARIA values, custom max with proportional fill, indeterminate omitting `aria-valuenow`, and clamping out-of-range values), while the 108-test held-out baseline, the count gate, the ratchet and the other gates stay green.
+- candidate source: campaign 2 screener position 2 (C2); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR E, `Progress` row: "`role=\"progressbar\"`, `aria-valuenow/min/max`, indeterminate when no value | ARIA values, indeterminate omits `aria-valuenow`"; ledger n=7 `next hypothesis`.
+- selection score (4 items): the four new `Progress` assertions.
+- held-out score (108 items, never used for selection): the 108 pre-existing tests (count gate and tested-export ratchet included), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` > 108 with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count 25, ratchet still green.
+- reject rule: any gate red, any pre-existing test edited, or a literal colour in the component CSS.
+- non-goals: animation or indeterminate motion, a segmented or stacked variant, the other PR E components, token changes.
+- at-risk regressions: `aria-valuenow` emitted on the indeterminate state; division by zero when `max` is 0 or negative; a fill width above 100% for an out-of-range value; the count gate failing until all five claims read twenty-five.
+- router decision: dispatched to `executor-strong` without a cheap attempt. The cheap tier has produced no acceptable diff in seven dispatches across two campaigns (step-cap exhaustion, compile errors, wrong assertions), which is the sustained-difficulty trigger the escalation router names, already met at campaign start.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive; the count gate and the ratchet are the incumbents that must stay green.
+- citations used: the design spec section 3 PR E `Progress` row (repo document, no id); `docs/agents/ledger.md` n=7. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:0e224f8205081007f9785eb0585f75dc7f124cb950d86919746ac87d5f521977 (the n=7 preregistration block, the highest top-level `### n=` below 8 that the gate's `reduce` selects when two records share n=7; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
