@@ -323,6 +323,7 @@ the feature commit was amended and before the fresh-eyes review returned.
 - reject rule: any gate red, any pre-existing test edited, or a literal colour in the component CSS.
 - non-goals: animation or indeterminate motion, a segmented or stacked variant, the other PR E components, token changes.
 - at-risk regressions: `aria-valuenow` emitted on the indeterminate state; division by zero when `max` is 0 or negative; a fill width above 100% for an out-of-range value; the count gate failing until all five claims read twenty-five.
+- contract decision (added after the first review): the indeterminate state omits `aria-valuemin` and `aria-valuemax` as well as `aria-valuenow`. The spec row names only `aria-valuenow`; the component owns the stronger contract because an operation whose completion is unknown has no honest range to state, and emitting `0`/`100` would claim one. The `/components` note and the tests state all three omissions, so the contract is visible where a reader looks.
 - router decision: dispatched to `executor-strong` without a cheap attempt. The cheap tier has produced no acceptable diff in seven dispatches across two campaigns (step-cap exhaustion, compile errors, wrong assertions), which is the sustained-difficulty trigger the escalation router names, already met at campaign start.
 - matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
 - answer-rescue audit: not applicable, the verifier is deterministic.

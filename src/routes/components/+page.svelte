@@ -16,6 +16,7 @@
   import FieldDemo from '../_demos/FieldDemo.svelte';
   import MenuDemo from '../_demos/MenuDemo.svelte';
   import PaginationDemo from '../_demos/PaginationDemo.svelte';
+  import ProgressDemo from '../_demos/ProgressDemo.svelte';
   import RadioGroupDemo from '../_demos/RadioGroupDemo.svelte';
   import SkeletonDemo from '../_demos/SkeletonDemo.svelte';
   import SwitchDemo from '../_demos/SwitchDemo.svelte';
@@ -37,7 +38,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-four Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-five Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -222,6 +223,12 @@
   <h2>Skeleton</h2>
   <p class="note">An <code>aria-hidden</code> placeholder with line, block and circle shapes built from radius tokens.</p>
   <SkeletonDemo />
+</section>
+
+<section class="block">
+  <h2>Progress</h2>
+  <p class="note">A <code>role="progressbar"</code> bar with ARIA values, a custom max and an indeterminate state that omits <code>aria-valuenow</code>, <code>aria-valuemin</code> and <code>aria-valuemax</code>.</p>
+  <ProgressDemo />
 </section>
 
 <section class="block">
