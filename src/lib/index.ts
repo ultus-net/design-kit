@@ -18,3 +18,4 @@ export { default as Table } from './components/Table.svelte';
 export { default as Tabs } from './components/Tabs.svelte';
 export { default as Textarea } from './components/Textarea.svelte';
 export { default as Toast } from './components/Toast.svelte';
+export { default as Tooltip } from './components/Tooltip.svelte';
