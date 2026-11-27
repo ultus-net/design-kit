@@ -266,6 +266,51 @@ the feature commit was amended and before the fresh-eyes review returned.
 - final gate run after the last code mutation: `npm test` 20 files / 104 tests passed.
 - prev-chain: sha256:353ced258faf37987f89bd6b4e62d03127d3edf8da352f6d1cd065e3ba129ee4 (same link as the preregistration, restated for the gate).
 
+### n=7 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T08:20Z
+- change-type: instrument
+- hypothesis (falsifiable): a new `src/lib/tested-exports.test.ts` derives the component export names from `src/lib/index.ts` and the sibling test files from `import.meta.glob('./components/*.test.ts')`, then asserts the untested set equals a documented seven-name allowlist (Alert, AppShell, Badge, Card, Input, Select, Stat). `npm test` moves 104 -> 108 passing, the 7/24 gap becomes explicit, a new untested export fails the gate, and a stale allowlist entry fails it too.
+- candidate source: campaign 2 screener position 1 (C1); goal audit during campaign 2 setup, which found the metric line reporting 24 exports while only 17 exports carry a sibling test.
+- selection score (4 items): the four new assertions — export derivation returns more than 20 names, the untested set equals the allowlist exactly, a synthetic export without a test is reported as untested, and the tested count equals exports minus the allowlist.
+- held-out score (104 items, never used for selection): the 104 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 108 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count still 24.
+- reject rule: any gate red, any pre-existing test edited, or the allowlist silently growing without a ledger record.
+- non-goals: writing the seven missing component tests in this iteration, changing any component, changing the count claims (they describe exports, not tested exports), or editing `src/lib/count-claims.test.ts`.
+- at-risk regressions: the glob keys and the export names differing by case (`Button` vs `button`); the allowlist hiding a new gap because the gate compares sets, not lengths; the metric line and the gate drifting apart.
+- metric correction (recorded here because the audit belongs with the change): the playbook metric read 19 -> 24 "exported components that carry behavioural tests". The measured value is 17 tested of 24 exported, because seven exports never had a sibling test. The earlier deltas were export-count deltas. The playbook line is corrected in this iteration to state the honest value and the discrepancy.
+- measurement note (added after the first review): the gate measures a sibling `*.test.ts`, not coverage depth. No test file imports any of the seven names (`grep "from './\(Alert\|AppShell\|Badge\|Card\|Input\|Select\|Stat\)\.svelte'"` over `*.test.ts` returns nothing), so the proxy and "no test imports it" agree today. The test, the playbook and this record use the sibling-file wording so the metric is not read as a coverage claim.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the gate is additive; the negative controls (a synthetic untested export, a stale allowlist entry) run inside the new test file.
+- citations used: `docs/agents/ledger.md` n=4..n=6 (each records a component added with tests, but no record audited the seven untested exports); `docs/agents/rsi-loop-playbook.md` "Anchors for this repo", whose metric line is the artefact under audit. The playbook's own "Grounding" section states this repo carries no reading list and no arXiv ids, so no citation id is asserted.
+- prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (the n=6 preregistration block, the highest top-level `### n=` below 7 that the gate's `reduce` selects when two records share n=6; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: new `src/lib/tested-exports.test.ts`; `docs/agents/rsi-loop-playbook.md` metric line corrected. No component, token or pre-existing test changed.
+- commit SHA + git tree: `5a91731f2279` + `0c87741f0a61026a9767baf8bf6611a409eb80db`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 21 files, 108 tests passed (104 baseline plus 4 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports unchanged at 24.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 new ratchet assertions passed (4 items).
+- held-out score: 104/104 pre-existing tests passed (104 items, never used for selection), plus the unchanged contrast, check and build gates.
+- negative controls: adding `export { default as NewThing } from './components/NewThing.svelte';` to `index.ts` failed the set comparison with `+ "NewThing"`; removing `Stat` from the allowlist failed with `+ "Stat"`. Both restored to 4/4.
+- gains: the metric is now honest and pinned at 17 of 24 exports with a sibling test; the seven-name gap cannot grow, cannot be silently substituted, and cannot linger after a component gains a test. The playbook's overstated 19 -> 24 history is corrected in place.
+- losses: none observed. Suite 20 -> 21 files.
+- exceptions: written by the calling session, not delegated, because it changes what the metric counts. The first review returned REQUEST CHANGES with one P1 (the sibling-file proxy could mislabel coverage). The fix relabelled the property everywhere to "sibling test file", added the evidence that no test imports any of the seven, and the reviewer withdrew the request with no P0/P1.
+- token/cost/duration: tokens not captured; one session, one reviewer pass plus one follow-up.
+- interpretation: the ruler is now measured, not assumed, and the gap is documented instead of hidden.
+- keep/revert: keep.
+- next hypothesis: `Progress` from PR E moves the tested count 17 -> 18 and pins `role="progressbar"`, `aria-valuenow/min/max`, and an indeterminate state that omits `aria-valuenow`.
+
+### n=7 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3ea2667ffeubwnb6feWw5hbF`, bound to commit `17d058bde469` (tracked fingerprint `fff365721e9b`).
+- work item: GitHub issue #23.
+- PR: #24, `feature/tested-export-ratchet` into `main`.
+- final gate run after the last code mutation: `npm test` 21 files / 108 tests passed.
+- prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (same link as the preregistration, restated for the gate).
+
 
 
 
