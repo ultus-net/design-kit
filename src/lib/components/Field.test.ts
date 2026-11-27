@@ -63,4 +63,29 @@ describe('Field', () => {
     expect(screen.getByLabelText('Email').hasAttribute('required')).toBe(true);
     expect(container.querySelector('.fw-field__required')?.getAttribute('aria-hidden')).toBe('true');
   });
+
+  it('renders the hint after the control, as the field-style controls do', () => {
+    const { container } = renderField({ id: 'email', label: 'Email', hint: 'Work address.' });
+
+    const control = screen.getByLabelText('Email');
+    const hint = container.querySelector<HTMLParagraphElement>('.fw-field__hint');
+
+    expect(hint?.textContent).toBe('Work address.');
+    expect(
+      control.compareDocumentPosition(hint as HTMLParagraphElement) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it('marks the wrapper with the error modifier only when an error is present', () => {
+    const withError = renderField({ id: 'project-key', label: 'Project key', error: 'Taken.' });
+    const invalid = withError.container.querySelector('.fw-field');
+
+    expect(invalid?.classList.contains('fw-field--error')).toBe(true);
+    expect(invalid?.classList.contains('fw-field--invalid')).toBe(false);
+
+    const withoutError = renderField({ id: 'name', label: 'Name' });
+    expect(withoutError.container.querySelector('.fw-field')?.classList.contains('fw-field--error')).toBe(
+      false
+    );
+  });
 });
