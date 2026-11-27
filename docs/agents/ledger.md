@@ -812,6 +812,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: the release is the only unstarted item with a user-visible consequence. `package.json:3` reads 0.5.0 with `private: false` and a `svelte-package` build, while ten components from PR D and PR E sit under `[Unreleased]`, so a publish today would ship two minor versions of components as 0.5.0.
 - prev-chain: sha256:0fa2bfe508fc2356b3d38ea1a957f42e9d3a9ee7a17a45c79f1aed49c3f4c1ef (same link as the preregistration, restated for the gate).
 
+### n=17 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de37cb78affec9z1OycMAvxyv9`, bound to commit `0b6a7d36e45e` (tracked fingerprint `fa7aef31b733`).
+- work item: GitHub issue #44.
+- PR: #45, `feature/command-palette` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45981340441 — `gates` passed in 28s on the PR head.
+- final gate run after the last code mutation: `npm test` 34 files / 186 tests passed.
+
 
 
 
