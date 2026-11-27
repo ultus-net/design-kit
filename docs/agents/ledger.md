@@ -257,6 +257,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - interpretation: the component meets the spec row, the gate now enforces the count claims, and the frozen baseline is intact.
 - keep/revert: keep.
 - next hypothesis: with PR D's five rows shipped, the campaign's next candidate is outside the frozen PR D scope, so a fresh spec decision (PR E: `Progress`) is required before another iteration.
+
+### n=6 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3f98a85ffeUoVnJtlwyPRB3q`, bound to commit `e4017dc04d3d` (tracked fingerprint `b9cefd22fd47`).
+- work item: GitHub issue #21.
+- PR: #22, `feature/skeleton-component` into `main`.
+- final gate run after the last code mutation: `npm test` 20 files / 104 tests passed.
 - prev-chain: sha256:353ced258faf37987f89bd6b4e62d03127d3edf8da352f6d1cd065e3ba129ee4 (same link as the preregistration, restated for the gate).
 
 
