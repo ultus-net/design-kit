@@ -4,6 +4,10 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 
 ## [Unreleased]
 
+### Fixed
+
+- A publish now ships the library: `prepack` runs the package build, so `npm pack` and `npm publish` include `dist/` instead of three metadata files. A `package-contents` gate pins the tarball, the export targets and the `svelte` peer range, and `docs/publishing.md` records the release procedure.
+
 ## [0.7.0] - 2026-11-27
 
 ### Added
