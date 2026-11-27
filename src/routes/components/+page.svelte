@@ -8,6 +8,7 @@
   import Select from '$lib/components/Select.svelte';
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
+  import BreadcrumbsDemo from '../_demos/BreadcrumbsDemo.svelte';
   import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
   import DialogDemo from '../_demos/DialogDemo.svelte';
@@ -32,7 +33,7 @@
 
 <PageHeader
   title="Components"
-  lede="Nineteen Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -118,6 +119,12 @@
   <h2>Combobox</h2>
   <p class="note">An ARIA combobox over caller-supplied options with arrow navigation, Enter to select and Escape to restore the query.</p>
   <ComboboxDemo />
+</section>
+
+<section class="block">
+  <h2>Breadcrumbs</h2>
+  <p class="note">A nav landmark over an ordered list, anchors on ancestor items and aria-current on the current page.</p>
+  <BreadcrumbsDemo />
 </section>
 
 <section class="block">
