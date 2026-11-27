@@ -86,4 +86,27 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #12, `feature/breadcrumbs-component` into `main`.
 - final gate run after the last mutation: `npm test` 15 files / 79 tests passed.
 
+### n=2
+
+- date (UTC): 2026-11-27T07:12Z
+- hypothesis (falsifiable): Adding the PR D `Tooltip` lifts the exported component count from 20 to 21 and passes five behavioural assertions (hover show, focus show, leave hide, Escape hide without focus loss, non-interactive content), while every pre-existing gate stays green.
+- trace evidence: `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D, `Tooltip` row; `src/lib/components/Dialog.svelte:47-73` (focus and Escape conventions); `src/lib/components/Toast.svelte:21-33` (role and live-region conventions); `src/lib/index.ts` (20 exports at `7223388`).
+- code change: new `src/lib/components/Tooltip.svelte`, `Tooltip.test.ts`, `src/routes/_demos/TooltipDemo.svelte`; export, `/components` section, five count claims, `[Unreleased]` bullet.
+- commit SHA + git tree: `379cc8d` + `bc8eb02f28b61dd95d7baa6d7e3764100a77ba80` (the docs close-out commit follows).
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 16 files, 84 tests passed (79 baseline plus 5 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 5/5 new `Tooltip` assertions passed (5 items, the set the change was selected against).
+- held-out score: 79/79 pre-existing tests passed (79 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 20 -> 21; one PR D component with hover, focus, Escape and non-interactive content coverage.
+- losses: none observed. Suite wall clock 1.38 s, not a controlled comparison.
+- exceptions: the cheap tier failed twice over (hover called `onclick`, `handleBlur` referenced an undefined `event`, two tests could not pass, five svelte-check errors), so the same spec went to the strong tier with the failing output. The spec's mandated `{#if open}<svelte:window onkeydown>` does not compile on Svelte 5.59.1 (`svelte_meta_invalid_placement`), so the requirement was met with an `$effect` add/remove listener. The first review returned REJECT labelled on P1 lines that affirmed correctness; a targeted follow-up produced "No P0 or P1 defect" and the rejection was withdrawn. A `console.log` and a pointless `preventDefault` were removed from the demo after the gates passed, which is why the gate run was repeated.
+- token/cost/duration: tokens not captured; one session, two executor dispatches and two reviewer passes.
+- interpretation: the component meets its documented contract; the frozen baseline is intact; the escape-listener deviation is deliberate and compile-forced.
+- keep/revert: keep.
+- next hypothesis: `Menu` from PR D moves the count 21 -> 22 with arrow-key navigation, Escape and focus return, without disturbing the 84-test baseline.
+- prev-chain: sha256:672a114a235a6aff72f2084fdd0250f51165cb248da4ecc168e134df86ab295d (the `### n=1 close-out` block above, from its heading to the final gate line).
+
+
 
