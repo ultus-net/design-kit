@@ -691,6 +691,25 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `CommandPalette` (PR E, the last spec row) for the next `feature` slot; the `id`/ARIA forwarding assertions and the `Field` seam refactor remain unstarted.
 - prev-chain: sha256:c2a27eed5764c6a9349b335252c76a3312c3365a956bb87f973f73312463fbd4 (same link as the preregistration, restated for the gate).
 
+### n=15 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de391fae6ffex6VtpQ2kzR1FUy`, bound to commit `50037737d322` (tracked fingerprint `a2d21a219f65`).
+- work item: GitHub issue #35 (the defect found at n=13). Issue #40 was created in error while opening this iteration and is closed by the same PR as a duplicate.
+- PR: #41, `fix/busy-link-navigation` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45977890382 — `gates` passed in 37s on the PR head.
+- final gate run after the last code mutation: `npm test` 33 files / 173 tests passed.
+
+### campaign 4 close-out
+
+- iterations: n=13 `test` (PR #37), n=14 `feature` (PR #39), n=15 `fix` (PR #41). N=3 reached, so the campaign stopped on the count, not on a brake.
+- diversity brake: never fired. The type sequence was `test` -> `feature` -> `fix`, so no two consecutive iterations shared a change-type.
+- no-gain brake: never reached. Every iteration produced a named gain: n=13 moved `Button` from 1 to 11 assertions, n=14 added an export (27 -> 28), n=15 closed a user-visible defect.
+- saturated-metric note: the export metric was already 27 of 27 at the start, so it could not measure n=13 or n=15. The campaign measured (a) preregistered assertions passed, (b) held-out suite green, (c) named contract depth before/after, and (d) exports where applicable. `docs/agents/rsi-loop-playbook.md` records the distinction between a sibling test file and coverage depth.
+- preregistration accuracy: n=13 predicted 166 tests and produced 165 (`156 - 1 + 10`); the executor reported the mismatch instead of padding, and review produced the 166th test legitimately. n=14 and n=15 predicted their counts exactly.
+- defects found: two. The busy-anchor navigation defect (n=13 found, n=15 fixed) and the Drawer edge-pinning dependency on the UA stylesheet (n=14 found and fixed in the same iteration).
+- lessons: L013 (name the defect in a test), L014 (declare UA layout dependencies), L015 (read a delegated event after dispatch).
+- unstarted: `CommandPalette` (the last PR E row), the `id`/ARIA forwarding assertions for `Checkbox`/`Input`/`Select`/`Textarea`, the `Field` seam refactor (three controls duplicate the wrapper's wiring), and the branch-protection decision for `main`.
+
 
 
 
