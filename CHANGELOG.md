@@ -4,6 +4,8 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-27
+
 ### Added
 
 - `Breadcrumbs`: a `nav` landmark with an ordered list, an optional accessible name, anchors on ancestor items and `aria-current="page"` on the current item.
