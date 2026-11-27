@@ -217,6 +217,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `Skeleton` from PR D (`feature`) moves the count 23 -> 24 with an `aria-hidden` shape primitive, and the new count gate fails until all five claims are updated, which makes the claim update mechanical rather than a thing to remember.
 - prev-chain: sha256:fc37f3eb60683e8861fcd05af58143eb5964abb639cf808d619d29e278f486ca (same link as the preregistration, restated for the gate).
 
+### n=5 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de404c46fffeQF13zUIu1n7yVK`, bound to commit `8c5f8ea51afe` (tracked fingerprint `9f9ec6d13ad1`).
+- work item: GitHub issue #19.
+- PR: #20, `feature/count-claim-gate` into `main`.
+- final gate run after the last code mutation: `npm test` 19 files / 100 tests passed.
+
 
 
 
