@@ -30,6 +30,8 @@ Profiles select a palette family, modes select light or dark inside that family,
 | `src/lib/assets/fonts/` | Bricolage Grotesque and JetBrains Mono, latin subsets. |
 | `src/routes/guidelines/` | The rulebook: invariants, surfaces, type, colour, tells. |
 
+Release and publish procedure: `docs/publishing.md`.
+
 ## Licence
 
 MIT. Type is licensed under the SIL Open Font License 1.1; both upstream OFL texts ship in `src/lib/assets/fonts/`. The palette is authored from the Omoro Blueprint dataset and measured in this repo.
