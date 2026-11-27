@@ -39,3 +39,4 @@ carrying its id in the bullet and registered below.
 - L014 — Declare the layout a component depends on even when the UA stylesheet provides it; `inset` without `position` floats once the element is not modal. (evidence: `2026-11-27T094000Z-declare-ua-layout-dependency.md`)
 - L015 — With delegated events, a listener on the element runs before the component's handler; dispatch the event yourself and read `event.defaultPrevented` after. (evidence: `2026-11-27T100500Z-delegated-events-read-after-dispatch.md`)
 - L016 — When four components share a contract, give each one a different case of it and record which proves what. (evidence: `2026-11-27T102500Z-one-case-per-component.md`)
+- L017 — Carry the source index through a regrouping; recomputing it with `indexOf` makes DOM ids depend on object identity. (evidence: `2026-11-27T104500Z-carry-the-source-index-through-grouping.md`)
