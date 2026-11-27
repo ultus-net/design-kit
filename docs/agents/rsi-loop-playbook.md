@@ -63,12 +63,17 @@ date claims no sweep happened.
 - **verifier** — `npm test` (vitest, behavioural), plus `npm run check`
   (svelte-check, zero errors and warnings) and `npm run contrast` (186 colour
   pairs, non-zero exit on a miss). `npm run build` proves the static site.
-- **metric** — exported components that carry behavioural tests that fail
-  without the component. Observed count moved 19 -> 20 at iteration 1
-  (`Breadcrumbs`), 20 -> 21 at iteration 2 (`Tooltip`), 21 -> 22 at iteration 3
-  (`Menu`), 22 -> 23 at campaign iteration 4 (`EmptyState`) and 23 -> 24 at
-  campaign iteration 6 (`Skeleton`). The candidate is one component from
-  `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D.
+- **metric** — exported components that carry a sibling `*.test.ts` of their
+  own. **Audited 2026-11-27:** 17 of 24 exports have one. The seven without
+  are `Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select` and `Stat`;
+  `src/lib/tested-exports.test.ts` pins that set, so a new export without a
+  sibling test fails the suite and an allowlist entry that gains one also fails
+  it. **The measured property is a sibling file, not coverage depth.** The
+  proxy and "no test imports it" agree today: no test file imports any of the
+  seven. The earlier history (19 -> 24) counted exports, not tested exports, so
+  those deltas overstated the metric by the size of the gap. The candidate is
+  one component from
+  `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3.
 - **frozen ruler** — the HEAD `bfcdf42` baseline: 14 test files, 74 tests
   passing, 186 contrast pairs with 0 failures, svelte-check 0/0, clean build.
   The ruler is the suite and the gates, not a stored score. Iteration 2 was
