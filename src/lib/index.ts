@@ -14,6 +14,7 @@ export { default as Menu } from './components/Menu.svelte';
 export { default as Pagination } from './components/Pagination.svelte';
 export { default as RadioGroup } from './components/RadioGroup.svelte';
 export { default as Select } from './components/Select.svelte';
+export { default as Skeleton } from './components/Skeleton.svelte';
 export { default as Stat } from './components/Stat.svelte';
 export { default as Switch } from './components/Switch.svelte';
 export { default as Table } from './components/Table.svelte';
