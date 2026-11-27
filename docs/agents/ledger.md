@@ -182,6 +182,48 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #18, `feature/emptystate-component` into `main`.
 - final gate run after the last code mutation: `npm test` 18 files / 96 tests passed.
 
+### n=5 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T07:47Z
+- change-type: instrument
+- hypothesis (falsifiable): a new `src/lib/count-claims.test.ts` derives the exported component count from `src/lib/index.ts`, parses the five hand-maintained count claims from `README.md` (2), `src/routes/+page.svelte` (2) and `src/routes/components/+page.svelte` (1), and fails when any claim disagrees with the derived count. `npm test` moves 96 -> 100 passing with 0 failures, the export count stays 23, and the other three gates are unchanged.
+- candidate source: campaign screener shortlist position 2 (CV); the at-risk regression recorded in `docs/agents/ledger.md` n=1, n=2, n=3 and n=4 (`the five hand-maintained count claims go stale`).
+- selection score (4 items): the four new assertions — derived count equals the number of `.svelte` component exports, all five claim sites are located, every claim equals the derived count, and the word parser maps `Twenty-two` to 22 and `twenty-three` to 23 while the export counter ignores non-component exports.
+- held-out score (96 items, never used for selection): the 96 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 100 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count still 23.
+- reject rule: any gate red, any pre-existing test edited, or the new test hard-codes the component list instead of deriving it.
+- non-goals: adding components, changing tokens, editing `vite.config.ts`, or replacing the hand-maintained claims with generated text.
+- at-risk regressions: a matcher that misses a claim and silently passes (guarded by the located-sites assertion); a file read that depends on the working directory (use `import.meta.url`, not `process.cwd()`); the parser accepting an unrelated `... Svelte 5 components` phrase (guarded by requiring a tens word).
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the new test is additive and the stale-claim case is exercised with synthetic strings inside the same test file, so no restored-state re-run is needed.
+- citations used: `docs/agents/ledger.md` n=1..n=4 (the stale-count regression is the trace); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 (the component set the count describes). This repo has no `docs/agents/reading-list.md`, so no harness citation id is asserted.
+
+- code change: new `src/lib/count-claims.test.ts` only. No existing file changed.
+- commit SHA + git tree: `b45dbe18d271` + `2b55106283e949278832b3476619559012376144`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 19 files, 100 tests passed (96 baseline plus 4 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 new gate tests passed (4 items).
+- held-out score: 96/96 pre-existing tests passed (96 items, never used for selection), plus the unchanged contrast, check and build gates.
+- negative control: changing one `README.md` claim to `twenty-two` made the gate fail with `README.md: expected 22 to be 23`; reverting restored 4/4. The gate fails on the stale claim, not on an unrelated assertion.
+- gains: the five hand-maintained count claims are now checked against `src/lib/index.ts`, closing the regression flagged in n=1..n=4. Export count unchanged at 23.
+- losses: none observed. `npm test` file count 18 -> 19.
+- exceptions: the cheap tier exhausted its step cap with all four tests failing (`parseInt('twenty-two')` is `NaN`, capture-group `.filter` read `undefined`, `index.ts` has no default export) and left two debug scratch files, which were deleted. The strong tier rewrote the file, then svelte-check failed with two `node:fs` errors because `@types/node` is absent; the fix was `?raw` imports, made in-session. The first review returned REQUEST CHANGES on two P2s (irregular spacing variants; an export path outside `./components/<name>.svelte`); the parser now normalises dashes and whitespace, the export matcher accepts any `./components/**.svelte` path, both cases have tests, and the reviewer withdrew the request.
+- token/cost/duration: tokens not captured; one session, two executor dispatches and two reviewer passes.
+- interpretation: the gate derives its number, fails on a stale claim, and adds no dependency. The frozen baseline is intact.
+- keep/revert: keep.
+- next hypothesis: `Skeleton` from PR D (`feature`) moves the count 23 -> 24 with an `aria-hidden` shape primitive, and the new count gate fails until all five claims are updated, which makes the claim update mechanical rather than a thing to remember.
+- prev-chain: sha256:fc37f3eb60683e8861fcd05af58143eb5964abb639cf808d619d29e278f486ca (same link as the preregistration, restated for the gate).
+
+### n=5 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de404c46fffeQF13zUIu1n7yVK`, bound to commit `8c5f8ea51afe` (tracked fingerprint `9f9ec6d13ad1`).
+- work item: GitHub issue #19.
+- PR: #20, `feature/count-claim-gate` into `main`.
+- final gate run after the last code mutation: `npm test` 19 files / 100 tests passed.
+
 
 
 

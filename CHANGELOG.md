@@ -11,6 +11,10 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - `Menu`: a trigger button with a `role="menu"` popup, arrow and Home/End navigation, Enter or click to select, and Escape or Tab to close with focus back on the trigger.
 - `EmptyState`: a decorative mark slot, a title, an optional description and an optional action snippet, with the action always interactive.
 
+### Changed
+
+- The hand-maintained count claims in `README.md`, `/` and `/components` are now checked against the exported component list by `src/lib/count-claims.test.ts`, so a stale claim fails `npm test`.
+
 ## [0.5.0] - 2026-11-26
 
 ### Added
