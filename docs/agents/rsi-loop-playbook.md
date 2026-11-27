@@ -70,12 +70,15 @@ date claims no sweep happened.
   fatal, and that each named script exists in `package.json`. The test reads the
   workflow text, so `actionlint` is the YAML check, not the test.
 - **metric** — exported components that carry a sibling `*.test.ts` of their
-  own. **Audited 2026-11-27:** 27 of 27 exports have one. n=11 added the seven
+  own. **Audited 2026-11-27:** 28 of 28 exports have one. n=11 added the seven
   that were missing (`Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select`,
-  `Stat`), and n=12's `Avatar` shipped with its test file in the same diff.
+  `Stat`); n=12's `Avatar` and n=14's `Drawer` shipped with their test files in
+  the same diff.
   `src/lib/tested-exports.test.ts` pins that set with an empty allowlist, so a
   new export without a sibling test fails the suite.
-  **The measured property is a sibling file, not coverage depth**, and three
+  **The measured property is a sibling file, not coverage depth**, which is why
+  the saturated metric is not the campaign measure on its own: n=13 added no
+  export and still moved `Button` from one assertion to eleven. Three
   assertions per component is a floor rather than a ceiling. The earlier
   history (19 -> 24) counted exports, not tested exports, and n=7's audit
   corrected that overstatement. The candidate is one component from

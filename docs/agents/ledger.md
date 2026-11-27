@@ -628,6 +628,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 PR E `Drawer` row; `src/lib/components/Dialog.svelte` and `Dialog.test.ts` (the guard pattern and the jsdom stubs); ledger n=13. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:630df0377d96a7014626e65b023e10a296818583030aae9f75592ec8e64f9dfc (the n=13 preregistration block, the highest top-level `### n=` below 14 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: new `src/lib/components/Drawer.svelte`, `Drawer.test.ts`, `src/routes/_demos/DrawerDemo.svelte`; export between `Dialog` and `EmptyState`; `/components` section; five count claims; `[Unreleased]` bullet; playbook metric line refreshed to 28 of 28.
+- commit SHA + git tree: `1efe44af0944` + `84c92c03cbee51891680c7db0664bde6e0b51338`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 33 files, 173 tests passed (166 baseline plus seven). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 28; the ratchet is green, so tested exports move 27 -> 28 of 28.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 7/7 new `Drawer` assertions passed (dialog named by its title, one `showModal` call, no `close` on an already-closed drawer, the `close` event writing state and calling `onclose`, the default `end` class, the `start` class, and `aria-labelledby` resolving to the title element).
+- held-out score: 166/166 pre-existing tests passed (166 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 27 -> 28 and tested exports 27 -> 28 of 28; the kit gains an edge drawer that reuses the `Dialog` guard instead of a second dialog state machine, so the two cannot drift on open/close.
+- losses: Escape and focus return are native to `showModal` and unasserted, because jsdom implements neither. The ledger says so rather than implying coverage.
+- exceptions: dispatched to `executor-strong`, which passed the four gates on the first attempt. Two corrections followed. Before implementation the contract lost a planned `label` prop, which duplicated `id`; the `${id}-title` convention from `Dialog` replaced it and the preregistration was corrected in the same branch. On review, a P0 said the edge pinning relied on the UA stylesheet's `position: fixed` for modal dialogs; `.fw-drawer` now declares `position: fixed` itself. A P1 said the demo's `actions` snippet might not reach the prop; the prerendered `build/components.html` shows `<div class="fw-drawer__actions">…<button class="fw-button…`, so the snippet is passed and rendered, and the reviewer withdrew the finding. One test name was renamed from "uses the label" to "names the dialog from its title element" after the prop was dropped.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and two reviewer rounds.
+- interpretation: the component meets the spec row, and the guard is a copy rather than a second implementation, which is the property the spec row asked for.
+- keep/revert: keep.
+- next hypothesis: the busy-anchor fix for issue #35, moved into the n=15 slot from the forwarding tests (reason recorded at n=13).
+- prev-chain: sha256:630df0377d96a7014626e65b023e10a296818583030aae9f75592ec8e64f9dfc (same link as the preregistration, restated for the gate).
+
 
 
 
