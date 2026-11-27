@@ -9,6 +9,7 @@
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
   import AccordionDemo from '../_demos/AccordionDemo.svelte';
+  import AvatarDemo from '../_demos/AvatarDemo.svelte';
   import BreadcrumbsDemo from '../_demos/BreadcrumbsDemo.svelte';
   import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
@@ -39,7 +40,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-six Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-seven Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -131,6 +132,12 @@
   <h2>Breadcrumbs</h2>
   <p class="note">A nav landmark over an ordered list, anchors on ancestor items and aria-current on the current page.</p>
   <BreadcrumbsDemo />
+</section>
+
+<section class="block">
+  <h2>Avatar</h2>
+  <p class="note">An image whose alt the type requires alongside <code>src</code>, an initials fallback whose accessible name is the full name, and sm/md/lg sizes. An empty name renders a decorative placeholder.</p>
+  <AvatarDemo />
 </section>
 
 <section class="block">
