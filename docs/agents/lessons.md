@@ -22,3 +22,5 @@ carrying its id in the bullet and registered below.
 ## Registry
 
 <!-- register lesson files below this line, newest last -->
+
+- L001 — A container-wide query can contradict the contract the test is checking: scope the assertion to the element under test. (evidence: `2026-11-27T06-54-11Z-assertion-scope.md`)
