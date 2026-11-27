@@ -355,6 +355,26 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #26, `feature/progress-component` into `main`.
 - final gate run after the last code mutation: `npm test` 22 files / 113 tests passed.
 
+### n=9 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T08:50Z
+- change-type: gate
+- hypothesis (falsifiable): a new `.github/workflows/gates.yml` runs `npm ci` then the four existing gate scripts on push to `main` and on every pull request, and a new `src/lib/workflow-gates.test.ts` pins the contract by parsing the workflow with `?raw`. `actionlint` reports zero findings, the pinned assertions pass 4/4, `npm test` moves 113 -> 117, exports stay 25, and no component, token or existing test changes.
+- candidate source: campaign 2 screener position 3 (C4); ledger n=8 `next hypothesis`. The audit fact behind it: there is no `.github/` directory, so nothing runs the four gates on a PR today and a red tree reaches `main` whenever a session forgets a gate.
+- selection score (4 items): the four new workflow assertions — `npm ci` is present, each of `test`/`check`/`contrast`/`build` is invoked, every `npm run <script>` named in the workflow exists in `package.json`, and the workflow triggers on both `push` and `pull_request`.
+- held-out score (113 items, never used for selection): the 113 pre-existing tests (count gate and tested-export ratchet included), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 117 passed with 0 failures, `actionlint .github/workflows/gates.yml` exits 0, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports stay 25.
+- reject rule: any gate red, `actionlint` finding, any pre-existing test edited, or the workflow pinning `npm install` instead of `npm ci` (which would ignore the lockfile).
+- non-goals: adding a status badge to the README, caching beyond `setup-node`'s npm cache, splitting jobs, adding a fifth gate, or enforcing branch protection through the API.
+- at-risk regressions: `actionlint` flagging the workflow's expression syntax; the workflow and `package.json` script names drifting apart; the workflow passing while a contributor runs a different Node major; CI cost on every push.
+- honest limit recorded before the run: this iteration can verify the workflow file statically (`actionlint`) and semantically (the pinned assertions), but it cannot prove the workflow executes on GitHub until a later PR triggers it. The first real signal arrives on the next PR's checks tab. That is a weaker verifier than a local test run, and it is stated here rather than assumed.
+- router decision: written by the calling session. The change defines the CI contract and its own verifier, which is a measurement decision like n=7, and the cheap tier has produced no acceptable diff in seven dispatches.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the workflow is additive; the four gates it invokes and the two existing gate tests are the incumbents that must stay green.
+- citations used: GitHub Actions workflow syntax for `on`, `permissions`, `concurrency` and `setup-node` (vendor documentation, no arXiv id); `package.json` scripts (repo file); ledger n=8. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:237be1d9876a65eb9851fc632ef86b3be444387e6b8916ed97c087f7aafe813e (the n=8 preregistration block, the highest top-level `### n=` below 9 that the gate's `reduce` selects when two records share n=8; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
