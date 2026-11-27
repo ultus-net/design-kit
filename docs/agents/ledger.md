@@ -820,6 +820,54 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45981340441 — `gates` passed in 28s on the PR head.
 - final gate run after the last code mutation: `npm test` 34 files / 186 tests passed.
 
+### n=18 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T10:50Z
+- change-type: chore
+- hypothesis (falsifiable): cutting the release moves `package.json` from `0.5.0` to `0.7.0` and turns the ten PR D and PR E entries under `[Unreleased]` into a dated `[0.7.0] - 2026-11-27` section with a fresh empty `[Unreleased]` above it, and a new `src/lib/version-claims.test.ts` with two assertions passes (the package version equals the top dated changelog heading, and every `## [x.y.z]` heading is dated, unique and ordered newest first), moving the suite from 186 to 188 tests with 0 failures while exports stay 29, the five count claims stay twenty-nine and the four gates stay green.
+- candidate source: campaign 5 screener candidate 2, which the screener could not read; `package.json:3` (`"version": "0.5.0"`, `"private": false`, the `svelte-package` script); `CHANGELOG.md:5-32` (ten components under `[Unreleased]`, top released section `[0.5.0] - 2026-11-26`); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 4 (PR D planned as 0.6.0, PR E as 0.7.0); ledger n=17 `next hypothesis`.
+- release decision: the release is **0.7.0**, not 0.6.0 then 0.7.0. The repo has no git tags and `package.json` still reads 0.5.0, so 0.6.0 never shipped. A version is a release, not a plan: the changelog records what shipped when, and skipping an unused number is permitted. Both PR D and PR E rows land in the one section.
+- gate decision: the version claim gets a test because `README.md` and the components page already carry counted claims pinned by `src/lib/count-claims.test.ts`, and `package.json` was the last hand-maintained claim in the repo with nothing checking it. The honest limit is recorded below: it catches a bump without a changelog heading, not a merged feature without a bump.
+- selection score (2 items): the two `version-claims` assertions.
+- held-out score (186 items, never used for selection): the 186 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 188 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, five count claims read twenty-nine, `package.json` reads 0.7.0, and the changelog's top dated heading is `0.7.0` dated 2026-11-27.
+- reject rule: any gate red, any component or existing test edited, a release section that changes an entry's wording, a version heading without a date, or a `package.json` bump with no matching heading.
+- non-goals: publishing to npm, creating a git tag, adding a release workflow, rewriting the changelog entries, and bumping any dependency.
+- at-risk regressions: the `?raw` import path for `CHANGELOG.md` from `src/lib/`, which no existing test does; the regex silently skipping a heading that is malformed, which the "every heading is dated" assertion is there to catch; the empty `[Unreleased]` section tripping a naive heading scan.
+- honest limit: the gate catches a version bump without a changelog section and a heading without a date. It cannot catch a merged feature that was never bumped, because an `[Unreleased]` section with entries is a legitimate state during development. Claiming otherwise would be false.
+- router decision: authored in-session. One two-line JSON change, one section rename, and a fourteen-line test are below the size where a dispatch pays for itself.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the changelog's released history is the incumbent; the revision adds one section and one test file.
+- citations used: `package.json`, `CHANGELOG.md`, `src/lib/count-claims.test.ts` (the ratchet this one is modelled on), `src/lib/workflow-gates.test.ts:3` (the `?raw` import precedent), the design doc's phasing table, ledger n=17. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (the n=17 preregistration record with its result and close-out, the highest top-level `### n=` below 18 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: `package.json` version 0.5.0 -> 0.7.0; `CHANGELOG.md` gains an empty `## [Unreleased]` and renames the section below it to `## [0.7.0] - 2026-11-27`, entry text unchanged; new `src/lib/version-claims.test.ts`. No component, workflow, dependency or existing test touched.
+- commit SHA + git tree: release commit `c27abb222096` + `5af6d9f133d07e5ff3129a11eb5f40c549e06c34`, plus the follow-up `e2515f3` + `8b8546523dfe2509f48336cb6dfb86c57f9a5942` that syncs `package-lock.json` to 0.7.0 after the PR preflight rejected a manifest change without its lockfile. The release commit had not touched the two root lockfile version fields, which `npm install --package-lock-only` rewrites to the manifest version; nothing else in the lockfile changed.
+- artifact name + checksum: no published artifact; `dist/` is not built in this iteration and no tag is created.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 35 files, 188 tests passed (186 baseline plus two). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 29, five count claims read twenty-nine, `package.json` reads 0.7.0.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 2/2 preregistered assertions passed: two tests, seven assertions in total (top section name equals the package version, top section is dated, every released name is semver-shaped, every released section is dated, names are unique, names are ordered newest first).
+- held-out score: 186/186 untouched tests passed, plus the unchanged contrast, check and build gates.
+- gains: the package version now matches the release it ships with, and the version/changelog agreement is a gate instead of a convention. Before this iteration `package.json` said 0.5.0 while the changelog listed ten components from two planned minor versions.
+- losses: none observed. No behaviour changed.
+- exceptions: authored in-session. The first review returned REQUEST CHANGES with a P0 that the date check was implicit in a set difference, and a P1 that a malformed name could reach the comparator as `NaN`. The P0's stated mechanism was not what the code did (an undated top heading already failed the set comparison, since `released` is the dated subset and the comparison list is every heading), but the criticism of the expression was right, and the test now asserts the date and the shape directly, with the shape checked before the sort. Each failure mode was then proved against synthetic changelog text: healthy passes, an undated top heading yields `["top undated","undated section"]`, a bump without a section yields `["top name 0.7.0 != 0.8.0"]`, a malformed name yields `["malformed name 0.5"]`, and a duplicate yields `["duplicate"]`. Second review APPROVED.
+- loop note: the n=16 and n=17 `prev-chain` values were wrong on the first attempt because the hash was computed while the record was still the last block, so it included the trailing blank lines that the gate trims once a new `### n=` heading appears. The gate's expected value is authoritative; both records were corrected before their commits closed.
+- token/cost/duration: tokens not captured; one session, no executor dispatch and two reviewer rounds.
+- interpretation: the release is the campaign's only non-code gain, and it is the one with an external consequence: a publish of this tree now ships 0.7.0 with the changelog to match, instead of 0.5.0 with ten undeclared components.
+- keep/revert: keep.
+- next hypothesis: nothing from the campaign 4 or 5 candidate sets remains unstarted except the `Field` seam refactor, which the campaign 5 screener denied as a multi-iteration restructure, and the branch-protection decision, which is the operator's.
+- prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (same link as the preregistration, restated for the gate).
+
+### n=18 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3776b55ffeaJXpKmm5EekT6k`, bound to commit `e2515f3ee85e` (tracked fingerprint `162b8e566f7c`).
+- work item: GitHub issue #46.
+- PR: #47, `chore/release-0-7-0` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45982193718 — `gates` passed in 37s on the PR head.
+- final gate run after the last code mutation: `npm test` 35 files / 188 tests passed, plus check 0/0, contrast 186/0 and a clean build.
+
 
 
 

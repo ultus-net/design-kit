@@ -40,3 +40,4 @@ carrying its id in the bullet and registered below.
 - L015 — With delegated events, a listener on the element runs before the component's handler; dispatch the event yourself and read `event.defaultPrevented` after. (evidence: `2026-11-27T100500Z-delegated-events-read-after-dispatch.md`)
 - L016 — When four components share a contract, give each one a different case of it and record which proves what. (evidence: `2026-11-27T102500Z-one-case-per-component.md`)
 - L017 — Carry the source index through a regrouping; recomputing it with `indexOf` makes DOM ids depend on object identity. (evidence: `2026-11-27T104500Z-carry-the-source-index-through-grouping.md`)
+- L018 — Assert the field a gate protects, not a difference between derived lists that implies it. (evidence: `2026-11-27T110000Z-assert-the-field-not-the-difference.md`)

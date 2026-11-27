@@ -1,6 +1,6 @@
 {
   "name": "@ultus-net/design-kit",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": false,
   "description": "A design kit: tokens, palette profiles, corner presets, components and guidance.",
   "type": "module",
