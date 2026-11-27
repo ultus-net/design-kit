@@ -242,6 +242,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 PR D `Skeleton` row (repo document, no id); `docs/agents/ledger.md` n=5 (the count gate this iteration must satisfy). This repo has no `docs/agents/reading-list.md`, so no harness citation id is asserted.
 - prev-chain: sha256:353ced258faf37987f89bd6b4e62d03127d3edf8da352f6d1cd065e3ba129ee4 (the n=5 preregistration block, the highest top-level `### n=` below 6 that the gate's `reduce` selects when two records share n=5; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: new `src/lib/components/Skeleton.svelte`, `Skeleton.test.ts`, `src/routes/_demos/SkeletonDemo.svelte`; export between `Select` and `Stat`; `/components` section; five count claims; `[Unreleased]` bullet.
+- commit SHA + git tree: `7b9d237` + `bb4c7b7c9051c4f2b963f8bf270f106a72d1e76c`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 20 files, 104 tests passed (100 baseline plus 4 new). The n=5 count gate passed, proving all five claims read twenty-four. svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 new `Skeleton` assertions passed (4 items).
+- held-out score: 100/100 pre-existing tests passed (100 items, never used for selection, count gate included), plus the unchanged contrast, check and build gates.
+- gains: exported components 23 -> 24; one PR D placeholder with line, block and circle shapes from radius tokens. The count gate caught the stale claims immediately, so the update was mechanical rather than remembered.
+- losses: none observed.
+- exceptions: the cheap tier hit its step cap with the component and tests written but the wiring half-done: a stray `let shapes = $state(...)` in the components page, no demo, no section, no changelog and no README/home claim updates. The strong tier removed the stray state, found two type errors the cheap draft left (`export type { Props as SkeletonProps }` in `index.ts` and an uncast `querySelector` result read for `.style`), and finished the wiring. The reviewer returned ACCEPT with no P0 or P1.
+- token/cost/duration: tokens not captured; one session, two executor dispatches and one reviewer pass.
+- interpretation: the component meets the spec row, the gate now enforces the count claims, and the frozen baseline is intact.
+- keep/revert: keep.
+- next hypothesis: with PR D's five rows shipped, the campaign's next candidate is outside the frozen PR D scope, so a fresh spec decision (PR E: `Progress`) is required before another iteration.
+- prev-chain: sha256:353ced258faf37987f89bd6b4e62d03127d3edf8da352f6d1cd065e3ba129ee4 (same link as the preregistration, restated for the gate).
+
 
 
 

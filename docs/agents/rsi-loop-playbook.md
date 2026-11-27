@@ -66,8 +66,8 @@ date claims no sweep happened.
 - **metric** — exported components that carry behavioural tests that fail
   without the component. Observed count moved 19 -> 20 at iteration 1
   (`Breadcrumbs`), 20 -> 21 at iteration 2 (`Tooltip`), 21 -> 22 at iteration 3
-  (`Menu`) and 22 -> 23 at campaign iteration 4 (`EmptyState`). The candidate is
-  one component from
+  (`Menu`), 22 -> 23 at campaign iteration 4 (`EmptyState`) and 23 -> 24 at
+  campaign iteration 6 (`Skeleton`). The candidate is one component from
   `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D.
 - **frozen ruler** — the HEAD `bfcdf42` baseline: 14 test files, 74 tests
   passing, 186 contrast pairs with 0 failures, svelte-check 0/0, clean build.
