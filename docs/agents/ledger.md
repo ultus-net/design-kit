@@ -108,5 +108,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `Menu` from PR D moves the count 21 -> 22 with arrow-key navigation, Escape and focus return, without disturbing the 84-test baseline.
 - prev-chain: sha256:672a114a235a6aff72f2084fdd0250f51165cb248da4ecc168e134df86ab295d (the `### n=1 close-out` block above, from its heading to the final gate line).
 
+### n=2 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de42799a5ffeJs23zI8q7TZ9Gx`, bound to commit `d878d25ab6bd` (tree fingerprint `7b773e5df95d`).
+- work item: GitHub issue #13.
+- PR: #14, `feature/tooltip-component` into `main`.
+- final gate run after the last code mutation: `npm test` 16 files / 84 tests passed.
+
+
 
 
