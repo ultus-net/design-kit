@@ -531,6 +531,20 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: none inside PR E that the brake allows next; `Drawer` and `CommandPalette` are the remaining PR E rows, and branch protection is still deferred to the operator.
 - prev-chain: sha256:6b8dacd8d17b9cdfda5b8724a53d654382a53529a00d2aa08b276b236b90c536 (same link as the preregistration, restated for the gate).
 
+### n=12 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3c153b6ffeXBMEdw3AeD282T`, bound to commit `9cbf966e64a3` (tracked fingerprint `83030d7bdd7c`).
+- work item: GitHub issue #33.
+- PR: #34, `feature/avatar-component` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45971116704 — `gates` passed on the PR head.
+- final gate run after the last code mutation: `npm test` 32 files / 156 tests passed.
+
+### campaign 3 close-out
+
+- iterations: n=10 `feature` (PR #30), n=11 `test` (PR #32), n=12 `feature` (PR #34), all merged.
+- stop reason: N=3 reached, the campaign size the request asked for. No iteration produced a no-gain result, so the no-gain brake never fired, and no two consecutive iterations shared a change-type, so the diversity brake never fired.
+- metric: exported components 25 -> 27; tested exports 18 -> 27 of 27. Tests 118 -> 156 across 23 -> 32 files.
+
 
 
 
