@@ -486,6 +486,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `Avatar` from PR E (`img` with required `alt`, initials fallback from `name`, size scale) moves the metric's tested and exported counts together, 26 -> 27 of 27.
 - prev-chain: sha256:84464f7fe6ac98cf1d5b9f3d73da4d24d6b1313996bafc340fe1dc6baa7b2ec9 (same link as the preregistration, restated for the gate).
 
+### n=11 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3c80f1cffeiw1U8oFvLjB0bs`, bound to commit `ea4ebeb76cd9` (tracked fingerprint `8a750865efaf`).
+- work item: GitHub issue #31.
+- PR: #32, `feature/sibling-tests` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45969839584 — `gates` passed on the PR head.
+- final gate run after the last code mutation: `npm test` 31 files / 146 tests passed.
+
 
 
 
