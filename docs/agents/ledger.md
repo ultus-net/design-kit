@@ -981,6 +981,28 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/46078780374 — `gates` passed in 39s on the PR head.
 - final gate run after the last code mutation: `npm test` 36 files / 193 tests passed, plus check 0/0, contrast 186/0 and a clean build.
 
+### n=21 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T22:55Z
+- change-type: refactor
+- hypothesis (falsifiable): extracting the modal guard that `Dialog.svelte:26-34`, `Drawer.svelte:26-34` and `CommandPalette.svelte:47-55` each hold byte for byte into `src/lib/components/dialog-modal.ts`, and calling it from the three `$effect` blocks, leaves all 193 existing tests passing without editing any of them (the three dialog suites are the oracle), adds three helper tests (193 -> 196), keeps exports at 29, and preserves the observable guard behaviour: `showModal` once when opening, `close` when closing, and no call when the element is disconnected.
+- candidate source: campaign 6 plan C7; `Dialog.svelte:26-34`, `Drawer.svelte:26-34`, `CommandPalette.svelte:47-55` (verified identical by direct diff), `Dialog.test.ts:51-71` and `:107-121` (the `showModal` and `close` cases), `src/lib/components/combobox-model.ts` and `combobox-model.test.ts` (the repo's precedent for a shared module plus a sibling unit test), ledger n=20 `next hypothesis`.
+- defect statement: the guard is three copies of the same six lines, which is the repo's third-use extraction trigger. A fix applied to one copy leaves the other two wrong, and the copies have already survived one behaviour question (`isConnected`) that a reader has to check three times.
+- contract decision: the helper takes a structural type (`open`, `isConnected`, optional `showModal` and `close`) rather than `HTMLDialogElement`, so its unit test passes a plain object and no cast is needed; `HTMLDialogElement` satisfies the type structurally. The module is internal, is not re-exported from `src/lib/index.ts`, and therefore does not change the package surface.
+- selection score (3 items): the three new helper tests (open, close, disconnected), six assertions in total.
+- held-out score (193 items, never used for selection): the 193 pre-existing tests, including `Dialog.test.ts` (7), `Drawer.test.ts` (7) and `CommandPalette.test.ts` (9), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 196 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, and `git diff` shows no change to `Dialog.test.ts`, `Drawer.test.ts` or `CommandPalette.test.ts`.
+- reject rule: any gate red, any existing test edited, any guard branch dropped or reordered, a parameter typed as `any` or `object`, a component's rendered markup changed, or the extraction deferred by a comment instead of performed.
+- non-goals: changing what the guard does (still `showModal`/`close` only, no focus management, no backdrop click, no Escape handling), extracting the `handleClose` handler, touching `Dialog`'s or `Drawer`'s props, and adding a new export.
+- at-risk regressions: Svelte's `$effect` tracks signals read during the call, so `syncDialogModal(element, open)` still subscribes to both; if the helper is called outside the effect, or if it returns early before reading `open`, an open or close would stop reacting. `Dialog.test.ts` stubs `showModal` and `close` on `HTMLDialogElement.prototype`, and the helper calls the instance members, so spies still observe the calls. jsdom has no layout, so nothing here depends on geometry.
+- honest limit: the refactor is not observable to a user, so the evidence is that behaviour did not change, not that anything improved. The helper tests cover the branches directly; the three component suites cover the wiring.
+- router decision: authored in-session. It is a 12-line module with three call sites and the extraction trigger is explicit in the repo rules; a dispatch would cost more than it saves.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the incumbent is three inline effects holding the same six lines; the revision is one module with the same branches plus a unit test, called from three one-line effects. No behaviour change.
+- citations used: `Dialog.svelte`, `Drawer.svelte`, `CommandPalette.svelte`, their three test files, `combobox-model.ts`, `combobox-model.test.ts`, campaign 6 plan C7, ledger n=20. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:34a92407126672c0dfbf765db9a03e855e3eca023c30dafc535f69a2082d1597 (the n=20 record with its result and close-out, the highest top-level `### n=` below 21 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
