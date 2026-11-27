@@ -331,6 +331,23 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: the design spec section 3 PR E `Progress` row (repo document, no id); `docs/agents/ledger.md` n=7. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:0e224f8205081007f9785eb0585f75dc7f124cb950d86919746ac87d5f521977 (the n=7 preregistration block, the highest top-level `### n=` below 8 that the gate's `reduce` selects when two records share n=7; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: new `src/lib/components/Progress.svelte`, `Progress.test.ts`, `src/routes/_demos/ProgressDemo.svelte`; export between `Pagination` and `RadioGroup`; `/components` section and note; five count claims; `[Unreleased]` bullet.
+- commit SHA + git tree: `840d46ff9aae` + `8f9d9cb0a5cb0bc1bbf699f35cfe5e08748dc3cf`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 22 files, 113 tests passed (108 baseline plus 5 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 25; the ratchet stayed green because `Progress` has a sibling test, so the tested count moved 17 -> 18.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 4/4 preregistered assertions passed, plus a fifth test added when the two-bar clamp case was split after review; the split strengthens isolation and does not change the contract.
+- held-out score: 108/108 pre-existing tests passed (108 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 24 -> 25, tested exports 17 -> 18; the progressbar contract is pinned including clamping and the indeterminate state; the count gate forced the five claim updates.
+- losses: none observed.
+- exceptions: dispatched to `executor-strong` directly per the recorded router decision; it passed the four gates on the first attempt. Its only deviation was `$derived` instead of the specified plain `const` for `safeMax`, `clamped` and `percent`, which is correct for Svelte 5 props and keeps the specified expressions. The first review returned REQUEST CHANGES with one P1 (the indeterminate state omits min/max as well as valuenow, which the spec row did not state) and one P2 (two bars in one test); the contract was written into the component page note and this record, the test was split into two, and the reviewer withdrew with no P0/P1.
+- token/cost/duration: tokens not captured; one session, one executor dispatch and two reviewer passes.
+- interpretation: the component meets and documents the contract, and the metric moved by one tested export.
+- keep/revert: keep.
+- next hypothesis: the GitHub Actions `gate` candidate runs the four gates on push and PR, so a red tree cannot reach `main` again; it is locally checkable with `actionlint`.
+- prev-chain: sha256:0e224f8205081007f9785eb0585f75dc7f124cb950d86919746ac87d5f521977 (same link as the preregistration, restated for the gate).
+
 
 
 
