@@ -820,6 +820,28 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45981340441 — `gates` passed in 28s on the PR head.
 - final gate run after the last code mutation: `npm test` 34 files / 186 tests passed.
 
+### n=18 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T10:50Z
+- change-type: chore
+- hypothesis (falsifiable): cutting the release moves `package.json` from `0.5.0` to `0.7.0` and turns the ten PR D and PR E entries under `[Unreleased]` into a dated `[0.7.0] - 2026-11-27` section with a fresh empty `[Unreleased]` above it, and a new `src/lib/version-claims.test.ts` with two assertions passes (the package version equals the top dated changelog heading, and every `## [x.y.z]` heading is dated, unique and ordered newest first), moving the suite from 186 to 188 tests with 0 failures while exports stay 29, the five count claims stay twenty-nine and the four gates stay green.
+- candidate source: campaign 5 screener candidate 2, which the screener could not read; `package.json:3` (`"version": "0.5.0"`, `"private": false`, the `svelte-package` script); `CHANGELOG.md:5-32` (ten components under `[Unreleased]`, top released section `[0.5.0] - 2026-11-26`); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 4 (PR D planned as 0.6.0, PR E as 0.7.0); ledger n=17 `next hypothesis`.
+- release decision: the release is **0.7.0**, not 0.6.0 then 0.7.0. The repo has no git tags and `package.json` still reads 0.5.0, so 0.6.0 never shipped. A version is a release, not a plan: the changelog records what shipped when, and skipping an unused number is permitted. Both PR D and PR E rows land in the one section.
+- gate decision: the version claim gets a test because `README.md` and the components page already carry counted claims pinned by `src/lib/count-claims.test.ts`, and `package.json` was the last hand-maintained claim in the repo with nothing checking it. The honest limit is recorded below: it catches a bump without a changelog heading, not a merged feature without a bump.
+- selection score (2 items): the two `version-claims` assertions.
+- held-out score (186 items, never used for selection): the 186 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 188 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, five count claims read twenty-nine, `package.json` reads 0.7.0, and the changelog's top dated heading is `0.7.0` dated 2026-11-27.
+- reject rule: any gate red, any component or existing test edited, a release section that changes an entry's wording, a version heading without a date, or a `package.json` bump with no matching heading.
+- non-goals: publishing to npm, creating a git tag, adding a release workflow, rewriting the changelog entries, and bumping any dependency.
+- at-risk regressions: the `?raw` import path for `CHANGELOG.md` from `src/lib/`, which no existing test does; the regex silently skipping a heading that is malformed, which the "every heading is dated" assertion is there to catch; the empty `[Unreleased]` section tripping a naive heading scan.
+- honest limit: the gate catches a version bump without a changelog section and a heading without a date. It cannot catch a merged feature that was never bumped, because an `[Unreleased]` section with entries is a legitimate state during development. Claiming otherwise would be false.
+- router decision: authored in-session. One two-line JSON change, one section rename, and a fourteen-line test are below the size where a dispatch pays for itself.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the changelog's released history is the incumbent; the revision adds one section and one test file.
+- citations used: `package.json`, `CHANGELOG.md`, `src/lib/count-claims.test.ts` (the ratchet this one is modelled on), `src/lib/workflow-gates.test.ts:3` (the `?raw` import precedent), the design doc's phasing table, ledger n=17. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (the n=17 preregistration record with its result and close-out, the highest top-level `### n=` below 18 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
