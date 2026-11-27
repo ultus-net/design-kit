@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import { syncDialogModal } from './dialog-modal';
 
   interface Props {
     id: string;
@@ -24,13 +25,7 @@
   let element = $state<HTMLDialogElement>();
 
   $effect(() => {
-    if (!element?.isConnected) return;
-
-    if (open && !element.open) {
-      if (typeof element.showModal === 'function') element.showModal();
-    } else if (!open && element.open && typeof element.close === 'function') {
-      element.close();
-    }
+    syncDialogModal(element, open);
   });
 
   function handleClose() {
