@@ -9,6 +9,10 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - A publish now ships the library: `prepack` runs the package build, so `npm pack` and `npm publish` include `dist/` instead of three metadata files. A `package-contents` gate pins the tarball, the export targets and the `svelte` peer range, and `docs/publishing.md` records the release procedure.
 - `Field`: the hint now follows the control and the error modifier is `fw-field--error`, matching `Input`, `Select` and `Textarea`, so the same class names resolve to one layout.
 
+### Changed
+
+- `Dialog`, `Drawer` and `CommandPalette` call one modal guard, `dialog-modal.ts`, instead of holding three byte-identical copies of it. The guard's behaviour is unchanged and the three component suites are unedited.
+
 ## [0.7.0] - 2026-11-27
 
 ### Added

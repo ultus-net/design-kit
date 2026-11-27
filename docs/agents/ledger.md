@@ -981,6 +981,60 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/46078780374 — `gates` passed in 39s on the PR head.
 - final gate run after the last code mutation: `npm test` 36 files / 193 tests passed, plus check 0/0, contrast 186/0 and a clean build.
 
+### n=21 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T22:55Z
+- change-type: refactor
+- hypothesis (falsifiable): extracting the modal guard that `Dialog.svelte:26-34`, `Drawer.svelte:26-34` and `CommandPalette.svelte:47-55` each hold byte for byte into `src/lib/components/dialog-modal.ts`, and calling it from the three `$effect` blocks, leaves all 193 existing tests passing without editing any of them (the three dialog suites are the oracle), adds three helper tests (193 -> 196), keeps exports at 29, and preserves the observable guard behaviour: `showModal` once when opening, `close` when closing, and no call when the element is disconnected.
+- candidate source: campaign 6 plan C7; `Dialog.svelte:26-34`, `Drawer.svelte:26-34`, `CommandPalette.svelte:47-55` (verified identical by direct diff), `Dialog.test.ts:51-71` and `:107-121` (the `showModal` and `close` cases), `src/lib/components/combobox-model.ts` and `combobox-model.test.ts` (the repo's precedent for a shared module plus a sibling unit test), ledger n=20 `next hypothesis`.
+- defect statement: the guard is three copies of the same six lines, which is the repo's third-use extraction trigger. A fix applied to one copy leaves the other two wrong, and the copies have already survived one behaviour question (`isConnected`) that a reader has to check three times.
+- contract decision: the helper takes a structural type (`open`, `isConnected`, optional `showModal` and `close`) rather than `HTMLDialogElement`, so its unit test passes a plain object and no cast is needed; `HTMLDialogElement` satisfies the type structurally. The module is internal, is not re-exported from `src/lib/index.ts`, and therefore does not change the package surface.
+- selection score (3 items): the three new helper tests (open, close, disconnected), six assertions in total.
+- held-out score (193 items, never used for selection): the 193 pre-existing tests, including `Dialog.test.ts` (7), `Drawer.test.ts` (7) and `CommandPalette.test.ts` (9), plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 196 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, and `git diff` shows no change to `Dialog.test.ts`, `Drawer.test.ts` or `CommandPalette.test.ts`.
+- reject rule: any gate red, any existing test edited, any guard branch dropped or reordered, a parameter typed as `any` or `object`, a component's rendered markup changed, or the extraction deferred by a comment instead of performed.
+- non-goals: changing what the guard does (still `showModal`/`close` only, no focus management, no backdrop click, no Escape handling), extracting the `handleClose` handler, touching `Dialog`'s or `Drawer`'s props, and adding a new export.
+- at-risk regressions: Svelte's `$effect` tracks signals read during the call, so `syncDialogModal(element, open)` still subscribes to both; if the helper is called outside the effect, or if it returns early before reading `open`, an open or close would stop reacting. `Dialog.test.ts` stubs `showModal` and `close` on `HTMLDialogElement.prototype`, and the helper calls the instance members, so spies still observe the calls. jsdom has no layout, so nothing here depends on geometry.
+- honest limit: the refactor is not observable to a user, so the evidence is that behaviour did not change, not that anything improved. The helper tests cover the branches directly; the three component suites cover the wiring.
+- router decision: authored in-session. It is a 12-line module with three call sites and the extraction trigger is explicit in the repo rules; a dispatch would cost more than it saves.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the incumbent is three inline effects holding the same six lines; the revision is one module with the same branches plus a unit test, called from three one-line effects. No behaviour change.
+- citations used: `Dialog.svelte`, `Drawer.svelte`, `CommandPalette.svelte`, their three test files, `combobox-model.ts`, `combobox-model.test.ts`, campaign 6 plan C7, ledger n=20. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:34a92407126672c0dfbf765db9a03e855e3eca023c30dafc535f69a2082d1597 (the n=20 record with its result and close-out, the highest top-level `### n=` below 21 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: new `src/lib/components/dialog-modal.ts` and `src/lib/components/dialog-modal.test.ts`; `Dialog.svelte`, `Drawer.svelte` and `CommandPalette.svelte` replace their six-line `$effect` with a one-line call and gain one import each (`git diff --stat`: 3 files, 6 insertions, 21 deletions); one `[Unreleased]` `### Changed` bullet. No existing test edited, no markup changed.
+- commit SHA + git tree: `826bffcfce9f` + `6049c01f53b52560238156ab03da94791d800e3f`.
+- artifact name + checksum: not a packaging iteration; the static build is gitignored and not checksummed.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1, npm 11.6.2.
+- test results: 37 files, 196 tests passed (193 baseline plus three). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 29.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 3/3 new tests passed: opens a connected closed dialog through `showModal` once, closes an open dialog once when the signal goes false, and leaves a detached or undefined element alone.
+- held-out score: 193/193 pre-existing tests passed, including `Dialog.test.ts` (7), `Drawer.test.ts` (7) and `CommandPalette.test.ts` (9) unedited, plus the unchanged contrast, check and build gates.
+- gains: one guard instead of three copies, so a change to modal opening or closing now lands once. The three components lose 21 lines and gain 6.
+- losses: none in behaviour. One new internal module and its test file.
+- exceptions: two review rounds and one factual slip. Round one rejected on two P1s: that a helper call might stop `$effect` tracking, and that the spy seam masks a failure. Both were answered with evidence rather than code: the Svelte `$effect` reference states that synchronously read state is tracked "including indirectly, via function calls", and an `untrack` control in `Dialog.svelte` failed exactly `closes on a close event and calls onclose` (`Tests 1 failed | 6 passed`), which shows the suite catches a lost subscription. jsdom implements neither `showModal` nor `close` (`Dialog.test.ts:32`), so a fake element is the only seam; the three component suites carry the browser-facing behaviour. The optional `showModal`/`close` members were kept because they encode the pre-existing `typeof` guards, which protect a browser without the method. Round two APPROVED. The slip: in that reply I asserted `git grep " as "` over the two new files returned one hit; it returns none (`exit=1`). The claim was checked and corrected here; it does not affect the code or the review's grounds.
+- token/cost/duration: tokens not captured; one session, no executor dispatch and two reviewer rounds.
+- interpretation: a refactor is only evidence-backed when the suite reaches the moved code. The no-op control (21 of 23 component tests fail) and the untrack control (1 of 7 fails) are what turn "the tests still pass" into "the tests still exercise this", and both were cheap.
+- keep/revert: keep.
+- next hypothesis: `Input`, `Select` and `Textarea` still carry their own copy of the field wrapper, label, hint and error markup and CSS, which `Field` now owns correctly. Composing `Field` inside the three controls would delete that duplication, but it changes rendered structure and the repo has no visual-diff harness (jsdom computes no layout), so it needs either a screenshot gate or an operator's eyes before it can be admitted.
+- prev-chain: sha256:34a92407126672c0dfbf765db9a03e855e3eca023c30dafc535f69a2082d1597 (same link as the preregistration, restated for the gate).
+
+### n=21 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de0c7e612ffezxXnRB2k8JLnkG`, bound to commit `826bffcfce9f` (tracked fingerprint `b531c7ced721`).
+- work item: GitHub issue #52.
+- PR: #53, `refactor/dialog-modal-guard` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/46079684058 — `gates` passed in 38s on the PR head.
+- final gate run after the last code mutation: `npm test` 37 files / 196 tests passed, plus check 0/0, contrast 186/0 and a clean build.
+
+### campaign 6 close-out
+
+- iterations run: n=19 `config` (PR #49), n=20 `fix` (PR #51), n=21 `refactor` (PR #53).
+- diversity brake: no two consecutive iterations share a change-type (`config`, `fix`, `refactor`), and no iteration was a no-gain, so the brake never fired.
+- stop reason: N=3 reached.
+- operator items left open: branch protection on `main` (campaign 5 item, never a code change), and the `Input`/`Select`/`Textarea` composition of `Field`, which needs a visual gate the repo does not yet have.
+
 
 
 

@@ -8,6 +8,7 @@
 
 <script lang="ts">
   import { filterOptions, stepIndex } from './combobox-model';
+  import { syncDialogModal } from './dialog-modal';
 
   interface Props {
     id: string;
@@ -47,13 +48,7 @@
   });
 
   $effect(() => {
-    if (!element?.isConnected) return;
-
-    if (open && !element.open) {
-      if (typeof element.showModal === 'function') element.showModal();
-    } else if (!open && element.open && typeof element.close === 'function') {
-      element.close();
-    }
+    syncDialogModal(element, open);
   });
 
   $effect(() => {

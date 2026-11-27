@@ -43,3 +43,4 @@ carrying its id in the bullet and registered below.
 - L018 — Assert the field a gate protects, not a difference between derived lists that implies it. (evidence: `2026-11-27T110000Z-assert-the-field-not-the-difference.md`)
 - L019 — Delete the artifact, then let the tool build it; a gate that prepares its own input proves the input, not the hook. (evidence: `2026-11-27T223500Z-delete-the-artifact-then-let-the-tool-build-it.md`)
 - L020 — Read the file a review cites before acting; a finding's stated facts can be wrong while its criticism is right. (evidence: `2026-11-27T225200Z-check-a-reviews-claims-against-the-source.md`)
+- L021 — Sabotage an extraction to prove the tests reach it; a green suite proves it passes, not that it exercises the moved lines. (evidence: `2026-11-27T230000Z-sabotage-the-extraction-to-prove-the-tests-reach-it.md`)
