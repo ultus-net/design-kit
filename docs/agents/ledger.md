@@ -545,6 +545,41 @@ the feature commit was amended and before the fresh-eyes review returned.
 - stop reason: N=3 reached, the campaign size the request asked for. No iteration produced a no-gain result, so the no-gain brake never fired, and no two consecutive iterations shared a change-type, so the diversity brake never fired.
 - metric: exported components 25 -> 27; tested exports 18 -> 27 of 27. Tests 118 -> 156 across 23 -> 32 files.
 
+### campaign 4 (plan)
+
+- request: "new campaign for next items"; no count given, so N=3 (default, cap 5).
+- base: `c51f72d`, clean tree, 32 test files, 156 tests, 27 exports, 186 contrast pairs, svelte-check 0/0, clean build.
+- planned positions: n=13 `test` (`Button` contract depth), n=14 `feature` (`Drawer`, PR E), n=15 `test` (the `id`/ARIA forwarding contract across `Checkbox`, `Input`, `Select` and `Textarea`).
+- brake state: n=12 was `feature`, so position 1 cannot be `feature`, which rules out `Drawer` and `CommandPalette` at n=13. The plan is `test` -> `feature` -> `test`, so no two consecutive iterations share a type.
+- gain measure: **the export metric is saturated at 27 of 27, so it cannot move without a new component.** The campaign therefore measures each iteration by (a) the preregistered assertions passed, (b) the held-out suite green, (c) exports where the iteration adds one, and (d) a named contract-depth before/after for the component the iteration touches. A `test` iteration is not a no-gain iteration: "no gain" means the preregistered claim did not hold, never that the export count stayed flat.
+- screener shortlist (campaign 4, ranked by the screener): `fix` Checkbox id forwarding, `test` RadioGroup arrow selection, `feature` Drawer, `feature` CommandPalette, `instrument` Menu active option.
+- candidate overrides and denies, with reasons:
+  - `fix` Checkbox id forwarding is **denied as a `fix`**. `Checkbox.svelte` already derives `inputId = id ?? uid-checkbox` (`Checkbox.svelte:33-35`) and labels the control with `for={inputId}` (`Checkbox.svelte:53`), so there is no defect; only the assertion is missing. It becomes an assertion in n=15.
+  - `instrument` Menu active option is **denied**. It edits `Menu.svelte` to emit an active-option id, which is a component change labelled as instrumentation, not a measurement. `Menu.test.ts` already asserts arrow, Home/End and Escape movement through focus, so the menu contract is pinned.
+  - `feature` Drawer and `feature` CommandPalette are denied at position 1 by the diversity brake (n=12 was `feature`). Drawer is adopted at n=14.
+  - branch protection and required checks are **not proposed**. That is an operator decision, denied at n=10, and nothing about the status has changed.
+  - `Button` is added to the shortlist the screener did not rank. `Button.test.ts` holds one assertion (`Button.test.ts:9-23`) against a contract with four variants, three sizes, a `type` passthrough, a `disabled`/`loading` pair, a loading spinner with screen-reader text, and a separate anchor branch with `aria-disabled` and a suppressed handler (`Button.svelte:43-62`). It is the most-used export and the thinnest-tested one in the repo.
+
+### n=13 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T09:25Z
+- change-type: test
+- hypothesis (falsifiable): adding a sibling contract test for `Button` moves that file from 1 assertion to 10 and `npm test` from 156 to 166 with 0 failures, pinning ten behaviours (the default `type="button"` and label, a `submit` type passthrough, the `danger` variant class without the primary class, the `lg` size class, the `md` default size, `disabled` reaching the native property with `aria-busy="false"`, `loading` setting `disabled` plus `aria-busy="true"` plus `is-loading` plus an `aria-hidden` spinner plus screen-reader "Loading", a `href` rendering an anchor with no `type` and `aria-disabled="false"`, a busy anchor carrying `aria-disabled="true"` and `tabindex="-1"` and not calling `onclick`, and a custom `class` appended rather than replacing `fw-button`), while exports stay 27, the count claims stay twenty-seven, the ratchet stays green and the four gates stay green.
+- candidate source: campaign 4 screener output, overridden by the driver because the screener omitted `Button`; `Button.test.ts:9-23` (one assertion); `Button.svelte:43-62` (the untested branches); the repo's own rule that an exported component carries a behavioural test.
+- selection score (10 items): the ten new `Button` assertions.
+- held-out score (156 items, never used for selection): the 156 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 166 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 27, five count claims read twenty-seven.
+- reject rule: any gate red, any edit to `Button.svelte` or to a pre-existing test, an assertion that pins a class where a property or attribute expresses the same fact, or a click assertion on a disabled native control (jsdom dispatches events that a browser would not, so the disabled branch is asserted on the DOM state).
+- non-goals: changing any component, adding exports, changing the count gate, adding a coverage tool or a dependency, deepening any other file.
+- at-risk regressions: `Button.svelte` edited to satisfy a test (forbidden); the screen-reader "Loading" text joining the accessible name and breaking an exact-name query; `fireEvent.click` on a disabled button firing in jsdom and giving a false pass on suppression.
+- honest limit: ten assertions still do not cover every prop combination, and the `loading` spinner is asserted for presence and accessibility only, not for animation.
+- router decision: dispatched to `executor-strong`. The cheap tier has failed eight of eight dispatches across three campaigns, and the anchor branch needs `tabindex` and `aria-disabled` assertions that a cheap attempt tends to simplify.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive test only; `Button.svelte` and every gate are the incumbent.
+- citations used: `Button.svelte` (the contract), `Button.test.ts` (the gap), `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 (the kit-wide rule that every component ships a behavioural test file), ledger n=12. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:45801c90002133a09a4b32135693033eea1bb5f0e82fd0c692df77975d2282d0 (the n=12 preregistration block, the highest top-level `### n=` below 13 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
