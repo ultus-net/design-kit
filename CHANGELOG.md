@@ -9,6 +9,7 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - `Breadcrumbs`: a `nav` landmark with an ordered list, an optional accessible name, anchors on ancestor items and `aria-current="page"` on the current item.
 - `Tooltip`: a button trigger that shows a text tooltip on hover and focus, wires `aria-describedby` while open, and hides on Escape without moving focus.
 - `Menu`: a trigger button with a `role="menu"` popup, arrow and Home/End navigation, Enter or click to select, and Escape or Tab to close with focus back on the trigger.
+- `EmptyState`: a decorative mark slot, a title, an optional description and an optional action snippet, with the action always interactive.
 
 ## [0.5.0] - 2026-11-26
 
