@@ -115,6 +115,37 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #14, `feature/tooltip-component` into `main`.
 - final gate run after the last code mutation: `npm test` 16 files / 84 tests passed.
 
+### n=3
+
+- date (UTC): 2026-11-27T07:22Z
+- hypothesis (falsifiable): Adding the PR D `Menu` lifts the exported component count from 21 to 22 and passes its eight behavioural assertions (closed default, click open with named menu, arrow focus sequence, Home/End, Escape restore, click select, outside close without focus theft, Tab close), while every pre-existing gate stays green.
+- trace evidence: `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D, `Menu` row; `src/lib/components/Tabs.svelte:33-62` (roving focus via `[role="tab"]`); `src/lib/components/Tooltip.svelte:42-46` (`$effect` listener pattern); `src/lib/components/Dialog.test.ts` (jsdom focus conventions); `src/lib/index.ts` (21 exports at `bd38316`).
+- code change: new `src/lib/components/Menu.svelte`, `Menu.test.ts`, `src/routes/_demos/MenuDemo.svelte`; export, `/components` section, five count claims, `[Unreleased]` bullet.
+- commit SHA + git tree: `cdde374` + `6d6a0eb454fbff9939a2466bb1cf4cf8cb818072`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 17 files, 92 tests passed (84 baseline plus 8 new). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 8/8 new `Menu` assertions passed (8 items, the set the change was selected against).
+- held-out score: 84/84 pre-existing tests passed (84 items, never used for selection), plus the unchanged contrast, check and build gates.
+- gains: exported components 21 -> 22; one PR D component with trigger, menu, arrow/Home/End navigation, Escape/Tab close and outside-dismiss coverage.
+- losses: none observed. Suite wall clock 1.36 s, not a controlled comparison.
+- exceptions: the cheap tier exhausted its step cap with a compile error (stray `});` at `Menu.svelte:116`), an extra required `id` prop, 18 svelte-check errors and a changelog bullet missing, so the spec went to the strong tier with that output. A runtime `NodeList.findIndex` crash and an uninstalled jest-dom `toHaveFocus` matcher only surfaced under the real focus path. The first review returned REVISE with one P1 (the outside-click test asserted only that focus was not on the trigger) and a P2 (`Tab` focus outcome unpinned); both were fixed in-session: the test now spies on `trigger.focus`, and `Tab` focuses the trigger before closing, with an eighth test. The reviewer then returned ACCEPT.
+- token/cost/duration: tokens not captured; one session, two executor dispatches and two reviewer passes.
+- interpretation: the component meets the documented contract, the keyboard path is pinned by tests, and the frozen baseline is intact.
+- keep/revert: keep.
+- next hypothesis: `EmptyState` from PR D moves the count 22 -> 23 with a mark slot, title, description and optional action, without disturbing the 92-test baseline.
+- prev-chain: sha256:afd2e13345668805d102788a6ad0767375c181b7fc0c6fae7db26f154f65fde1 (the `### n=2 close-out` block above, from its heading to the final gate line).
+
+### n=3 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de41dfacfffemcmn1sDv54asAh`, bound to commit `bf925275e587` (tree fingerprint `4204476562bb`).
+- work item: GitHub issue #15.
+- PR: #16, `feature/menu-component` into `main`.
+- final gate run after the last code mutation: `npm test` 17 files / 92 tests passed.
+
+
+
 
 
 

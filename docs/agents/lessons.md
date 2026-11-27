@@ -25,3 +25,4 @@ carrying its id in the bullet and registered below.
 
 - L001 — A container-wide query can contradict the contract the test is checking: scope the assertion to the element under test. (evidence: `2026-11-27T06-54-11Z-assertion-scope.md`)
 - L002 — In a jsdom test, move focus with `await element.focus()`, not `fireEvent.focus`, before asserting `document.activeElement` or focus-dependent behaviour. (evidence: `2026-11-27T071204Z-jsdom-focus-with-element-focus.md`)
+- L003 — Convert a `querySelectorAll` NodeList with `Array.from` before using Array methods such as `findIndex`; the compiler will not catch it and the failure appears at runtime. (evidence: `2026-11-27T072217Z-nodelist-array-methods.md`)

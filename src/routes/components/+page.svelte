@@ -13,6 +13,7 @@
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
   import DialogDemo from '../_demos/DialogDemo.svelte';
   import FieldDemo from '../_demos/FieldDemo.svelte';
+  import MenuDemo from '../_demos/MenuDemo.svelte';
   import PaginationDemo from '../_demos/PaginationDemo.svelte';
   import RadioGroupDemo from '../_demos/RadioGroupDemo.svelte';
   import SwitchDemo from '../_demos/SwitchDemo.svelte';
@@ -34,7 +35,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-one Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-two Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -201,6 +202,12 @@
   <h2>Tooltip</h2>
   <p class="note">A button trigger that shows a text tooltip on hover and focus, wires aria-describedby while open, and hides on Escape without moving focus.</p>
   <TooltipDemo />
+</section>
+
+<section class="block">
+  <h2>Menu</h2>
+  <p class="note">A trigger button with a <code>role="menu"</code> popup, arrow and Home/End navigation, Enter or click to select, and Escape or Tab to close with focus back on the trigger.</p>
+  <MenuDemo />
 </section>
 
 <section class="block">

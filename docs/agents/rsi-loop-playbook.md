@@ -65,12 +65,13 @@ date claims no sweep happened.
   pairs, non-zero exit on a miss). `npm run build` proves the static site.
 - **metric** — exported components that carry behavioural tests that fail
   without the component. Observed count moved 19 -> 20 at iteration 1
-  (`Breadcrumbs`) and 20 -> 21 at iteration 2 (`Tooltip`). The candidate is
-  one component from
+  (`Breadcrumbs`), 20 -> 21 at iteration 2 (`Tooltip`) and 21 -> 22 at
+  iteration 3 (`Menu`). The candidate is one component from
   `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3, PR D.
 - **frozen ruler** — the HEAD `bfcdf42` baseline: 14 test files, 74 tests
   passing, 186 contrast pairs with 0 failures, svelte-check 0/0, clean build.
   The ruler is the suite and the gates, not a stored score. Iteration 2 was
-  entered from the `7223388` merge of PR #12: 15 files, 79 tests.
+  entered from the `7223388` merge of PR #12 (15 files, 79 tests). Iteration 3
+  was entered from the `bd38316` merge of PR #14 (16 files, 84 tests).
 - **target tier** — the operator's default executor tier. Record whether an
   accepted change was measured there.
