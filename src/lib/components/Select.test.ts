@@ -54,4 +54,16 @@ describe('Select', () => {
 
     expect(screen.getByLabelText('Plan').getAttribute('aria-invalid')).toBeNull();
   });
+
+  it('forwards a caller id to the select and the label', () => {
+    const { container } = render(Select, {
+      props: { label: 'Plan', id: 'billing-plan', options }
+    });
+
+    const select = screen.getByLabelText('Plan') as HTMLSelectElement;
+
+    expect(select.tagName).toBe('SELECT');
+    expect(select.id).toBe('billing-plan');
+    expect(container.querySelector('label')?.htmlFor).toBe('billing-plan');
+  });
 });
