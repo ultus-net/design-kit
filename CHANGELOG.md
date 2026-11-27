@@ -2,6 +2,12 @@
 
 All notable changes to this package. The format follows Keep a Changelog, and versions follow Semantic Versioning.
 
+## [Unreleased]
+
+### Added
+
+- `Breadcrumbs`: a `nav` landmark with an ordered list, an optional accessible name, anchors on ancestor items and `aria-current="page"` on the current item.
+
 ## [0.5.0] - 2026-11-26
 
 ### Added
