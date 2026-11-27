@@ -8,6 +8,7 @@
   import Select from '$lib/components/Select.svelte';
   import Stat from '$lib/components/Stat.svelte';
   import PageHeader from '../_PageHeader.svelte';
+  import AccordionDemo from '../_demos/AccordionDemo.svelte';
   import BreadcrumbsDemo from '../_demos/BreadcrumbsDemo.svelte';
   import CheckboxDemo from '../_demos/CheckboxDemo.svelte';
   import ComboboxDemo from '../_demos/ComboboxDemo.svelte';
@@ -38,7 +39,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-five Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-six Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -142,6 +143,12 @@
     <Badge variant="info">New</Badge>
     <Badge variant="review">Needs review</Badge>
   </div>
+</section>
+
+<section class="block">
+  <h2>Accordion</h2>
+  <p class="note">Native details and summary items, one-open or multiple, with aria-expanded on each summary.</p>
+  <AccordionDemo />
 </section>
 
 <section class="block">

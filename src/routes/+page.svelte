@@ -9,7 +9,7 @@
     { href: '/colours', title: 'Colours', body: 'Three palette families, each with light and dark, and every measured pair.' },
     { href: '/typography', title: 'Typography', body: 'Bricolage Grotesque and JetBrains Mono, self-hosted variable faces.' },
     { href: '/spacing', title: 'Spacing', body: 'The 4px rhythm, corner presets, breakpoints and motion.' },
-    { href: '/components', title: 'Components', body: 'Twenty-five Svelte 5 components built on tokens only.' },
+    { href: '/components', title: 'Components', body: 'Twenty-six Svelte 5 components built on tokens only.' },
     { href: '/assets', title: 'Assets', body: 'Self-hosted font files and their licence.' },
     { href: '/guidelines', title: 'Guidelines', body: 'The rules, the surfaces and the tells that mark generated work.' }
   ];
@@ -63,7 +63,7 @@
     <li><code>tailwind.css</code> as an opt-in Tailwind v4 bridge.</li>
     <li>Three profiles in one <code>tokens.css</code>, selected with the <code>data-profile</code> attribute.</li>
     <li>Three corner presets, switchable with the <code>data-corners</code> attribute.</li>
-    <li>Twenty-five Svelte 5 components, including a dense table and a native dialog.</li>
+    <li>Twenty-six Svelte 5 components, including a dense table and a native dialog.</li>
     <li><code>npm run contrast</code> asserting 186 pairs across three profiles and exiting non-zero on a failure.</li>
     <li><code>npm test</code> covering the token schema and the interactive components.</li>
   </ul>
