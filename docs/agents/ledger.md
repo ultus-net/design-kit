@@ -772,6 +772,29 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45979936799 — `gates` passed in 43s on the PR head.
 - final gate run after the last code mutation: `npm test` 33 files / 177 tests passed.
 
+### n=17 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T10:35Z
+- change-type: feature
+- hypothesis (falsifiable): adding `CommandPalette` from PR E lifts exports 28 -> 29 and tested exports 28 -> 29, moves the suite 177 -> 186 tests, and passes nine behavioural assertions (a dialog named by its title with the search input focused on open, exactly one `showModal` call, every item listed when the query is empty, a case-insensitive narrowing while typing, group headings exposed as labelled groups with their options inside them, arrow keys stepping the active option across a group boundary with `aria-activedescendant` following it, Enter invoking the active item and closing, Escape closing and clearing the query, and the dialog `close` event writing `open` back and calling `onclose`), while the 177-test held-out baseline, the count gate, the empty ratchet and the four gates stay green.
+- candidate source: campaign 5 screener position for `feature`; spec line 225; ledger n=16 `next hypothesis`; `src/lib/components/Combobox.svelte:91-129` and `combobox-model.ts` (the keyboard contract to reuse); `src/lib/components/Dialog.svelte:24-35` (the `showModal`/`close` guard).
+- contract decision: the palette is a launcher, not a field, so it differs from `Combobox` in three stated ways. Escape clears the query instead of restoring the pre-open text, because the next open starts empty. Enter selects and closes. The input is focused when the dialog opens, which is what makes the component usable and is observable in jsdom. Everything else is reused: `filterOptions` and `stepIndex` from `combobox-model.ts`, and the `Dialog` guard.
+- model change: `ComboboxOption` gains an optional `group`, and `filterOptions` becomes generic over `T extends ComboboxOption` returning `T[]`, so the palette keeps its item type through filtering instead of a second matcher. `Combobox`'s call site and its eight tests are unchanged, which is the check that the widening is backward compatible.
+- grouping contract: an item with a `group` renders inside a `<ul role="presentation">` wrapped by an `<li role="group" aria-label={group}>`; ungrouped items are direct `role="option"` children of the `role="listbox"`. Group order is first appearance in the caller's array, and within a group the caller's order is kept.
+- selection score (9 items): the nine new `CommandPalette` assertions.
+- held-out score (177 items, never used for selection): the 177 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 186 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, five count claims read twenty-nine.
+- reject rule: any gate red, any pre-existing test edited, `showModal` called more than once while open, `close` called on a closed palette, a group heading without an accessible name, arrow keys not stepping across the group boundary, or `filterOptions` changed in a way that breaks the eight `Combobox` tests.
+- non-goals: a keyboard shortcut to open the palette, recent or fuzzy ranking, async items, nested groups, a second dialog guard implementation, and changing `Combobox`'s behaviour.
+- at-risk regressions: jsdom's missing `showModal`/`close`, so the test must define them as `Dialog.test.ts` does; `role="combobox"` inside a `dialog` with `aria-activedescendant` and `aria-controls` pointing outside the input; nested lists making `getAllByRole('option')` return duplicates; the generic `filterOptions` widening breaking type inference at `Combobox.svelte:66`.
+- honest limit: the tests pin the keyboard contract, the grouping structure and the close path. They cannot prove that a browser's focus trap keeps Tab inside the palette or that the dialog is announced as modal, both native to `showModal`.
+- router decision: dispatched to `executor-strong`. The cheap tier has failed nine of nine dispatches, and this iteration combines a model widening, a dialog guard and a grouped listbox in one diff.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: additive; `Combobox`, `Dialog` and every gate are the incumbent, with one generic widening in `combobox-model.ts`.
+- citations used: spec line 225; `Combobox.svelte:91-129`; `combobox-model.ts`; `Dialog.svelte:24-35` and `Dialog.test.ts:13-34`; `Drawer.svelte` (the same guard copied twice already); ledger n=16. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:0fa2bfe508fc2356b3d38ea1a957f42e9d3a9ee7a17a45c79f1aed49c3f4c1ef (the n=16 preregistration record with its result and close-out, the highest top-level `### n=` below 17 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
