@@ -137,6 +137,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `EmptyState` from PR D moves the count 22 -> 23 with a mark slot, title, description and optional action, without disturbing the 92-test baseline.
 - prev-chain: sha256:afd2e13345668805d102788a6ad0767375c181b7fc0c6fae7db26f154f65fde1 (the `### n=2 close-out` block above, from its heading to the final gate line).
 
+### n=3 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de41dfacfffemcmn1sDv54asAh`, bound to commit `bf925275e587` (tree fingerprint `4204476562bb`).
+- work item: GitHub issue #15.
+- PR: #16, `feature/menu-component` into `main`.
+- final gate run after the last code mutation: `npm test` 17 files / 92 tests passed.
+
+
 
 
 
