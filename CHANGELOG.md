@@ -21,6 +21,10 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - The hand-maintained count claims in `README.md`, `/` and `/components` are now checked against the exported component list by `src/lib/count-claims.test.ts`, so a stale claim fails `npm test`.
 - The four gates also run in GitHub Actions (`.github/workflows/gates.yml`) on push to `main` and on every pull request, so a failure appears on the pull request instead of only in whichever session last ran them. `src/lib/workflow-gates.test.ts` pins the step order and that every gate step is fatal; `actionlint` checks the YAML. The checks are advisory: `main` has no branch protection yet, so they do not block a merge.
 
+### Fixed
+
+- A busy `Button` rendered as a link cancels activation, so a disabled action no longer navigates on a pointer click. `aria-disabled` and `tabindex="-1"` never stopped the default action on their own.
+
 ## [0.5.0] - 2026-11-26
 
 ### Added

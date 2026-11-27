@@ -653,6 +653,63 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/45977235502 — `gates` passed in 29s on the PR head.
 - final gate run after the last code mutation: `npm test` 33 files / 173 tests passed.
 
+### n=15 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T10:00Z
+- change-type: fix
+- hypothesis (falsifiable): a busy `Button` with `href` cancels activation, so a pointer click on it neither calls the caller's handler nor navigates, proven by `event.defaultPrevented` being `true` in a second listener after the component's own handler ran; the `TODO(#35)` becomes that assertion, `npm test` stays 173 with 0 failures because one test is rewritten rather than added, exports stay 28, and the count claims, the ratchet and the four gates stay green.
+- candidate source: issue #35, found at n=13 while pinning the `Button` contract; ledger n=14 `next hypothesis`; `src/lib/components/Button.svelte:49-52`; MDN's `aria-disabled` page ("only semantically exposes these elements as being disabled. Web developers must manually ensure such elements have functionality suppressed").
+- contract decision: the anchor keeps its `href`, its `aria-disabled` and its `tabindex="-1"`. Dropping the `href` when busy would have changed the element's role and removed the link from assistive technology's model, which is a larger behavioural change than the defect needs. Suppressing the default action in one handler keeps the element a link, keeps it out of the tab order, and closes the pointer path.
+- selection score (1 item): the rewritten busy-link test, whose assertion is `event.defaultPrevented === true` plus the existing handler and tab-order checks.
+- held-out score (172 items, never used for selection): the other 172 tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 173 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 28, five count claims read twenty-eight, and no `TODO` left in `Button.test.ts`.
+- reject rule: any gate red, any test deleted or weakened, `preventDefault` applied to the enabled anchor (which would break real navigation), or the caller's handler still called while busy.
+- non-goals: changing the disabled `<button>` path, changing the anchor's role, adding a `type` to the anchor, and any other component.
+- at-risk regressions: `preventDefault` swallowing the enabled link's navigation if the `busy` guard is placed wrong; the second listener running before the component's handler and reading `defaultPrevented` as `false`; jsdom `fireEvent.click` not honouring `defaultPrevented` for assertion purposes.
+- honest limit: `event.defaultPrevented` proves the default action was cancelled at the event level. It cannot prove that a real browser then stays on the page, because jsdom does not navigate; the claim is the cancellation, not the absence of navigation.
+- router decision: authored in-session, not dispatched. A three-line handler change with a one-test rewrite is below the size where a dispatch pays for itself, and the defect was found in-session. The sustained-difficulty trigger applies to dispatches, not to small session-authored fixes.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the `Button` anchor branch is the revision; everything else is the incumbent.
+- citations used: issue #35 (the defect); `src/lib/components/Button.svelte:43-62` and `Button.test.ts:92-109` (the branch and the test that names the defect); MDN `aria-disabled`. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:c2a27eed5764c6a9349b335252c76a3312c3365a956bb87f973f73312463fbd4 (the n=14 preregistration block, the highest top-level `### n=` below 15 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
+- code change: `src/lib/components/Button.svelte` (the anchor's single click handler), `Button.test.ts` (busy-link test rewritten, enabled-link test strengthened), `CHANGELOG.md` (`### Fixed` bullet). No other component, test, gate or claim touched.
+- commit SHA + git tree: `f615e7c5ee56` + `0e883434a5141955f7f827b791f9c2545a0c184c`.
+- artifact name + checksum: no packaged artifact; the static build at that tree is the artifact.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 33 files, 173 tests passed, unchanged from the baseline because one test was rewritten and one strengthened. svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 28. No `TODO` remains in `Button.test.ts`.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 1/1 preregistered assertion pair passed: the busy link shows `event.defaultPrevented === true` and the caller's handler is not called; the enabled link shows `defaultPrevented === false` and the handler is called once.
+- held-out score: 172/172 untouched tests passed, plus the unchanged contrast, check and build gates.
+- gains: a busy `Button` with `href` no longer navigates on a pointer click, while the enabled anchor still navigates and still calls its handler. Both directions are pinned, so a future guard placed the wrong way round fails the suite.
+- losses: none observed. The element stays a link, so assistive technology still sees link semantics on a disabled action, which is the trade the preregistration chose over removing `href`.
+- exceptions: authored in-session. The first test attempt registered a listener on the link and read `defaultPrevented === false`; Svelte 5 delegates `click` to the mount root, so the component's handler runs after any element-level listener. The test now dispatches a `MouseEvent` directly and reads the event afterwards, which is order-independent. The reviewer rejected once because it could not run `git diff --stat` itself; the stat was supplied (four files, one of them the preregistration record) and the reviewer approved with no defect.
+- token/cost/duration: tokens not captured; one session, no executor dispatch and two reviewer rounds.
+- interpretation: the defect n=13 found is closed in the iteration after the feature slot, which is the order the campaign plan recorded. The fix is 9 lines of component change, and the two-sided assertion is what makes it safe.
+- keep/revert: keep.
+- next hypothesis: `CommandPalette` (PR E, the last spec row) for the next `feature` slot; the `id`/ARIA forwarding assertions and the `Field` seam refactor remain unstarted.
+- prev-chain: sha256:c2a27eed5764c6a9349b335252c76a3312c3365a956bb87f973f73312463fbd4 (same link as the preregistration, restated for the gate).
+
+### n=15 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de391fae6ffex6VtpQ2kzR1FUy`, bound to commit `50037737d322` (tracked fingerprint `a2d21a219f65`).
+- work item: GitHub issue #35 (the defect found at n=13). Issue #40 was created in error while opening this iteration and is closed by the same PR as a duplicate.
+- PR: #41, `fix/busy-link-navigation` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45977890382 — `gates` passed in 37s on the PR head.
+- final gate run after the last code mutation: `npm test` 33 files / 173 tests passed.
+
+### campaign 4 close-out
+
+- iterations: n=13 `test` (PR #37), n=14 `feature` (PR #39), n=15 `fix` (PR #41). N=3 reached, so the campaign stopped on the count, not on a brake.
+- diversity brake: never fired. The type sequence was `test` -> `feature` -> `fix`, so no two consecutive iterations shared a change-type.
+- no-gain brake: never reached. Every iteration produced a named gain: n=13 moved `Button` from 1 to 11 assertions, n=14 added an export (27 -> 28), n=15 closed a user-visible defect.
+- saturated-metric note: the export metric was already 27 of 27 at the start, so it could not measure n=13 or n=15. The campaign measured (a) preregistered assertions passed, (b) held-out suite green, (c) named contract depth before/after, and (d) exports where applicable. `docs/agents/rsi-loop-playbook.md` records the distinction between a sibling test file and coverage depth.
+- preregistration accuracy: n=13 predicted 166 tests and produced 165 (`156 - 1 + 10`); the executor reported the mismatch instead of padding, and review produced the 166th test legitimately. n=14 and n=15 predicted their counts exactly.
+- defects found: two. The busy-anchor navigation defect (n=13 found, n=15 fixed) and the Drawer edge-pinning dependency on the UA stylesheet (n=14 found and fixed in the same iteration).
+- lessons: L013 (name the defect in a test), L014 (declare UA layout dependencies), L015 (read a delegated event after dispatch).
+- unstarted: `CommandPalette` (the last PR E row), the `id`/ARIA forwarding assertions for `Checkbox`/`Input`/`Select`/`Textarea`, the `Field` seam refactor (three controls duplicate the wrapper's wiring), and the branch-protection decision for `main`.
+
 
 
 
