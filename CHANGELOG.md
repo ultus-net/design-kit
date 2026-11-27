@@ -14,6 +14,7 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - `Progress`: a role="progressbar" bar with aria-valuenow/min/max, a custom max, clamped values and an indeterminate state that omits aria-valuenow.
 - `Accordion`: native details and summary items in one-open or multiple mode, with aria-expanded on each summary.
 - `Avatar`: an image with a required alt, an initials fallback derived from the name, and sm/md/lg sizes.
+- `Drawer`: a native `dialog` pinned to the start or end edge, reusing the `Dialog` guard and the native focus return.
 
 ### Changed
 
