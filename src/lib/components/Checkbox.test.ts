@@ -60,4 +60,34 @@ describe('Checkbox', () => {
     expect(input.disabled).toBe(true);
     expect(input.checked).toBe(false);
   });
+
+  it('forwards a caller id to the checkbox and the label, and lets a caller describedby win', () => {
+    render(Checkbox, {
+      props: {
+        label: 'Email me',
+        id: 'opt-in',
+        'aria-describedby': 'external-note',
+        hint: 'Daily digest.',
+        error: 'Pick one.'
+      }
+    });
+
+    const found = document.getElementById('opt-in');
+    // A missing forward leaves getElementById null, so this fails rather than
+    // passing on a stale node.
+    expect(found).toBeInstanceOf(HTMLInputElement);
+
+    const input = found as HTMLInputElement;
+    const label = input.closest('label');
+
+    expect(label?.tagName).toBe('LABEL');
+    expect(input.id).toBe('opt-in');
+    expect(label?.htmlFor).toBe('opt-in');
+    expect(screen.getByLabelText('Email me')).toBe(input);
+    // The caller's describedby overrides the list, but the error still marks the control.
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    // Pins the documented escape hatch: a caller who sets aria-describedby opts out
+    // of the hint/error wiring.
+    expect(input.getAttribute('aria-describedby')).toBe('external-note');
+  });
 });

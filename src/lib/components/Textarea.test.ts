@@ -47,4 +47,23 @@ describe('Textarea', () => {
     expect(textarea.getAttribute('aria-describedby')).toBe(`${hint?.id} ${error?.id}`);
     expect(error?.textContent).toBe('A reason is required.');
   });
+
+  it('forwards a caller id, and lets a caller describedby win over the hint', () => {
+    const { container } = render(Textarea, {
+      props: {
+        label: 'Release notes',
+        id: 'notes-body',
+        hint: 'Keep it short.',
+        'aria-describedby': 'external-note'
+      }
+    });
+
+    const textarea = screen.getByLabelText('Release notes') as HTMLTextAreaElement;
+
+    expect(textarea.id).toBe('notes-body');
+    // The label is a sibling rather than a wrapper here, so the render container is the link.
+    expect(container.querySelector('label')?.htmlFor).toBe('notes-body');
+    // Same precedence as Checkbox: the caller's describedby replaces the hint id.
+    expect(textarea.getAttribute('aria-describedby')).toBe('external-note');
+  });
 });

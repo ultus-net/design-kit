@@ -38,3 +38,4 @@ carrying its id in the bullet and registered below.
 - L013 — A test that documents defective behaviour must call it a defect and cite the fix's work item, or a green suite hides it. (evidence: `2026-11-27T092500Z-name-the-defect-in-the-test.md`)
 - L014 — Declare the layout a component depends on even when the UA stylesheet provides it; `inset` without `position` floats once the element is not modal. (evidence: `2026-11-27T094000Z-declare-ua-layout-dependency.md`)
 - L015 — With delegated events, a listener on the element runs before the component's handler; dispatch the event yourself and read `event.defaultPrevented` after. (evidence: `2026-11-27T100500Z-delegated-events-read-after-dispatch.md`)
+- L016 — When four components share a contract, give each one a different case of it and record which proves what. (evidence: `2026-11-27T102500Z-one-case-per-component.md`)
