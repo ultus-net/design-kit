@@ -934,6 +934,28 @@ the feature commit was amended and before the fresh-eyes review returned.
 - CI run: https://github.com/ultus-net/design-kit/actions/runs/46077906520 — `gates` passed in 44s on the PR head.
 - final gate run after the last code mutation: `npm test` 36 files / 191 tests passed, plus check 0/0, contrast 186/0 and a clean build.
 
+### n=20 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T22:45Z
+- change-type: fix
+- hypothesis (falsifiable): bringing `Field`'s markup and CSS into line with the layout `Input`, `Select` and `Textarea` already render (no label wrapper span, hint after the control, `fw-field--error` as the modifier, gap `--fw-space-2`, semibold label) makes two new `Field` tests pass (the hint follows the control in DOM order; the wrapper carries `fw-field--error` only when an error is present), moves the suite 191 -> 193, leaves the four existing `Field` tests and every other test unchanged, keeps exports at 29, and leaves the four gates green.
+- candidate source: campaign 6 plan C6; `Field.svelte:27-40` and `:43-80` against `Input.svelte:52-75` and `:74-130`, `Select.svelte:45-74` and `:85-140`, `Textarea.svelte:41-62` and `:64-130`; `src/routes/_demos/FieldDemo.svelte:1-45` (it passes `label=""` to `Input` because `Input` renders its own wrapper inside `Field`, so the demo renders a field inside a field); ledger n=19 `next hypothesis`.
+- defect statement: the four components share the class vocabulary `fw-field`, `fw-field__label`, `fw-field__hint`, `fw-field__error`, but `Field` resolves those classes to a different structure, modifier and spacing than the three controls that use them. The one exported component whose job is to own a field is the one field that does not look like the others, and its demo shows the hint above the input while every other field shows it below.
+- layout decision: the three-control layout is canonical because three of the four components and every demo already use it. `Field` moves to it; nothing else moves.
+- selection score (2 items): the two new `Field` tests, seven assertions in total.
+- held-out score (191 items, never used for selection): the 191 pre-existing tests, including the four existing `Field` tests and the `Input`, `Select` and `Textarea` suites, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 193 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, exports 29, and no existing test file edited.
+- reject rule: any gate red, any existing test edited, any change to the snippet contract (`id`, `required`, `invalid`, `aria-describedby`), the hint id or error id scheme changing, or a modifier class left on the wrapper that the controls do not use.
+- non-goals: adopting `Field` inside `Input`/`Select`/`Textarea`, deleting `Field`, un-nesting the demo, changing the demo's copy, and touching any other component.
+- at-risk regressions: `Field`'s existing tests read `.fw-field__required` and the `aria-describedby` order, both kept; the demo's nested field remains nested (out of scope) and only its inner order changes; `Field` has no consumer outside its demo, so the blast radius is the demo and the four tests.
+- honest limit: jsdom computes no layout, so the tests pin DOM order and classes, not rendered spacing. The visual claim rests on the CSS diff matching the three controls rule for rule, which is a review question, not a test question.
+- router decision: authored in-session. One component's markup and CSS, plus two tests; a dispatch would cost more than it saves.
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the incumbent is `Field` as it stands, used only by its demo; the revision rewrites its markup and CSS and adds two tests. No API change.
+- citations used: `Field.svelte`, `Input.svelte`, `Select.svelte`, `Textarea.svelte`, `FieldDemo.svelte`, campaign 6 plan C6, ledger n=19. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
+- prev-chain: sha256:ff87116d24cedf4fb83a4c391a74149d6d5503d03cbb78b829a7b87301b7af9c (the n=19 record with its result and close-out, the highest top-level `### n=` below 20 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
