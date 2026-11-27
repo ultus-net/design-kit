@@ -302,6 +302,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - interpretation: the ruler is now measured, not assumed, and the gap is documented instead of hidden.
 - keep/revert: keep.
 - next hypothesis: `Progress` from PR E moves the tested count 17 -> 18 and pins `role="progressbar"`, `aria-valuenow/min/max`, and an indeterminate state that omits `aria-valuenow`.
+
+### n=7 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3ea2667ffeubwnb6feWw5hbF`, bound to commit `17d058bde469` (tracked fingerprint `fff365721e9b`).
+- work item: GitHub issue #23.
+- PR: #24, `feature/tested-export-ratchet` into `main`.
+- final gate run after the last code mutation: `npm test` 21 files / 108 tests passed.
 - prev-chain: sha256:973f0771720f72c68ac5aea7a937ec3a1939ad592436810b4c7f88aea5aba4c2 (same link as the preregistration, restated for the gate).
 
 
