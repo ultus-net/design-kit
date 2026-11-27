@@ -175,6 +175,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: the count-claim gate (`instrument`) derives the export count and asserts the five hand-maintained claims, moving nothing in the component count while catching the regression flagged in n=1..n=4.
 - prev-chain: sha256:351867578e3fbe21e8689828dc6e83bbc6a674368acde84c314e9b25bfccc623 (record n=3, the highest top-level `### n=` below 4, hashed with the repo's `validate-ledger.cjs` `parseRecords`/`sha256` so the bytes match the gate).
 
+### n=4 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de40e470cffe5GfvmbW2hFWvmT`, bound to commit `f30f4bdb141d` (tracked fingerprint `86c3909ce2ff`).
+- work item: GitHub issue #17.
+- PR: #18, `feature/emptystate-component` into `main`.
+- final gate run after the last code mutation: `npm test` 18 files / 96 tests passed.
+
 
 
 
