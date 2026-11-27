@@ -926,6 +926,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: `Field` is exported, demoed and unused, and it renders the same class names as `Input`, `Select` and `Textarea` with a different structure, modifier and spacing, so the one exported component that exists to own a field is the one field that does not look like a field.
 - prev-chain: sha256:1a74e4e9d349f0cb69e7aec5c2b4cd01e788babeac08b83437379b66c12e7a40 (same link as the preregistration, restated for the gate).
 
+### n=19 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de0d9bbb5fferd73tu99BZfK1S`, bound to commit `ff82a04faf58` (tracked fingerprint `daf24368a132`).
+- work item: GitHub issue #48.
+- PR: #49, `fix/publishable-package` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/46077906520 — `gates` passed in 44s on the PR head.
+- final gate run after the last code mutation: `npm test` 36 files / 191 tests passed, plus check 0/0, contrast 186/0 and a clean build.
+
 
 
 
