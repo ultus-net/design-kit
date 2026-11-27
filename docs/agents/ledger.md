@@ -182,6 +182,24 @@ the feature commit was amended and before the fresh-eyes review returned.
 - PR: #18, `feature/emptystate-component` into `main`.
 - final gate run after the last code mutation: `npm test` 18 files / 96 tests passed.
 
+### n=5 (preregistration, schema v2)
+
+- date (UTC): 2026-11-27T07:47Z
+- change-type: instrument
+- hypothesis (falsifiable): a new `src/lib/count-claims.test.ts` derives the exported component count from `src/lib/index.ts`, parses the five hand-maintained count claims from `README.md` (2), `src/routes/+page.svelte` (2) and `src/routes/components/+page.svelte` (1), and fails when any claim disagrees with the derived count. `npm test` moves 96 -> 100 passing with 0 failures, the export count stays 23, and the other three gates are unchanged.
+- candidate source: campaign screener shortlist position 2 (CV); the at-risk regression recorded in `docs/agents/ledger.md` n=1, n=2, n=3 and n=4 (`the five hand-maintained count claims go stale`).
+- selection score (4 items): the four new assertions — derived count equals the number of `.svelte` component exports, all five claim sites are located, every claim equals the derived count, and the word parser maps `Twenty-two` to 22 and `twenty-three` to 23 while the export counter ignores non-component exports.
+- held-out score (96 items, never used for selection): the 96 pre-existing tests, plus the 186 contrast pairs, svelte-check 0/0 and the static build.
+- accept rule: `npm test` 100 passed with 0 failures, svelte-check 0/0, 186 contrast pairs 0 failures, build succeeds, export count still 23.
+- reject rule: any gate red, any pre-existing test edited, or the new test hard-codes the component list instead of deriving it.
+- non-goals: adding components, changing tokens, editing `vite.config.ts`, or replacing the hand-maintained claims with generated text.
+- at-risk regressions: a matcher that misses a claim and silently passes (guarded by the located-sites assertion); a file read that depends on the working directory (use `import.meta.url`, not `process.cwd()`); the parser accepting an unrelated `... Svelte 5 components` phrase (guarded by requiring a tens word).
+- matched-budget test-time-scaling control: not applicable. The verifier is deterministic, so compute per item is fixed.
+- answer-rescue audit: not applicable, the verifier is deterministic.
+- incumbent-vs-revision: the new test is additive and the stale-claim case is exercised with synthetic strings inside the same test file, so no restored-state re-run is needed.
+- citations used: `docs/agents/ledger.md` n=1..n=4 (the stale-count regression is the trace); `docs/design/2026-11-26-design-kit-shape-and-components.md` section 3 (the component set the count describes). This repo has no `docs/agents/reading-list.md`, so no harness citation id is asserted.
+- prev-chain: sha256:fc37f3eb60683e8861fcd05af58143eb5964abb639cf808d619d29e278f486ca (the n=4 preregistration block, the highest top-level `### n=` below 5 that the gate's `reduce` selects when two records share n=4; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
+
 
 
 
