@@ -842,6 +842,24 @@ the feature commit was amended and before the fresh-eyes review returned.
 - citations used: `package.json`, `CHANGELOG.md`, `src/lib/count-claims.test.ts` (the ratchet this one is modelled on), `src/lib/workflow-gates.test.ts:3` (the `?raw` import precedent), the design doc's phasing table, ledger n=17. The playbook's "Grounding" section states this repo cites no arXiv ids, so none is asserted.
 - prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (the n=17 preregistration record with its result and close-out, the highest top-level `### n=` below 18 that the gate's `reduce` selects; hashed with `validate-ledger.cjs` `parseRecords`/`sha256`).
 
+- code change: `package.json` version 0.5.0 -> 0.7.0; `CHANGELOG.md` gains an empty `## [Unreleased]` and renames the section below it to `## [0.7.0] - 2026-11-27`, entry text unchanged; new `src/lib/version-claims.test.ts`. No component, workflow, dependency or existing test touched.
+- commit SHA + git tree: `c27abb222096` + `5af6d9f133d07e5ff3129a11eb5f40c549e06c34`.
+- artifact name + checksum: no published artifact; `dist/` is not built in this iteration and no tag is created.
+- exact command/config: `npm test`, `npm run check`, `npm run contrast`, `npm run build` on Node v26.13.0, vitest 5.1.1.
+- test results: 35 files, 188 tests passed (186 baseline plus two). svelte-check 0 errors and 0 warnings. Contrast 186 pairs, 0 failures. Static build clean. Exports 29, five count claims read twenty-nine, `package.json` reads 0.7.0.
+- eval job path: none. The anchors define the verifier as the local gate run.
+- selection score: 2/2 preregistered assertions passed: two tests, seven assertions in total (top section name equals the package version, top section is dated, every released name is semver-shaped, every released section is dated, names are unique, names are ordered newest first).
+- held-out score: 186/186 untouched tests passed, plus the unchanged contrast, check and build gates.
+- gains: the package version now matches the release it ships with, and the version/changelog agreement is a gate instead of a convention. Before this iteration `package.json` said 0.5.0 while the changelog listed ten components from two planned minor versions.
+- losses: none observed. No behaviour changed.
+- exceptions: authored in-session. The first review returned REQUEST CHANGES with a P0 that the date check was implicit in a set difference, and a P1 that a malformed name could reach the comparator as `NaN`. The P0's stated mechanism was not what the code did (an undated top heading already failed the set comparison, since `released` is the dated subset and the comparison list is every heading), but the criticism of the expression was right, and the test now asserts the date and the shape directly, with the shape checked before the sort. Each failure mode was then proved against synthetic changelog text: healthy passes, an undated top heading yields `["top undated","undated section"]`, a bump without a section yields `["top name 0.7.0 != 0.8.0"]`, a malformed name yields `["malformed name 0.5"]`, and a duplicate yields `["duplicate"]`. Second review APPROVED.
+- loop note: the n=16 and n=17 `prev-chain` values were wrong on the first attempt because the hash was computed while the record was still the last block, so it included the trailing blank lines that the gate trims once a new `### n=` heading appears. The gate's expected value is authoritative; both records were corrected before their commits closed.
+- token/cost/duration: tokens not captured; one session, no executor dispatch and two reviewer rounds.
+- interpretation: the release is the campaign's only non-code gain, and it is the one with an external consequence: a publish of this tree now ships 0.7.0 with the changelog to match, instead of 0.5.0 with ten undeclared components.
+- keep/revert: keep.
+- next hypothesis: nothing from the campaign 4 or 5 candidate sets remains unstarted except the `Field` seam refactor, which the campaign 5 screener denied as a multi-iteration restructure, and the branch-protection decision, which is the operator's.
+- prev-chain: sha256:a0215935f6af58883fd868a566382b3a59b00eeaffd1e9bec5d7a2c3e98f259d (same link as the preregistration, restated for the gate).
+
 
 
 
