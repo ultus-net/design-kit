@@ -7,6 +7,7 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 ### Added
 
 - `Breadcrumbs`: a `nav` landmark with an ordered list, an optional accessible name, anchors on ancestor items and `aria-current="page"` on the current item.
+- `Tooltip`: a button trigger that shows a text tooltip on hover and focus, wires `aria-describedby` while open, and hides on Escape without moving focus.
 
 ## [0.5.0] - 2026-11-26
 

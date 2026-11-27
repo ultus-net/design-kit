@@ -20,6 +20,7 @@
   import TabsDemo from '../_demos/TabsDemo.svelte';
   import TextareaDemo from '../_demos/TextareaDemo.svelte';
   import ToastDemo from '../_demos/ToastDemo.svelte';
+  import TooltipDemo from '../_demos/TooltipDemo.svelte';
 
   let email = $state('dispatch@example.com');
   let density = $state('compact');
@@ -33,7 +34,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-one Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -194,6 +195,12 @@
   <h2>Toast</h2>
   <p class="note">A polite live region by default, alert for danger, and no timers.</p>
   <ToastDemo />
+</section>
+
+<section class="block">
+  <h2>Tooltip</h2>
+  <p class="note">A button trigger that shows a text tooltip on hover and focus, wires aria-describedby while open, and hides on Escape without moving focus.</p>
+  <TooltipDemo />
 </section>
 
 <section class="block">
