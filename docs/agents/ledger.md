@@ -441,6 +441,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: sibling behavioural tests for the seven exports the ratchet allowlists (Alert, AppShell, Badge, Card, Input, Select, Stat) empty that allowlist and move the tested count 19 -> 26 without adding exports.
 - prev-chain: sha256:e1f0c7a8090c9cb72c8d53a0be1ab31ecacbf6156b50069d74fdfeddfb9ef16b (same link as the preregistration, restated for the gate).
 
+### n=10 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3ce6600ffeRGy46JGzzcIxFT`, bound to commit `be2c26b873f7` (tracked fingerprint `45036cbec372`).
+- work item: GitHub issue #29.
+- PR: #30, `feature/accordion-component` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45968883095 — `gates` passed in 26s on the PR head.
+- final gate run after the last code mutation: `npm test` 24 files / 125 tests passed.
+
 
 
 
