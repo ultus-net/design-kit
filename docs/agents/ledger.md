@@ -645,6 +645,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: the busy-anchor fix for issue #35, moved into the n=15 slot from the forwarding tests (reason recorded at n=13).
 - prev-chain: sha256:630df0377d96a7014626e65b023e10a296818583030aae9f75592ec8e64f9dfc (same link as the preregistration, restated for the gate).
 
+### n=14 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de396e4b0ffejCsRMpVTfLsCdy`, bound to commit `61096320006b` (tracked fingerprint `74255ac5743b`).
+- work item: GitHub issue #38.
+- PR: #39, `feature/drawer-component` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45977235502 — `gates` passed in 29s on the PR head.
+- final gate run after the last code mutation: `npm test` 33 files / 173 tests passed.
+
 
 
 
