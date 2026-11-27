@@ -348,6 +348,13 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: the GitHub Actions `gate` candidate runs the four gates on push and PR, so a red tree cannot reach `main` again; it is locally checkable with `actionlint`.
 - prev-chain: sha256:0e224f8205081007f9785eb0585f75dc7f124cb950d86919746ac87d5f521977 (same link as the preregistration, restated for the gate).
 
+### n=8 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de3e51cfbffeEnDveJkSa8PARS`, bound to commit `3184e76d5ff3` (tracked fingerprint `86a49179744c`).
+- work item: GitHub issue #25.
+- PR: #26, `feature/progress-component` into `main`.
+- final gate run after the last code mutation: `npm test` 22 files / 113 tests passed.
+
 
 
 
