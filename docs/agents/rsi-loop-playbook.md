@@ -63,6 +63,12 @@ date claims no sweep happened.
 - **verifier** — `npm test` (vitest, behavioural), plus `npm run check`
   (svelte-check, zero errors and warnings) and `npm run contrast` (186 colour
   pairs, non-zero exit on a miss). `npm run build` proves the static site.
+  `.github/workflows/gates.yml` mirrors all four on push to `main` and on every
+  pull request, added at n=9. The workflow is advisory: `main` has no branch
+  protection, so its checks report on the PR and do not block a merge.
+  `src/lib/workflow-gates.test.ts` pins the step order, that every gate step is
+  fatal, and that each named script exists in `package.json`. The test reads the
+  workflow text, so `actionlint` is the YAML check, not the test.
 - **metric** — exported components that carry a sibling `*.test.ts` of their
   own. **Audited 2026-11-27:** 17 of 24 exports have one. The seven without
   are `Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select` and `Stat`;
