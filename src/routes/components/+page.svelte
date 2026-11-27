@@ -17,6 +17,7 @@
   import MenuDemo from '../_demos/MenuDemo.svelte';
   import PaginationDemo from '../_demos/PaginationDemo.svelte';
   import RadioGroupDemo from '../_demos/RadioGroupDemo.svelte';
+  import SkeletonDemo from '../_demos/SkeletonDemo.svelte';
   import SwitchDemo from '../_demos/SwitchDemo.svelte';
   import TableDemo from '../_demos/TableDemo.svelte';
   import TabsDemo from '../_demos/TabsDemo.svelte';
@@ -36,7 +37,7 @@
 
 <PageHeader
   title="Components"
-  lede="Twenty-three Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
+  lede="Twenty-four Svelte 5 components built on tokens only. Props are typed, markup is plain, and no component requires Tailwind."
 />
 
 {#snippet shellBrand()}
@@ -215,6 +216,12 @@
   <h2>EmptyState</h2>
   <p class="note">A decorative mark slot, title, optional description and optional action snippet.</p>
   <EmptyStateDemo />
+</section>
+
+<section class="block">
+  <h2>Skeleton</h2>
+  <p class="note">An <code>aria-hidden</code> placeholder with line, block and circle shapes built from radius tokens.</p>
+  <SkeletonDemo />
 </section>
 
 <section class="block">
