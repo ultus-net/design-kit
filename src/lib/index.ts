@@ -8,6 +8,7 @@ export { default as Button } from './components/Button.svelte';
 export { default as Card } from './components/Card.svelte';
 export { default as Checkbox } from './components/Checkbox.svelte';
 export { default as Combobox } from './components/Combobox.svelte';
+export { default as CommandPalette } from './components/CommandPalette.svelte';
 export { default as Dialog } from './components/Dialog.svelte';
 export { default as Drawer } from './components/Drawer.svelte';
 export { default as EmptyState } from './components/EmptyState.svelte';

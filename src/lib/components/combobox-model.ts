@@ -3,7 +3,7 @@ export interface ComboboxOption {
   label: string;
 }
 
-export function filterOptions(options: ComboboxOption[], query: string): ComboboxOption[] {
+export function filterOptions<T extends ComboboxOption>(options: T[], query: string): T[] {
   const needle = query.trim().toLowerCase();
 
   if (!needle) return options;

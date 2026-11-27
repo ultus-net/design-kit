@@ -70,10 +70,10 @@ date claims no sweep happened.
   fatal, and that each named script exists in `package.json`. The test reads the
   workflow text, so `actionlint` is the YAML check, not the test.
 - **metric** — exported components that carry a sibling `*.test.ts` of their
-  own. **Audited 2026-11-27:** 28 of 28 exports have one. n=11 added the seven
+  own. **Audited 2026-11-27:** 29 of 29 exports have one. n=11 added the seven
   that were missing (`Alert`, `AppShell`, `Badge`, `Card`, `Input`, `Select`,
-  `Stat`); n=12's `Avatar` and n=14's `Drawer` shipped with their test files in
-  the same diff.
+  `Stat`); n=12's `Avatar`, n=14's `Drawer` and n=17's `CommandPalette` shipped
+  with their test files in the same diff.
   `src/lib/tested-exports.test.ts` pins that set with an empty allowlist, so a
   new export without a sibling test fails the suite.
   **The measured property is a sibling file, not coverage depth**, which is why

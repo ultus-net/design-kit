@@ -15,6 +15,7 @@ All notable changes to this package. The format follows Keep a Changelog, and ve
 - `Accordion`: native details and summary items in one-open or multiple mode, with aria-expanded on each summary.
 - `Avatar`: an image with a required alt, an initials fallback derived from the name, and sm/md/lg sizes.
 - `Drawer`: a native `dialog` pinned to the start or end edge, reusing the `Dialog` guard and the native focus return.
+- `CommandPalette`: a native dialog with a search input and a grouped listbox, reusing `filterOptions` and `stepIndex` from the Combobox model, with Enter to invoke and Escape to clear.
 
 ### Changed
 
