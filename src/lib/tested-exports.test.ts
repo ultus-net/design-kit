@@ -13,10 +13,10 @@ export function testFileNames(keys: string[]): string[] {
   return keys.map((key) => key.replace('./components/', '').replace('.test.ts', ''));
 }
 
-// The measured property is a sibling test file, not coverage depth. None of
-// these names is imported by any test file, so the proxy and "uncovered" agree
-// today. A name leaves this list when it gains its own file.
-export const WITHOUT_SIBLING_TEST = ['Alert', 'AppShell', 'Badge', 'Card', 'Input', 'Select', 'Stat'];
+// The measured property is a sibling test file, not coverage depth. The gap is
+// closed, so the list is empty; a new export without a test still fails the set
+// comparison below.
+export const WITHOUT_SIBLING_TEST: string[] = [];
 
 describe('sibling test files', () => {
   it('derives more than twenty component export names from index.ts', () => {

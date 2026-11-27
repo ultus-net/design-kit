@@ -33,3 +33,4 @@ carrying its id in the bullet and registered below.
 - L008 — An under-specified spec row is a contract decision the component owns: state it in the rendered note, pin it with an assertion, and record the rationale in the ledger. (evidence: `2026-11-27T082407Z-under-specified-contract.md`)
 - L009 — A workflow file is prose until it runs: claim only what the text-level test proves (step order and fatality), and say so where a reader checks. (evidence: `2026-11-27T082818Z-workflow-is-prose-until-it-runs.md`)
 - L010 — A controlled native element must cancel its default action and be the only writer; test the activation path the user takes, not the event the code listens for. (evidence: `2026-11-27T084700Z-controlled-native-element.md`)
+- L011 — When a query fails, fix the query before weakening the claim: a replacement assertion must prove at least as much, or say what it stopped proving. (evidence: `2026-11-27T085551Z-query-failure-not-claim-failure.md`)
