@@ -599,6 +599,14 @@ the feature commit was amended and before the fresh-eyes review returned.
 - next hypothesis: a busy `Button` with `href` cancels activation, so a pointer click neither calls the caller's handler nor navigates, and the test's `TODO(#35)` becomes an `event.defaultPrevented` assertion without changing the test count.
 - prev-chain: sha256:45801c90002133a09a4b32135693033eea1bb5f0e82fd0c692df77975d2282d0 (same link as the preregistration, restated for the gate).
 
+### n=13 close-out
+
+- final review: `record_review` APPROVED, reviewer `ses_de39db4d1ffev1kzRQPUDST2ze`, bound to commit `e527fb292277` (tracked fingerprint `f02f4190d5d1`).
+- work item: GitHub issue #36. Defect found and tracked: issue #35.
+- PR: #37, `feature/button-contract-tests` into `main`.
+- CI run: https://github.com/ultus-net/design-kit/actions/runs/45976231082 — `gates` passed on the PR head.
+- final gate run after the last code mutation: `npm test` 32 files / 166 tests passed.
+
 
 
 
